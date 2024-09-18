@@ -48,7 +48,7 @@
             "authors":"Tongfei Li, Kaihua Che, Jiadong Lu, Yifan Zeng, Wei Lv, Zhiyao Liang",
             "year":"2024",
             "institution":"Earth Science Informatics, 1-17",
-            "picture":"../../../public/assets/img/publications/1.webp"
+            "picture":"/assets/img/publications/1.webp"
         },
         "two": {
             "name":"Typhoon Track Prediction Based on TimeForce CNN-LSTM Hybrid Model",
@@ -56,7 +56,7 @@
             "authors":"Jiadong Lu, Meixuan Jiang, Yuchen Zhang, Wei Lv, Tongfei Li",
             "year":"2023",
             "institution":"Springer International Publishing",
-            "picture":"../../../public/assets/img/publications/2.png"
+            "picture":"/assets/img/publications/2.png"
         },
         "three": {
             "name":"A Multimodal Deep Learning Approach for Typhoon Track Forecast by Fusing CNN and Transformer Structures",
@@ -64,7 +64,7 @@
             "authors":"Ruijie Zhan, Jiadong Lu, Yuchao Jiang, Tongfei Li, Guohao Zhong, Wei Lv",
             "year":"2023",
             "institution":"IEEE(CVIDL 2023)",
-            "picture":"../../../public/assets/img/publications/3.png"
+            "picture":"/assets/img/publications/3.png"
         },
         "four": {
             "name":"Enhanced Word-unit Broad Learning System with Sememes",
@@ -72,7 +72,7 @@
             "authors":"Yuchao Jiang, Jiadong Lu, Tongfei Li, Wei Lv",
             "year":"2023",
             "institution":"IEEE Access",
-            "picture":"../../../public/assets/img/publications/4.png"
+            "picture":"/assets/img/publications/4.png"
         },
         "five": {
             "name":"Chinese Brand Identity Management Based on Never-Ending Learning and Knowledge Graphs",
@@ -80,7 +80,7 @@
             "authors":"Dalin Li, Yijin Wang, Guansu Wang, Jiadong Lu, Yong Zhu, Gábor Bella, Yanchun Liang",
             "year":"2023",
             "institution":"Electronics",
-            "picture":"../../../public/assets/img/publications/5.webp"
+            "picture":"/assets/img/publications/5.webp"
         },
         "six": {
             "name":"Aspect-level sentiment analysis model fused with GPT and multi-layer attention",
@@ -88,74 +88,74 @@
             "authors":"Lai Mingzheng, Hong Zelin, Lu Jiadong, Lv Wei",
             "year":"2023",
             "institution":"ICAICE 2022",
-            "picture":"../../../public/assets/img/publications/6.png"
+            "picture":"/assets/img/publications/6.png"
         }
     },
     "awards": {
         "one": {
             "name":"2023 National Scholarship",
-            "picture":"../../../public/assets/img/awards/1.png"
+            "picture":"/assets/img/awards/1.png"
         },
         "two": {
             "name":"2024 Zhuhai College of Science and Technology Outstanding Student",
-            "picture":"../../../public/assets/img/awards/2.jpg"
+            "picture":"/assets/img/awards/2.jpg"
         },
         "three": {
             "name":"2023 National Scholarship",
-            "picture":"../../../public/assets/img/awards/3.jpeg"
+            "picture":"/assets/img/awards/3.jpeg"
         },
         "four": {
             "name":"2024 Zhuhai College of Science and Technology Outstanding Student",
-            "picture":"../../../public/assets/img/awards/4.jpg"
+            "picture":"/assets/img/awards/4.jpg"
         },
         "five": {
             "name":"2023 National Scholarship",
-            "picture":"../../../public/assets/img/awards/5.jpg"
+            "picture":"/assets/img/awards/5.jpg"
         },
         "six": {
             "name":"2024 Zhuhai College of Science and Technology Outstanding Student",
-            "picture":"../../../public/assets/img/awards/6.jpg"
+            "picture":"/assets/img/awards/6.jpg"
         }
     },
     "skills": {
         "one": {
             "name":"Language and Databases",
             "picture":{
-                "python":"../../../public/assets/img/skills/python.jpg",
-                "vue":"../../../public/assets/img/skills/vue.png",
-                "mysql":"../../../public/assets/img/skills/mysql.png",
-                "java":"../../../public/assets/img/skills/java.png",
-                "json":"../../../public/assets/img/skills/json.webp"
+                "python":"/assets/img/skills/python.jpg",
+                "vue":"/assets/img/skills/vue.png",
+                "mysql":"/assets/img/skills/mysql.png",
+                "java":"/assets/img/skills/java.png",
+                "json":"/assets/img/skills/json.webp"
             }
         },
         "two": {
             "name":"Libraries and Framworks",
             "picture":{
-                "numpy":"../../../public/assets/img/skills/numpy.jpg",
-                "pandas":"../../../public/assets/img/skills/pandas.png",
-                "opencv":"../../../public/assets/img/skills/opencv.jpg",
-                "Flask":"../../../public/assets/img/skills/flask.jpg",
-                "PyTorch":"../../../public/assets/img/skills/pytorch.png",
-                "git":"../../../public/assets/img/skills/git.png"
+                "numpy":"/assets/img/skills/numpy.jpg",
+                "pandas":"/assets/img/skills/pandas.png",
+                "opencv":"/assets/img/skills/opencv.jpg",
+                "Flask":"/assets/img/skills/flask.jpg",
+                "PyTorch":"/assets/img/skills/pytorch.png",
+                "git":"/assets/img/skills/git.png"
             }
         }
     },
     "contactMe":{
         "Github":{
             "link":"https://github.com/JIaDLu",
-            "picture":"../../../public/assets/img/contact/github.png"
+            "picture":"/assets/img/contact/github.png"
         },
         "Email":{
             "link":"lujiadong0243@gmail.com",
-            "picture":"../../../public/assets/img/contact/gmail.jpeg"
+            "picture":"/assets/img/contact/gmail.jpeg"
         },
         "orcid":{
             "link":"https://orcid.org/0000-0002-2105-7247",
-            "picture":"../../../public/assets/img/contact/orcid.png"
+            "picture":"/assets/img/contact/orcid.png"
         },
         "scholar":{
             "link":"https://scholar.google.com/citations?user=7awu8-kAAAAJ&hl=en",
-            "picture":"../../../public/assets/img/contact/scholar.webp"
+            "picture":"/assets/img/contact/scholar.webp"
         }
 
     }
