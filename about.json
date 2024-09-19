@@ -2,6 +2,7 @@
     "aboutInfo": {
         "personalInfo": {
             "userName": "Jiadong Lu",
+            "passport": "/assets/img/passport.jpg",
             "birthday": "Apr 3 2002",
             "nativePlace": "Chao Zhou, Guangdong",
             "phoneNumber": "13622555424",
