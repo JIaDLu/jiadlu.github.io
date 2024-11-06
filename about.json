@@ -25,26 +25,30 @@
     "experience": {
         "one":{"company":"JiuSong Health Tech company",
                "ChineseName":"九松健康科技有限公司",
-               "position":"FontEnd Software Engineer",
+               "position":"Development Engineer",
                "StartTime":"July 2024",
-               "description":"mainly covers two aspects: service implementation (chat app, workflow, calendar) and technology usage (design flowchart pages with vueFlow, familiar with logic implementation such as interface calls, polling refresh, and component communication, as well as large model workflow).",
+               "description":" Collaborated in the development of an AI-driven blood sugar management Agent. Designed and implemented workflows that enabled the agent to autonomously make decisions and adjust behaviors based on task objectives. Integrated flexible API interfaces and a modular RAG architecture (Router, Search, Memory) to enhance system adaptability and accuracy, ensuring scientifically sound and reliable AI responses. ",
                "Chinese-description":{
                     "frondEnd-developer":"参与慢病管理服务AI智能体的中后台开发，专注于以糖尿病患者为中心的生活方式干预服务，解决慢性病管理中的标准化与产品化难题。负责使用Vue 3框架完成前端功能的实现，主要包括：聊天会话工作台，确保AI服务与人工服务的无缝衔接；任务日历模块，清晰展示患者的服务方案与任务配置；以及工作流任务配置，为健康管理师提供SOP任务流配置功能，配置任务会按照预设标准自动执行，以保证服务的一致性和高效性。技术栈：Vue3、TypeScript、Vite、Element-Plus、Pinia等主流技术。",
                     "ai-agent":"参与构建控糖管理服务AI智能体，旨在构建一款具备糖尿病管理专长的Bot。熟练运用大模型AI应用开发平台，通过工作流形式高效构建了Bot。在Bot配置与搭建方面，我拥有系统化的思维和清晰的认识，能够通过意图分类准确解析用户的询问，并针对不同需求执行特定的处理流程，以实现更加精准的响应。此外，我融合了知识库资源，提供了特定产品信息，作为AI参考输入，进一步提升了应答的准确性。与此同时，通过创建和调用API接口，获取包括近期饮食、体重变化及血糖记录在内的后台数据，为AI提供数据支撑，从而确保其回答的科学性与可信度。",
                     "LLM-Fine-tuning":""
-               }
+               },
+               "certificate":"/assets/img/experience/jiusong.jpg"
+               
             },
         "two": {"company":"Zhuhai Yixun Technology Co., Ltd.",
                "ChineseName":"珠海市易讯科技有限公司",
                "position":"Data analysis Engineer (Internship)",
                "StartTime":"Fre 2022",
-               "description":"Use matplotlib, seaborn plotting in python and ECharts plotting to present the data, then summarise in a PowerPoint presentation to report on the group."
+               "description":"Utilized Python, Matplotlib, and Seaborn for data visualization to illustrate data features and relationships; implemented interactive diagrams using ECharts.",
+               "certificate":"/assets/img/experience/yixun.jpg"
             },
         "three": {"company":"Zhuhai Shuohang Student Trusteeship Service Co., Ltd.",
                 "ChineseName":"珠海市硕航学生托管服务有限公司",
                 "position":"Tutor (Internship)",
                 "StartTime":"Fre 2022",
-                "description":"Part-time tutor of physics for grade eight and children's programming."
+                "description":"Part-time tutor of physics for grade eight and children's programming.",
+                "certificate":""
             }
     },
     "publications": {
