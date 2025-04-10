@@ -1,14 +1,676 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/assets/img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
     <title>Jiadong</title>
-    <script type="module" crossorigin src="/assets/index-D7Cyxh8Q.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CfMZJ3Q-.css">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Silicon - Multipurpose Technology Bootstrap Template">
+    <meta name="keywords" content="bootstrap, business, creative agency, mobile app showcase, saas, fintech, finance, online courses, software, medical, conference landing, services, e-commerce, shopping cart, multipurpose, shop, ui kit, marketing, seo, landing, blog, portfolio, html5, css3, javascript, gallery, slider, touch, creative">
+    <meta name="author" content="Createx Studio">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon and Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/logo.jpeg">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#6366f1">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#080032">
+    <meta name="msapplication-config" content="assets/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" media="screen" href="assets/vendor/boxicons/css/boxicons.min.css"/>
+    <link rel="stylesheet" media="screen" href="assets/vendor/swiper/swiper-bundle.min.css"/>
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="assets/css/theme.min.css">
+
+    <!-- Page loading styles -->
+    <style>.page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #0b0f19;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    
+    <!-- Page custom styles -->
+    <style>/* Spin animation */
+      @-webkit-keyframes hero-spin {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes hero-spin {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      .hero-animation-spin {
+        -webkit-animation: hero-spin 35s linear infinite;
+        animation: hero-spin 35s linear infinite;
+      }
+
+      /* Fade animation */
+      @-webkit-keyframes hero-fade {
+        0%, 100% { opacity: 0 }
+        50% { opacity: 1 }
+      }
+      @keyframes hero-fade {
+        0%, 100% { opacity: 0 }
+        50% { opacity: 1 }
+      }
+      .hero-animation-fade {
+        -webkit-animation: hero-fade 4s ease-in infinite;
+        animation: hero-fade 4s ease-in infinite;
+      }
+      .hero-animation-delay-1,
+      .hero-animation-delay-2,
+      .hero-animation-delay-3 {
+        opacity: 0;
+      }
+      .hero-animation-delay-1 { animation-delay: .75s; }
+      .hero-animation-delay-2 { animation-delay: 1.5s; }
+      .hero-animation-delay-3 { animation-delay: 2s; }
+    </style>
+
+
+    <!-- Theme mode -->
+    <script>
+      let mode = window.localStorage.getItem('mode'),
+          root = document.getElementsByTagName('html')[0];
+      if (mode !== null && mode === 'dark') {
+        root.classList.add('dark-mode');
+      } else {
+        root.classList.remove('dark-mode');
+      }
+    </script>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-WKV3GT5');
+    </script>
   </head>
+
+
+  <!-- Body -->
   <body>
-    <div id="app"></div>
+    
+    <!-- Google Tag Manager (noscript)-->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WKV3GT5" height="0" width="0" style="display: none; visibility: hidden;"></iframe>
+    </noscript>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <header class="header navbar navbar-expand-lg navbar-dark position-absolute navbar-sticky">
+        <div class="container px-3">
+          <a href="index.html" class="navbar-brand pe-3">
+            <img src="assets/img/logo.jpeg" width="35" alt="Silicon">
+            Jiadong
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end bg-dark">
+            <div class="offcanvas-header border-bottom border-light">
+              <h5 class="offcanvas-title text-white">Menu</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+
+          </div>
+          <div class="dark-mode pe-lg-1 ms-auto me-4">
+            <div class="form-check form-switch mode-switch" data-bs-toggle="mode">
+              <input type="checkbox" class="form-check-input" id="theme-mode">
+              <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+              <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+            </div>
+          </div>
+          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </header>
+
+
+      <!-- Hero + animations -->
+      <section class="position-relative d-flex align-items-center min-vh-100 py-5 bg-dark overflow-hidden">
+        <span class="position-absolute top-0 start-0 d-dark-mode-block d-none w-100 h-100 bg-secondary opacity-75"></span>
+        <div class="container position-relative dark-mode mt-5 mb-lg-5 mb-md-4 mb-3 pt-3 pb-xl-3">
+          <div class="row gy-5">
+            <div class="col-xl-5 col-lg-6">
+              <div class="position-relative zindex-5 text-lg-start text-center">
+                <h1 class="display-2 mb-4 pb-lg-3 pb-md-2"><span class="text-primary">Hi, </br> </span>I am Jiadong</h1>
+              </div>
+              <div class="d-flex align-items-center justify-content-center justify-content-md-start text-start pt-4 pt-lg-5 mt-xxl-5">
+                <div class="d-flex me-3">
+                  <div class="d-flex align-items-center justify-content-center bg-light rounded-circle" style="width: 52px; height: 52px;">
+                    <img src="assets/img/avatar/onboarding.png" class="rounded-circle" width="48" alt="Avatar">
+                  </div>
+                </div>
+                <div class="text-light" style="font-size: large;">Welcome to My Website</div>
+              </div>
+            </div>
+            <div class="col-lg-6 offset-xl-1">
+              <div class="position-relative ms-xl-0 ms-lg-4">
+                <div class="position-absolute top-50 start-50 translate-middle ratio ratio-1x1" style="width: 125%; max-width: 49.75rem;">
+                  <div class="p-md-0 p-5">
+                    <img src="assets/img/landing/software-agency-3/hero-bg.png" alt="Shape" class="hero-animation-spin p-md-0 p-5">
+                  </div>
+                </div>
+                <div class="position-relative row row-cols-sm-2 row-cols-1 gx-xl-4 gx-lg-3 gx-md-4 gx-3">
+                  <div class="col">
+                    <div class="d-sm-grid d-flex gap-xl-4 gap-lg-3 gap-md-4 gap-sm-3 gap-2">
+                      <div class="d-flex align-items-center justify-content-center bg-secondary rounded-3" style="min-height: 176px; backdrop-filter: blur(6px);">
+                        <div class="p-xl-4 p-sm-3 p-2 fs-xl fw-semibold text-center">
+                          <span class="hero-animation-fade text-white">AI Developer</span>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center justify-content-center bg-secondary rounded-3" style="min-height: 176px; backdrop-filter: blur(6px);">
+                        <div class="p-xl-4 p-sm-3 p-2 fs-xl fw-semibold text-center">
+                          <span class="hero-animation-fade hero-animation-delay-2 text-white">Software Engineer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col mt-sm-5 mt-2 pt-sm-5">
+                    <div class="d-sm-grid d-flex gap-xl-4 gap-lg-3 gap-md-4 gap-sm-3 gap-2">
+                      <div class="d-flex align-items-center justify-content-center bg-secondary rounded-3" style="min-height: 176px; backdrop-filter: blur(6px);">
+                        <div class="p-xl-4 p-sm-3 p-2 fs-xl fw-semibold text-center">
+                          <span class="hero-animation-fade hero-animation-delay-1 text-white">Pythonist</span>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center justify-content-center bg-secondary rounded-3" style="min-height: 176px; backdrop-filter: blur(6px);">
+                        <div class="p-xl-4 p-sm-3 p-2 fs-xl fw-semibold text-center">
+                          <span class="hero-animation-fade hero-animation-delay-3 text-white">FastLearner</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <!-- Testimonials -->
+      <section class="container my-5 py-lg-5 py-md-4 py-3">
+        <div class="row">
+          <div class="col-md-5">
+
+            <div id="author-1" class="card bg-transparent border-0 swiper-tab active">
+              <div class="card-body p-0 rounded-3 bg-size-cover bg-repeat-0 bg-position-top-center" style="background-image: url(assets/img/portrait.PNG);"></div>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="card border-0 shadow-sm p-4 p-xxl-5">
+              <div class="d-flex justify-content-between pb-4 mb-2">
+                <span class="btn btn-icon btn-primary btn-lg shadow-primary pe-none">
+                  <i class="bx bxs-quote-left"></i>
+                </span>
+                  <h4 style="margin-top: 15px;">PROFILE</h4>
+              </div>
+              
+              <!-- Slider -->
+              <div class="swiper mx-0 mb-md-n2 mb-xxl-n3" data-swiper-options='{
+                "spaceBetween": 24,
+                "loop": true,
+                "pagination": {
+                  "el": ".swiper-pagination",
+                  "clickable": true
+                },
+                "navigation": {
+                  "prevEl": "#testimonials-prev",
+                  "nextEl": "#testimonials-next"
+                }
+              }'>
+                <div class="swiper-wrapper">
+                  <!-- Item -->
+                  <div class="swiper-slide h-auto">
+                    <figure class="card h-100 position-relative border-0 bg-transparent">
+                      <blockquote class="card-body p-0 mb-0">
+                        <p class="fs-lg mb-0">
+                          Hello, welcome to my website🌐.  I am <strong>Lu Jiadong</strong>, a passionate researcher in the field of deep learning 🤖. I earned my bachelor's degree from Zhuhai College of Jilin University in 2024, graduating with a GPA of 3.7/4.0 and ranking within the top 1% of my department.
+                          During my undergraduate studies, my research primarily focused on time series forecasting ⏱️, with applications in the meteorological domain. ☁️
+                        </br>Currently, I am contributing to a health-tech company 🏥, where I am involved in the development of an AI-powered chatbot to advance patient education and enable effective self-management for people living with diabetes. 🩺
+                          Meanwhile, I am actively preparing to embark on my graduate journey 🎓 at the National University of Singapore (NUS) this coming August, where I look forward to deepening my expertise and engaging in cutting-edge research.
+                          </p>
+                      </blockquote>
+                    </figure>
+                  </div>
+                </div>
+              </div>        
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Latest posts -->
+      <section class="container mb-5 pt-5 pb-lg-5">
+        <h2 class="h1 pt-md-2 pt-lg-4 pt-xl-5 pb-md-3 pb-lg-4 mb-md-4 text-center">Education BackGround</h2>
+
+        <!-- Blog articles -->
+        <div class="pb-3">
+
+          <!-- Blog item -->
+          <article class="card border-0 shadow-sm overflow-hidden mb-4">
+            <div class="row g-0">
+              <div class="col-sm-4 position-relative bg-repeat-0" style="background-image: url(assets/img/blog/nus.png); background-size: contain; background-position: center;">
+                <a href="https://www.nus.edu.sg/" class="position-absolute top-0 start-0 w-100 h-100" aria-label="Read more"></a>
+                <a href="https://www.nus.edu.sg/" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-5 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Read later">
+                  <i class="bx bx-bookmark"></i>
+                </a>
+              </div>
+              <div class="col-sm-8">
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-3">
+                    <a href="https://www.nus.edu.sg/" class="badge fs-sm text-nav bg-secondary text-decoration-none">graduate</a>
+                    <span class="fs-sm text-muted border-start ps-3 ms-3">Aug, 2025</span>
+                  </div>
+                  <h4 class="h4">
+                    <a href="https://www.nus.edu.sg/">National University of Singapore</a>
+                  </h4>
+                  <p>25Fall Biomedical Informatics</p>
+                  <hr class="my-4">
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Article -->
+          <article class="card border-0 shadow-sm overflow-hidden mb-4">
+            <div class="row g-0">
+              <div class="col-sm-4 position-relative bg-repeat-0" style="background-image: url(assets/img/blog/zsct.jpeg); background-size: contain; background-position: center;">
+                <a href="https://www.zcst.edu.cn/" class="position-absolute top-0 start-0 w-100 h-100" aria-label="Read more"></a>
+                <a href="https://www.zcst.edu.cn/" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-5 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Read later">
+                  <i class="bx bx-bookmark"></i>
+                </a>
+              </div>
+              <div class="col-sm-8">
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-3">
+                    <a href="https://www.zcst.edu.cn/" class="badge fs-sm text-nav bg-secondary text-decoration-none">undergraduate</a>
+                    <span class="fs-sm text-muted border-start ps-3 ms-3">Oct, 2020 - Jun, 2024</span>
+                  </div>
+                  <h4 class="h4">
+                    <a href="https://www.zcst.edu.cn/">Zhuhai College Jilin University</a>
+                  </h4>
+                  <p>Data Science and Big Data Technology</p>
+                  <hr class="my-4">
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Use cases (Tabs) -->
+      <section class="container pt-5 pb-2 mt-3 mt-sm-4 mt-xl-5">
+        <h2 class="h1 text-center pb-3 pb-lg-4">Research Projects</h2>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs flex-nowrap justify-content-lg-center overflow-auto pb-2 mb-3 mb-lg-4" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap active" id="project-management-tab" data-bs-toggle="tab" data-bs-target="#project-management" type="button" role="tab" aria-controls="project-management" aria-selected="true">
+              <i class="bx bx-star fs-lg opacity-60 me-2"></i>
+              AI for Healthcare
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="remote-work-tab" data-bs-toggle="tab" data-bs-target="#remote-work" type="button" role="tab" aria-controls="remote-work" aria-selected="false">
+              <i class="bx bx-briefcase-alt-2 fs-lg opacity-60 me-2"></i>
+              DL for Meteorology
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="campaign-planning-tab" data-bs-toggle="tab" data-bs-target="#campaign-planning" type="button" role="tab" aria-controls="campaign-planning" aria-selected="false">
+              <i class="bx bx-bar-chart-alt-2 fs-lg opacity-60 me-2"></i>
+              Front-End Develop
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content bg-secondary rounded-3 py-4">
+
+          <!-- Project Management -->
+          <div class="tab-pane fade show active" id="project-management" role="tabpanel" aria-labelledby="project-management-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Diabetes Mellitus</h3>
+                <p>Collaborated with team members to develop an AI-driven blood sugar management Agent. Designed and implemented workflows that enabled the agent to autonomously adjust behaviors and make decisions based on task objectives. Integrated flexible API interfaces and a modular RAG architecture (Router, Search, Memory) to enhance system adaptability and accuracy, ensuring scientifically sound and reliable AI responses. </p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-md-4">
+                <img src="assets/img/landing/saas-1/use-cases/333.png" class="d-block my-lg-2 mx-auto me-md-0" width="686" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Remote Work -->
+          <div class="tab-pane fade" id="remote-work" role="tabpanel" aria-labelledby="remote-work-tab">
+            <div class="row align-items-center pt-3 pb-2 pb-sm-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Typhoone Track Prediction</h3>
+                <li>Used Python scripts for data scraping and processing. Developed a feature engineering technique, 'Time Force,' to enhance the model’s time-series learning by assigning dynamic weights to recent data points based on the temporal proximity of historical time steps, improving the accuracy of cyclone path prediction.</li>
+                <li>Integrated IBTrACS, ERA5 Reanalysis, and GridSat-B1 BT data to build a multimodal encoder-decoder architecture. Applied ensemble learning techniques to enhance model robustness.</li>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-md-4">
+                <img src="assets/img/landing/saas-1/use-cases/222.jpg" class="d-block my-lg-2 mx-auto me-md-0" width="686" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Campaign Planning -->
+          <div class="tab-pane fade" id="campaign-planning" role="tabpanel" aria-labelledby="campaign-planning-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 pe-sm-4 pe-md-0 ps-sm-4 ps-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Vue3</h3>
+                <p>Contributed to the front-end development of a blood sugar management AI platform. Implemented core modules such as a chat dashboard, task calendar, and workflow configuration to streamline Standard Operating Procedures (SOPs) configuration for healthcare administrators. Technologies: Vue3, TypeScript, Vite, Element-Plus, Pinia.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-md-4">
+                <img src="assets/img/landing/saas-1/use-cases/111.png" class="d-block mb-lg-2 mx-auto me-md-0" width="686" alt="Image">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container my-5 py-lg-5 py-md-4 py-3">
+        <h2 class="h1 pt-md-2 pt-lg-4 pt-xl-5 pb-md-3 pb-lg-4 mb-md-4 text-center">Selected Publications</h2>
+        <div class="steps steps-sm">
+          <div class="step">
+            <div class="step-number">
+              <div class="step-number-inner">22</div>
+            </div>
+            <div class="step-body">
+              <h4 class="mb-2">Typhoon Track Prediction Based on TimeForce CNN-LSTM Hybrid Model</h4>
+              <p class="mb-0"><u>Jiadong Lu</u>, Meixuan Jiang, Yuchen Zhang, Wei Lv, Tongfei Li</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">
+              <div class="step-number-inner">23</div>
+            </div>
+            <div class="step-body">
+              <h4 class="mb-2">A Multimodal Deep Learning Approach for Typhoon Track Forecast by Fusing CNN and Transformer Structures</h4>
+              <p class="mb-0">Ruijie Zhan, <u>Jiadong Lu</u>, Yuchao Jiang, Tongfei Li, Guohao Zhong, Wei Lv</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">
+              <div class="step-number-inner">23</div>
+            </div>
+            <div class="step-body">
+              <h4 class="mb-2">Enhanced Word-unit Broad Learning System with Sememes</h4>
+              <p class="mb-0">Yuchao Jiang, <u>Jiadong Lu</u>, Tongfei Li, Wei Lv</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">
+              <div class="step-number-inner">23</div>
+            </div>
+            <div class="step-body">
+              <h4 class="mb-2">Aspect-level sentiment analysis model fused with GPT and multi-layer attention</h4>
+              <p class="mb-0">Mingzheng Lai, Zelin Hong, <u>Jiadong Lu</u>, Wei Lv</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">
+              <div class="step-number-inner">23</div>
+            </div>
+            <div class="step-body">
+              <h4 class="mb-2">Chinese Brand Identity Management Based on Never-Ending Learning and Knowledge Graphs</h4>
+              <p class="mb-0">Dalin Li, Yijin Wang, Guansu Wang, <u>Jiadong Lu</u>, Yong Zhu, Gábor Bella, Yanchun Liang</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">
+              <div class="step-number-inner">24</div>
+            </div>
+            <div class="step-body">
+              <h4 class="mb-2">Tropical cyclone ensemble forecast framework based on spatiotemporal model</h4>
+              <p class="mb-0">Tongfei Li, Kaihua Che, <u>Jiadong Lu</u>, Yifan Zeng, Wei Lv & Zhiyao Liang </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Integrations -->
+      <section class="container py-5 my-md-2 my-lg-4 my-xl-5">
+        <h2 class="h1 pt-md-2 pt-lg-4 pt-xl-5 pb-md-3 pb-lg-4 mb-md-4 text-center">How to contact me</h2>
+        <div class="swiper swiper-nav-onhover mx-n2" data-swiper-options='{
+          "slidesPerView": 2,
+          "spaceBetween": 8,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 3
+            },
+            "600": {
+              "slidesPerView": 4
+            },
+            "768": {
+              "slidesPerView": 5
+            },
+            "850": {
+              "slidesPerView": 6
+            },
+            "1000": {
+              "slidesPerView": 7
+            },
+            "1200": {
+              "slidesPerView": 8
+            }
+          }
+        }'>
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/wx.svg" class="d-block mx-auto" alt="wechat">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="https://github.com/JIaDLu" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/github.svg" alt="github">
+                </div>
+              </a>
+            </div>
+
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="https://x.com/JadenLu4" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/x.svg" class="d-block mx-auto" alt="x">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="lujiadong0243@gmail.com" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/Gmail.svg" class="d-block mx-auto" alt="Gmail">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/xhs.svg" class="d-block mx-auto" alt="小红书">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="https://scholar.google.com/citations?user=7awu8-kAAAAJ&hl=en" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/gs.svg" class="d-block mx-auto" alt="google-scholar">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/douyin.svg" class="d-block mx-auto" alt="douyin">
+                </div>
+              </a>
+            </div>
+
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/bilibili.svg" class="d-block mx-auto" alt="bilibili">
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div class="swiper-pagination position-relative pt-3 mt-4"></div>
+        </div>
+      </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer position-relative bg-dark pt-5 pb-4 pb-lg-5">
+      <div class="footer pt-5 pb-4 pb-lg-5" style="text-align:center">
+        I'm developing, Please loading...
+      </div>
+    </footer>
+
+
+
+    <!-- Back to top button -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+
+
+    <!-- Vendor Scripts -->
+    <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+    <script src="assets/vendor/rellax/rellax.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main Theme Script -->
+    <script src="assets/js/theme.min.js"></script>
   </body>
 </html>
