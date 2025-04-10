@@ -183,6 +183,63 @@
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
       })(window,document,'script','dataLayer','GTM-WKV3GT5');
     </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- 弹窗脚本 -->
+    <script>
+      function showEmail() {
+        Swal.fire({
+          title: '联系邮箱',
+          text: 'lujiadong0243@gmail.com',
+          icon: 'info',
+          confirmButtonText: '复制邮箱',
+          showCancelButton: true,
+          cancelButtonText: '关闭',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // 复制到剪贴板
+            navigator.clipboard.writeText('lujiadong0243@gmail.com');
+            Swal.fire('已复制到剪贴板 ✅');
+          }
+        });
+      }
+      
+      function showXHS() {
+        Swal.fire({
+          title: 'RedNote',
+          html: '<img src="assets/img/xhs.JPG" alt="RedNote QrCode" style="width: 550px; height: 720px;">',
+          showCloseButton: true,
+          showConfirmButton: false,
+        });
+      }
+      
+      function showDouyin() {
+        Swal.fire({
+          title: 'Douyin',
+          html: '<img src="assets/img/douyin.JPG" alt="Douyin QrCode" style="width: 550px; height: 720px;">',
+          showCloseButton: true,
+          showConfirmButton: false,
+        });
+      }
+      
+      function showWechat() {
+        Swal.fire({
+          title: '微信',
+          text: '微信号：ljd0243',
+          icon: 'info',
+          confirmButtonText: '复制微信号',
+          showCancelButton: true,
+          cancelButtonText: '关闭',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigator.clipboard.writeText('ljd0243');
+            Swal.fire('已复制到剪贴板 ✅');
+          }
+        });
+      }
+      </script>
+    
   </head>
 
 
@@ -209,13 +266,6 @@
             <img src="assets/img/logo.jpeg" width="35" alt="Silicon">
             Jiadong
           </a>
-          <div id="navbarNav" class="offcanvas offcanvas-end bg-dark">
-            <div class="offcanvas-header border-bottom border-light">
-              <h5 class="offcanvas-title text-white">Menu</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-
-          </div>
           <div class="dark-mode pe-lg-1 ms-auto me-4">
             <div class="form-check form-switch mode-switch" data-bs-toggle="mode">
               <input type="checkbox" class="form-check-input" id="theme-mode">
@@ -246,6 +296,8 @@
                   </div>
                 </div>
                 <div class="text-light" style="font-size: large;">Welcome to My Website</div>
+
+                <button class="btn btn-primary btn-lg" style="margin-left: 25px;" onclick="location.href='#profile'">Read More</button>
               </div>
             </div>
             <div class="col-lg-6 offset-xl-1">
@@ -260,12 +312,12 @@
                     <div class="d-sm-grid d-flex gap-xl-4 gap-lg-3 gap-md-4 gap-sm-3 gap-2">
                       <div class="d-flex align-items-center justify-content-center bg-secondary rounded-3" style="min-height: 176px; backdrop-filter: blur(6px);">
                         <div class="p-xl-4 p-sm-3 p-2 fs-xl fw-semibold text-center">
-                          <span class="hero-animation-fade text-white">AI Developer</span>
+                          <span class="hero-animation-fade text-white" onclick="location.href='#projects'">AI Developer</span>
                         </div>
                       </div>
                       <div class="d-flex align-items-center justify-content-center bg-secondary rounded-3" style="min-height: 176px; backdrop-filter: blur(6px);">
                         <div class="p-xl-4 p-sm-3 p-2 fs-xl fw-semibold text-center">
-                          <span class="hero-animation-fade hero-animation-delay-2 text-white">Software Engineer</span>
+                          <span class="hero-animation-fade hero-animation-delay-2 text-white" onclick="location.href='#projects'">Software Engineer</span>
                         </div>
                       </div>
                     </div>
@@ -274,12 +326,12 @@
                     <div class="d-sm-grid d-flex gap-xl-4 gap-lg-3 gap-md-4 gap-sm-3 gap-2">
                       <div class="d-flex align-items-center justify-content-center bg-secondary rounded-3" style="min-height: 176px; backdrop-filter: blur(6px);">
                         <div class="p-xl-4 p-sm-3 p-2 fs-xl fw-semibold text-center">
-                          <span class="hero-animation-fade hero-animation-delay-1 text-white">Pythonist</span>
+                          <span class="hero-animation-fade hero-animation-delay-1 text-white" onclick="location.href='#publications'">Academics</span>
                         </div>
                       </div>
                       <div class="d-flex align-items-center justify-content-center bg-secondary rounded-3" style="min-height: 176px; backdrop-filter: blur(6px);">
                         <div class="p-xl-4 p-sm-3 p-2 fs-xl fw-semibold text-center">
-                          <span class="hero-animation-fade hero-animation-delay-3 text-white">FastLearner</span>
+                          <span class="hero-animation-fade hero-animation-delay-3 text-white" onclick="location.href='#education'">Postgraduate</span>
                         </div>
                       </div>
                     </div>
@@ -293,7 +345,7 @@
 
       
       <!-- Testimonials -->
-      <section class="container my-5 py-lg-5 py-md-4 py-3">
+      <section id="profile" class="container my-5 py-lg-5 py-md-4 py-3">
         <div class="row">
           <div class="col-md-5">
 
@@ -345,36 +397,11 @@
       </section>
 
       <!-- Latest posts -->
-      <section class="container mb-5 pt-5 pb-lg-5">
+      <section id="education" class="container mb-5 pt-5 pb-lg-5">
         <h2 class="h1 pt-md-2 pt-lg-4 pt-xl-5 pb-md-3 pb-lg-4 mb-md-4 text-center">Education BackGround</h2>
 
         <!-- Blog articles -->
         <div class="pb-3">
-
-          <!-- Blog item -->
-          <article class="card border-0 shadow-sm overflow-hidden mb-4">
-            <div class="row g-0">
-              <div class="col-sm-4 position-relative bg-repeat-0" style="background-image: url(assets/img/blog/nus.png); background-size: contain; background-position: center;">
-                <a href="https://www.nus.edu.sg/" class="position-absolute top-0 start-0 w-100 h-100" aria-label="Read more"></a>
-                <a href="https://www.nus.edu.sg/" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-5 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Read later">
-                  <i class="bx bx-bookmark"></i>
-                </a>
-              </div>
-              <div class="col-sm-8">
-                <div class="card-body">
-                  <div class="d-flex align-items-center mb-3">
-                    <a href="https://www.nus.edu.sg/" class="badge fs-sm text-nav bg-secondary text-decoration-none">graduate</a>
-                    <span class="fs-sm text-muted border-start ps-3 ms-3">Aug, 2025</span>
-                  </div>
-                  <h4 class="h4">
-                    <a href="https://www.nus.edu.sg/">National University of Singapore</a>
-                  </h4>
-                  <p>25Fall Biomedical Informatics</p>
-                  <hr class="my-4">
-                </div>
-              </div>
-            </div>
-          </article>
 
           <!-- Article -->
           <article class="card border-0 shadow-sm overflow-hidden mb-4">
@@ -400,11 +427,36 @@
               </div>
             </div>
           </article>
+
+          <!-- Blog item -->
+          <article class="card border-0 shadow-sm overflow-hidden mb-4">
+            <div class="row g-0">
+              <div class="col-sm-4 position-relative bg-repeat-0" style="background-image: url(assets/img/blog/nus.png); background-size: contain; background-position: center;">
+                <a href="https://www.nus.edu.sg/" class="position-absolute top-0 start-0 w-100 h-100" aria-label="Read more"></a>
+                <a href="https://www.nus.edu.sg/" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-5 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Read later">
+                  <i class="bx bx-bookmark"></i>
+                </a>
+              </div>
+              <div class="col-sm-8">
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-3">
+                    <a href="https://www.nus.edu.sg/" class="badge fs-sm text-nav bg-secondary text-decoration-none">graduate</a>
+                    <span class="fs-sm text-muted border-start ps-3 ms-3">Aug, 2025</span>
+                  </div>
+                  <h4 class="h4">
+                    <a href="https://www.nus.edu.sg/">National University of Singapore</a>
+                  </h4>
+                  <p>25Fall Biomedical Informatics</p>
+                  <hr class="my-4">
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </section>
 
       <!-- Use cases (Tabs) -->
-      <section class="container pt-5 pb-2 mt-3 mt-sm-4 mt-xl-5">
+      <section id="projects" class="container pt-5 pb-2 mt-3 mt-sm-4 mt-xl-5">
         <h2 class="h1 text-center pb-3 pb-lg-4">Research Projects</h2>
 
         <!-- Nav tabs -->
@@ -474,7 +526,7 @@
         </div>
       </section>
 
-      <section class="container my-5 py-lg-5 py-md-4 py-3">
+      <section id="publications" class="container my-5 py-lg-5 py-md-4 py-3">
         <h2 class="h1 pt-md-2 pt-lg-4 pt-xl-5 pb-md-3 pb-lg-4 mb-md-4 text-center">Selected Publications</h2>
         <div class="steps steps-sm">
           <div class="step">
@@ -568,14 +620,6 @@
         }'>
           <div class="swiper-wrapper">
 
-            <div class="swiper-slide py-3">
-              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
-                <div class="card-body">
-                  <img src="assets/img/brands/wx.svg" class="d-block mx-auto" alt="wechat">
-                </div>
-              </a>
-            </div>
-
             <!-- Item -->
             <div class="swiper-slide py-3">
               <a href="https://github.com/JIaDLu" class="card card-hover border-0 shadow-sm py-3 mx-2">
@@ -597,24 +641,6 @@
 
             <!-- Item -->
             <div class="swiper-slide py-3">
-              <a href="lujiadong0243@gmail.com" class="card card-hover border-0 shadow-sm py-3 mx-2">
-                <div class="card-body">
-                  <img src="assets/img/brands/Gmail.svg" class="d-block mx-auto" alt="Gmail">
-                </div>
-              </a>
-            </div>
-
-            <!-- Item -->
-            <div class="swiper-slide py-3">
-              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
-                <div class="card-body">
-                  <img src="assets/img/brands/xhs.svg" class="d-block mx-auto" alt="小红书">
-                </div>
-              </a>
-            </div>
-
-            <!-- Item -->
-            <div class="swiper-slide py-3">
               <a href="https://scholar.google.com/citations?user=7awu8-kAAAAJ&hl=en" class="card card-hover border-0 shadow-sm py-3 mx-2">
                 <div class="card-body">
                   <img src="assets/img/brands/gs.svg" class="d-block mx-auto" alt="google-scholar">
@@ -622,23 +648,57 @@
               </a>
             </div>
 
-            <!-- Item -->
-            <div class="swiper-slide py-3">
-              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+
+
+
+            <div class="swiper-slide py-3" onclick="showEmail()"> 
+              <div class="card card-hover border-0 shadow-sm py-3 mx-2">
                 <div class="card-body">
-                  <img src="assets/img/brands/douyin.svg" class="d-block mx-auto" alt="douyin">
+                  <img src="assets/img/brands/Gmail.svg" class="d-block mx-auto" alt="Gmail">
+                </div>
+              </div>
+            </div>
+
+            
+            <!-- 小红书 -->
+            <div class="swiper-slide py-3" onclick="showXHS()">
+              <div class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/xhs.svg" class="d-block mx-auto" alt="小红书">
+                </div>
+              </div>
+            </div>
+
+            <!-- 抖音 -->
+            <div class="swiper-slide py-3" onclick="showDouyin()">
+              <div class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/douyin.svg" class="d-block mx-auto" alt="抖音">
+                </div>
+              </div>
+            </div>
+
+            <!-- Bilibili -->
+            <div class="swiper-slide py-3">
+              <a href="https://space.bilibili.com/352370610?spm_id_from=333.1007.0.0" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="assets/img/brands/bilibili.svg" class="d-block mx-auto" alt="Bilibili">
                 </div>
               </a>
             </div>
 
-            <div class="swiper-slide py-3">
-              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+            <!-- 微信 -->
+            <div class="swiper-slide py-3" onclick="showWechat()">
+              <div class="card card-hover border-0 shadow-sm py-3 mx-2">
                 <div class="card-body">
-                  <img src="assets/img/brands/bilibili.svg" class="d-block mx-auto" alt="bilibili">
+                  <img src="assets/img/brands/wx.svg" class="d-block mx-auto" alt="微信">
                 </div>
-              </a>
+              </div>
             </div>
+
           </div>
+
+          
 
           <!-- Pagination (bullets) -->
           <div class="swiper-pagination position-relative pt-3 mt-4"></div>
