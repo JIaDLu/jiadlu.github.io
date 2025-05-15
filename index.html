@@ -686,7 +686,10 @@
       <section>
         <h2 class="h1 pt-md-2 pt-lg-4 pt-xl-5 pb-md-3 pb-lg-4 mb-md-4 text-center">PageViews</h2>
         <div style="text-align:center; max-width: 200px; margin: 0 auto;">
-          <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=-iCnQ1sfDkxRAdsQ9saiDVpZOLYdo8gsMekEsp2ffP0"></script>
+          <!-- 这个 <script> 加载的是一个外部 JavaScript 文件，这个文件内部代码执行后，会动态地操作 DOM，插入显示内容（例如 canvas 或图片等）。 -->
+          <!-- DOM（Document Object Model）是浏览器里的页面结构，比如：这个 <h1> 元素就是一个 DOM 节点。 -->
+          <!-- 浏览器把网页内容（HTML）转成的 “JavaScript 可操作的对象结构”，也就是说：DOM 是 JavaScript 操作网页的“桥梁”（这个树状的对象结构 js 就可以操作它） -->
+            <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=-iCnQ1sfDkxRAdsQ9saiDVpZOLYdo8gsMekEsp2ffP0"></script>
         </div>
       </section>
 
@@ -695,18 +698,15 @@
     <!-- Footer -->
     <footer class="footer position-relative bg-dark pt-5 pb-4 pb-lg-5">
       <div class="footer pt-5 pb-4 pb-lg-5" style="text-align:center">
-        I'm developing, Please loading...
+        I'm developing, Please waiting...
       </div>
     </footer>
-
-
 
     <!-- Back to top button -->
     <a href="#top" class="btn-scroll-top" data-scroll>
       <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
       <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
     </a>
-
 
     <!-- Vendor Scripts -->
     <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
