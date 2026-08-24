@@ -213,6 +213,12 @@
     .edu-card h3 { font-family: var(--font-serif); font-size: 1.08rem; font-weight: 600; margin-bottom: .3rem; }
     .edu-card p { font-size: .88rem; color: var(--ink-soft); }
     .edu-card .date { font-size: .76rem; color: var(--ink-muted); margin-top: .4rem; }
+    .edu-card-link {
+      display: inline-flex; align-items: center; gap: .35rem;
+      margin-top: 1rem; color: var(--accent); font-size: .78rem; font-weight: 500;
+      border-bottom: 1px solid var(--accent-soft); transition: border-color var(--t), gap var(--t);
+    }
+    .edu-card-link:hover { border-color: var(--accent); gap: .55rem; }
 
     /* ─── Projects ───────────────────────────────────────────────────── */
     #projects { background: var(--cream-dark); }
@@ -506,6 +512,7 @@
           <h3>Zhuhai College, Jilin University</h3>
           <p>Data Science and Big Data Technology</p>
           <p class="date">Zhuhai, China</p>
+          <a class="edu-card-link" href="undergraduate/">View undergraduate journey <span aria-hidden="true">→</span></a>
         </div>
         <div class="edu-card">
           <span class="badge">Graduate · Aug 2025</span>

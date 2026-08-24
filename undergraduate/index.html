@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="陆佳东本科阶段的学业、科研、竞赛与知识产权成果。">
+  <meta name="theme-color" content="#F5F0E8">
+  <title>本科经历｜Lu Jiadong</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&amp;family=Lora:ital,wght@0,500;0,600;1,500&amp;display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #F5F0E8;
+      --cream-dark: #EDE6D6;
+      --paper: #FBF9F5;
+      --ink: #1A1714;
+      --ink-soft: #4A4540;
+      --ink-muted: #8A837A;
+      --accent: #D97B4F;
+      --accent-soft: #F0C9A8;
+      --line: rgba(26, 23, 20, .13);
+      --shadow: 0 18px 60px rgba(43, 35, 29, .08);
+      --serif: 'Lora', 'Noto Serif SC', 'Songti SC', Georgia, serif;
+      --sans: 'DM Sans', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+      --max-width: 1120px;
+      --ease: .25s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream); color: var(--ink); font-family: var(--sans);
+      font-weight: 300; line-height: 1.75; -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+    button { font: inherit; }
+    ::selection { background: var(--accent-soft); color: var(--ink); }
+
+    .container { width: min(var(--max-width), calc(100% - 4rem)); margin-inline: auto; }
+    .eyebrow {
+      color: var(--accent); font-size: .7rem; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .section-heading {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+      gap: 4rem; align-items: end; margin-bottom: 2.6rem;
+    }
+    .section-heading h2 {
+      font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2; letter-spacing: -.035em; font-weight: 600;
+    }
+    .section-heading > p { color: var(--ink-soft); font-size: .92rem; }
+    .section-index { color: var(--ink-muted); font-size: .72rem; letter-spacing: .12em; }
+
+    header {
+      position: fixed; z-index: 20; inset: 0 0 auto;
+      background: rgba(245, 240, 232, .88); border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    }
+    nav {
+      width: min(var(--max-width), calc(100% - 4rem)); height: 64px; margin-inline: auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; }
+    .nav-actions { display: flex; align-items: center; gap: 1.8rem; }
+    .nav-actions a {
+      color: var(--ink-soft); font-size: .72rem; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; transition: color var(--ease);
+    }
+    .nav-actions a:hover, .nav-actions a:focus-visible { color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: .45rem; }
+
+    .hero {
+      padding: 9rem 0 5rem; position: relative; overflow: hidden;
+    }
+    .hero::before, .hero::after {
+      content: ''; position: absolute; border-radius: 50%; pointer-events: none; filter: blur(8px);
+    }
+    .hero::before {
+      width: 520px; height: 520px; right: -170px; top: 50px;
+      background: radial-gradient(circle, rgba(240, 201, 168, .55), rgba(240, 201, 168, 0) 70%);
+    }
+    .hero::after {
+      width: 360px; height: 360px; left: -140px; bottom: -60px;
+      background: radial-gradient(circle, rgba(212, 201, 181, .62), rgba(212, 201, 181, 0) 70%);
+    }
+    .hero-grid {
+      position: relative; z-index: 1; display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: 6rem; align-items: end;
+    }
+    .hero h1 {
+      max-width: 760px; font-family: var(--serif); font-size: clamp(3.1rem, 7vw, 6rem);
+      font-weight: 600; line-height: 1.05; letter-spacing: -.055em;
+    }
+    .hero h1 em { color: var(--accent); font-weight: 500; }
+    .hero-summary { padding-bottom: .55rem; }
+    .hero-summary > p { color: var(--ink-soft); font-size: 1rem; margin-bottom: 1.8rem; }
+    .hero-meta { border-top: 1px solid var(--line); padding-top: 1.25rem; display: grid; gap: .65rem; }
+    .meta-row { display: flex; justify-content: space-between; gap: 1rem; font-size: .78rem; }
+    .meta-row span:first-child { color: var(--ink-muted); letter-spacing: .04em; }
+    .meta-row span:last-child { font-weight: 500; text-align: right; }
+    .metrics-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); background: var(--paper);
+      border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow);
+      overflow: hidden; position: relative; z-index: 2; margin-top: 3rem;
+    }
+    .metric { padding: 1.55rem 1.8rem; border-right: 1px solid var(--line); }
+    .metric:last-child { border-right: 0; }
+    .metric strong {
+      display: block; font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600; line-height: 1; margin-bottom: .65rem;
+    }
+    .metric strong span { color: var(--accent); }
+    .metric p { color: var(--ink-muted); font-size: .76rem; letter-spacing: .04em; }
+
+    .journey-grid {
+      display: grid; grid-template-columns: minmax(220px, .72fr) minmax(0, 2.28fr);
+      gap: 1.15rem; align-items: stretch; position: relative; z-index: 2; margin-top: 1.15rem;
+    }
+    .quote {
+      padding: 1.4rem 1.5rem; background: rgba(251, 249, 245, .72);
+      border: 1px solid var(--line); border-radius: 14px;
+    }
+    .quote-mark { color: var(--accent); font-family: var(--serif); font-size: 2.5rem; line-height: .8; }
+    .quote blockquote {
+      font-family: var(--serif); font-size: 1.05rem; line-height: 1.65; margin: .55rem 0 .8rem;
+    }
+    .quote cite { color: var(--ink-muted); font-size: .68rem; font-style: normal; }
+    .story-copy { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.15rem; }
+    .story-item {
+      padding: 1.35rem; background: rgba(251, 249, 245, .72);
+      border: 1px solid var(--line); border-radius: 14px;
+    }
+    .story-item .number { color: var(--accent); font-size: .7rem; letter-spacing: .12em; }
+    .story-item h3 { font-family: var(--serif); font-size: 1.08rem; line-height: 1.45; margin: .55rem 0 .55rem; }
+    .story-item p { color: var(--ink-soft); font-size: .78rem; line-height: 1.7; }
+
+    .evidence-section { padding: 7rem 0; }
+    .evidence-section.alt { background: var(--cream-dark); }
+    .proof-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+    .proof-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .proof-card {
+      min-width: 0; overflow: hidden; background: var(--paper); border: 1px solid var(--line);
+      border-radius: 12px; transition: transform var(--ease), box-shadow var(--ease);
+    }
+    .proof-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .proof-media {
+      aspect-ratio: 4 / 3; background:
+        linear-gradient(135deg, rgba(217, 123, 79, .07), transparent 42%),
+        repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(26, 23, 20, .045) 30px),
+        var(--cream);
+      border-bottom: 1px solid var(--line); display: grid; place-items: center;
+      position: relative; overflow: hidden;
+    }
+    .proof-media.wide { aspect-ratio: 16 / 8.5; }
+    .proof-media.document { aspect-ratio: 4 / 5; }
+    .proof-media img { width: 100%; height: 100%; object-fit: contain; background: #fff; }
+    .proof-media:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+    .placeholder-copy { padding: 1.5rem; text-align: center; }
+    .placeholder-copy strong {
+      display: block; font-family: var(--serif); font-size: 1rem; font-weight: 500; margin-bottom: .25rem;
+    }
+    .placeholder-copy span { color: var(--ink-muted); font-size: .68rem; letter-spacing: .06em; }
+    .proof-caption { padding: 1rem 1.1rem 1.15rem; }
+    .proof-caption p { font-family: var(--serif); font-size: .94rem; line-height: 1.45; }
+    .proof-caption span { display: block; color: var(--ink-muted); font-size: .68rem; margin-top: .35rem; }
+
+    .publication-list { display: grid; gap: 1.15rem; }
+    .publication-item {
+      display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 1.25rem;
+      align-items: start; padding: 1.3rem; background: var(--paper);
+      border: 1px solid var(--line); border-radius: 14px;
+      transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
+    }
+    .publication-item:hover { transform: translateY(-2px); border-color: rgba(217, 123, 79, .34); box-shadow: var(--shadow); }
+    .publication-number {
+      color: var(--accent); font-family: var(--serif); font-size: .78rem;
+      font-style: italic; padding-top: .15rem;
+    }
+    .publication-shell { min-width: 0; }
+    .publication-item.has-figure .publication-shell {
+      display: grid; grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr);
+      gap: 1.55rem; align-items: center;
+    }
+    .publication-figure { min-width: 0; }
+    .publication-figure a {
+      display: grid; place-items: center; aspect-ratio: 16 / 8.4;
+      overflow: hidden; background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    }
+    .publication-figure a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .publication-figure img { width: 100%; height: 100%; object-fit: contain; }
+    .publication-figure figcaption {
+      display: flex; justify-content: space-between; gap: .8rem; margin-top: .5rem;
+      color: var(--ink-muted); font-size: .63rem; letter-spacing: .035em;
+    }
+    .publication-copy { min-width: 0; }
+    .publication-topline {
+      display: flex; align-items: center; gap: .7rem; margin-bottom: .65rem;
+      color: var(--ink-muted); font-size: .67rem; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+    .publication-topline::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+    .publication-title {
+      max-width: 820px; font-family: var(--serif); font-size: 1.08rem;
+      font-weight: 600; line-height: 1.5;
+    }
+    .publication-title a { transition: color var(--ease); }
+    .publication-title a:hover, .publication-title a:focus-visible { color: var(--accent); }
+    .publication-authors { color: var(--ink-soft); font-size: .8rem; margin-top: .38rem; }
+    .publication-authors strong { color: var(--ink); font-weight: 600; }
+    .publication-meta {
+      display: flex; flex-wrap: wrap; align-items: center; gap: .55rem 1rem;
+      color: var(--ink-muted); font-size: .74rem; margin-top: .5rem;
+    }
+    .publication-abstract {
+      color: var(--ink-soft); font-size: .8rem; line-height: 1.7;
+      margin-top: .85rem; padding-top: .8rem; border-top: 1px solid var(--line);
+    }
+    .citation-link {
+      display: inline-flex; align-items: center; padding: .16rem .55rem;
+      border: 1px solid var(--line); border-radius: 100px; color: var(--accent);
+      font-weight: 500; transition: border-color var(--ease), background var(--ease);
+    }
+    .citation-link:hover, .citation-link:focus-visible {
+      border-color: var(--accent); background: rgba(217, 123, 79, .06);
+    }
+    .honors-divider {
+      display: grid; grid-template-columns: minmax(210px, .55fr) 1fr;
+      gap: 2rem; align-items: end; margin: 4.5rem 0 1.4rem; padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+    .honors-divider span {
+      color: var(--accent); font-size: .68rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+    }
+    .honors-divider h3 { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; }
+
+    .transcript-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr); gap: 3rem; }
+    .course-note { align-self: center; }
+    .course-note h3 { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 1rem; }
+    .course-note p { color: var(--ink-soft); font-size: .92rem; margin-bottom: 1.2rem; }
+    .course-points { display: grid; gap: .8rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
+    .course-point { display: flex; justify-content: space-between; font-size: .8rem; }
+    .course-point span:first-child { color: var(--ink-muted); }
+    .course-point strong { font-weight: 500; }
+
+    .ip-columns { display: grid; grid-template-columns: 1.2fr .8fr; gap: 3rem; }
+    .ip-group > h3 {
+      display: flex; align-items: baseline; justify-content: space-between;
+      font-family: var(--serif); font-size: 1.25rem; margin-bottom: 1rem;
+    }
+    .ip-group > h3 span { color: var(--ink-muted); font-family: var(--sans); font-size: .7rem; font-weight: 400; }
+
+    .section-exit {
+      display: flex; justify-content: flex-end; margin-top: 2.8rem;
+      padding-top: 2rem; border-top: 1px solid var(--line);
+    }
+    .home-button {
+      display: inline-flex; align-items: center; gap: .55rem; background: var(--ink); color: var(--cream);
+      border-radius: 100px; padding: .78rem 1.5rem; font-size: .8rem; font-weight: 500;
+      transition: background var(--ease), transform var(--ease);
+    }
+    .home-button:hover { background: var(--accent); transform: translateY(-2px); }
+
+    footer { border-top: 1px solid var(--line); }
+    .footer-inner {
+      width: min(var(--max-width), calc(100% - 4rem)); margin-inline: auto; min-height: 68px;
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--ink-muted); font-size: .7rem;
+    }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-summary { max-width: 540px; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .metric:nth-child(2) { border-right: 0; }
+      .metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .journey-grid, .transcript-layout, .ip-columns { grid-template-columns: 1fr; }
+      .section-heading { grid-template-columns: 1fr; gap: 1rem; }
+      .proof-grid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .publication-item { grid-template-columns: 34px minmax(0, 1fr); gap: 1rem; }
+      .publication-item.has-figure .publication-shell { grid-template-columns: minmax(230px, .8fr) minmax(0, 1.2fr); gap: 1.2rem; }
+    }
+
+    @media (max-width: 620px) {
+      .container, nav, .footer-inner { width: min(100% - 2.4rem, var(--max-width)); }
+      .nav-actions a:not(.back-link) { display: none; }
+      .hero { padding: 8.5rem 0 4rem; }
+      .hero h1 { font-size: clamp(2.75rem, 15vw, 4.5rem); }
+      .metrics-grid { margin-top: 2rem; }
+      .metric { padding: 1.35rem; }
+      .metric strong { font-size: 2rem; }
+      .story-copy { grid-template-columns: 1fr; }
+      .evidence-section { padding: 5rem 0; }
+      .proof-grid, .proof-grid.three { grid-template-columns: 1fr; }
+      .proof-media.wide { aspect-ratio: 4 / 3; }
+      .publication-item { grid-template-columns: 25px minmax(0, 1fr); padding: 1rem; gap: .7rem; }
+      .publication-item.has-figure .publication-shell { grid-template-columns: 1fr; gap: 1rem; }
+      .publication-title { font-size: 1rem; }
+      .publication-figure figcaption { flex-direction: column; gap: .05rem; }
+      .honors-divider { grid-template-columns: 1fr; gap: .45rem; margin-top: 3.5rem; }
+      .footer-inner { align-items: flex-start; flex-direction: column; justify-content: center; gap: .15rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav aria-label="主导航">
+      <a class="brand" href="../">Jiadong</a>
+      <div class="nav-actions">
+        <a href="#academic">学业</a>
+        <a href="#research">科研</a>
+        <a href="#honors">竞赛</a>
+        <a class="back-link" href="../"><span aria-hidden="true">←</span> 返回主页</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="overview" aria-label="本科阶段经历与成果概览">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">Undergraduate · 2020—2024</p>
+            <h1>以勤为径，<br><em>向学而行。</em></h1>
+          </div>
+          <div class="hero-summary">
+            <p>本科阶段，我把“勤能补拙”落实为持续的学习、科研与实践：夯实数据科学基础，也在论文、竞赛与知识产权中验证所学。</p>
+            <div class="hero-meta">
+              <div class="meta-row"><span>专业</span><span>数据科学与大数据技术</span></div>
+              <div class="meta-row"><span>本科院校</span><span>吉林大学珠海学院</span></div>
+              <div class="meta-row"><span>关键词</span><span>自驱 · 笃学 · 实践</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metrics-grid reveal" aria-label="本科阶段成果概览">
+          <article class="metric"><strong>3.7<span>/4.0</span></strong><p>学科绩点</p></article>
+          <article class="metric"><strong>40<span>+</span></strong><p>满绩课程</p></article>
+          <article class="metric"><strong>5</strong><p>学术论文</p></article>
+          <article class="metric"><strong>16</strong><p>校内奖项</p></article>
+        </div>
+
+        <div class="journey-grid">
+          <aside class="quote reveal">
+            <div class="quote-mark" aria-hidden="true">“</div>
+            <blockquote>不是用起点定义自己，而是用持续的行动拓宽边界。</blockquote>
+            <cite>本科四年的学习信念</cite>
+          </aside>
+          <div class="story-copy">
+            <article class="story-item reveal">
+              <span class="number">01 · LEARN</span>
+              <h3>以学业为先，建立扎实基础</h3>
+              <p>取得 3.7/4.0 的学科绩点，累计 40 余门课程达到满绩，并获得学业奖学金等荣誉。</p>
+            </article>
+            <article class="story-item reveal">
+              <span class="number">02 · APPLY</span>
+              <h3>学以致用，把问题带进实践</h3>
+              <p>将数据科学与人工智能方法用于真实问题，在科研、创新项目和学科竞赛中承担核心工作。</p>
+            </article>
+            <article class="story-item reveal">
+              <span class="number">03 · CREATE</span>
+              <h3>持续产出，形成研究能力</h3>
+              <p>累计发表论文 5 篇，登记软件著作权 3 项、参与发明专利 2 项，并取得多项竞赛成果。</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence-section" id="academic">
+      <div class="container">
+        <p class="eyebrow">01 · Academic Foundation</p>
+        <div class="section-heading reveal">
+          <h2>学业，是所有探索的底座</h2>
+          <p>成绩不是终点，而是长期投入最直接的记录。课程训练构成了此后进入机器学习研究与工程实践的知识基础。</p>
+        </div>
+        <div class="transcript-layout">
+          <figure class="proof-card reveal">
+            <a class="proof-media document" data-src="../assets/img/undergraduate/transcript.jpg" href="../assets/undergraduate/成绩单/transcript(Chinese).jpg" target="_blank" rel="noopener" aria-label="查看本科成绩单原图">
+              <div class="placeholder-copy"><strong>Transcript</strong><span>加载成绩单 · transcript.jpg</span></div>
+            </a>
+            <figcaption class="proof-caption"><p>本科成绩单</p><span>GPA 3.67 / 4.0（约 3.7）· 40+ 门满绩课程</span></figcaption>
+          </figure>
+          <div class="course-note reveal">
+            <p class="section-index">ACADEMIC RECORD</p>
+            <h3>从广度中建立体系，在深度中形成方向。</h3>
+            <p>通过系统的专业课程训练，逐步建立数学、统计、编程与数据建模能力，并将其迁移到科研与创新项目中。</p>
+            <div class="course-points">
+              <div class="course-point"><span>学科绩点</span><strong>3.67 / 4.0</strong></div>
+              <div class="course-point"><span>满绩课程</span><strong>40+ 门</strong></div>
+              <div class="course-point"><span>学习原则</span><strong>学业为先</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence-section alt" id="research">
+      <div class="container">
+        <p class="eyebrow">02 · Research Output</p>
+        <div class="section-heading reveal">
+          <h2>从课程知识，到五篇论文</h2>
+          <p>围绕数据驱动方法展开研究，在问题定义、实验设计、模型实现与论文写作中逐步形成完整的科研训练。</p>
+        </div>
+        <div class="publication-list">
+          <article class="publication-item has-figure reveal">
+            <span class="publication-number">01</span>
+            <div class="publication-shell">
+              <figure class="publication-figure">
+                <a href="../assets/undergraduate/paper/A%20Multimodal%20Deep.jpg" target="_blank" rel="noopener" aria-label="放大查看 TyT 多模态模型框架图">
+                  <img src="../assets/img/undergraduate/paper-framework-01.jpg" alt="Typhoon Transformer 多模态台风轨迹预测框架" loading="lazy" decoding="async">
+                </a>
+                <figcaption><span>Method framework</span><span>点击查看原图</span></figcaption>
+              </figure>
+              <div class="publication-copy">
+                <p class="publication-topline">2023 · Multimodal Forecasting</p>
+                <h3 class="publication-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=7awu8-kAAAAJ&amp;citation_for_view=7awu8-kAAAAJ:IjCSPb-OGe4C" target="_blank" rel="noopener">A Multimodal Deep Learning Approach for Typhoon Track Forecast by Fusing CNN and Transformer Structures ↗</a></h3>
+                <p class="publication-authors">R. Zhan, <strong>J. Lu</strong>, Y. Jiang, T. Li, G. Zhong, W. Lv</p>
+                <div class="publication-meta"><span>2023 4th International Conference on Computer Vision, Image and Deep Learning</span><a class="citation-link" href="https://scholar.google.com/scholar?oi=bibs&amp;hl=en&amp;cites=16710991199326383179" target="_blank" rel="noopener">Cited by 11</a></div>
+                <p class="publication-abstract">以 CNN 提取多时刻气象场的空间特征，并与历史轨迹共同送入 Transformer 编码器建模长程依赖，最后通过全连接层回归未来台风位置。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="publication-item has-figure reveal">
+            <span class="publication-number">02</span>
+            <div class="publication-shell">
+              <figure class="publication-figure">
+                <a href="../assets/undergraduate/paper/GPT.jpg" target="_blank" rel="noopener" aria-label="放大查看 GPT 与多层注意力情感分析框架图">
+                  <img src="../assets/img/undergraduate/paper-framework-02.jpg" alt="融合句子级与单词级 Bi-GRU 注意力的方面级情感分析框架" loading="lazy" decoding="async">
+                </a>
+                <figcaption><span>Multi-layer attention</span><span>点击查看原图</span></figcaption>
+              </figure>
+              <div class="publication-copy">
+                <p class="publication-topline">2023 · Aspect-level Sentiment</p>
+                <h3 class="publication-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=7awu8-kAAAAJ&amp;citation_for_view=7awu8-kAAAAJ:u5HHmVD_uO8C" target="_blank" rel="noopener">Aspect-level Sentiment Analysis Model Fused with GPT and Multi-layer Attention ↗</a></h3>
+                <p class="publication-authors">L. Mingzheng, H. Zelin, <strong>L. Jiadong</strong>, L. Wei</p>
+                <div class="publication-meta"><span>Third International Conference on Artificial Intelligence and Computer Engineering</span><a class="citation-link" href="https://scholar.google.com/scholar?oi=bibs&amp;hl=en&amp;cites=247188421339139925" target="_blank" rel="noopener">Cited by 7</a></div>
+                <p class="publication-abstract">融合 GPT 的上下文表征与多层注意力机制，聚焦方面词及其相关情感线索，用于更细粒度的方面级情感判断。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="publication-item has-figure reveal">
+            <span class="publication-number">03</span>
+            <div class="publication-shell">
+              <figure class="publication-figure">
+                <a href="../assets/undergraduate/paper/Enhanced%20Word-unit.jpg" target="_blank" rel="noopener" aria-label="放大查看 Word-unit BLS 语义增强框架图">
+                  <img src="../assets/img/undergraduate/paper-framework-03.jpg" alt="基于 Sense 与 Sememe 的 Word-unit BLS 词表示增强结构" loading="lazy" decoding="async">
+                </a>
+                <figcaption><span>Sememe enhancement</span><span>点击查看原图</span></figcaption>
+              </figure>
+              <div class="publication-copy">
+                <p class="publication-topline">2023 · NLP &amp; Broad Learning</p>
+                <h3 class="publication-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=7awu8-kAAAAJ&amp;citation_for_view=7awu8-kAAAAJ:2osOgNQ5qMEC" target="_blank" rel="noopener">Enhanced Word-unit Broad Learning System with Sememes ↗</a></h3>
+                <p class="publication-authors">Y. Jiang, <strong>J. Lu</strong>, T. Li, W. Lv</p>
+                <div class="publication-meta"><span>IEEE Access</span><a class="citation-link" href="https://scholar.google.com/scholar?oi=bibs&amp;hl=en&amp;cites=12356219115998147858" target="_blank" rel="noopener">Cited by 4</a></div>
+                <p class="publication-abstract">通过 Word → Sense → Sememe 的层级知识增强词表示，并结合位置编码与注意力聚合，使宽度学习系统同时学习文本序列信息与词语重要性。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="publication-item has-figure reveal">
+            <span class="publication-number">04</span>
+            <div class="publication-shell">
+              <figure class="publication-figure">
+                <a href="../assets/undergraduate/paper/Typhoon%20Track%20Prediction%20Based%20on%20TimeForce.jpg" target="_blank" rel="noopener" aria-label="放大查看 TimeForce CNN-LSTM 混合网络框架图">
+                  <img src="../assets/img/undergraduate/paper-framework-04.jpg" alt="TimeForce CNN-LSTM 台风轨迹预测混合网络结构" loading="lazy" decoding="async">
+                </a>
+                <figcaption><span>TF-CNN-LSTM framework</span><span>点击查看原图</span></figcaption>
+              </figure>
+              <div class="publication-copy">
+                <p class="publication-topline">2022 · Time-series Forecasting</p>
+                <h3 class="publication-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=7awu8-kAAAAJ&amp;citation_for_view=7awu8-kAAAAJ:d1gkVwhDpl0C" target="_blank" rel="noopener">Typhoon Track Prediction Based on TimeForce CNN-LSTM Hybrid Model ↗</a></h3>
+                <p class="publication-authors"><strong>J. Lu</strong>, M. Jiang, Y. Zhang, W. Lv, T. Li</p>
+                <div class="publication-meta"><span>International Conference on Computer and Information Science, 45–57</span><a class="citation-link" href="https://scholar.google.com/scholar?oi=bibs&amp;hl=en&amp;cites=8145510448417593463" target="_blank" rel="noopener">Cited by 3</a></div>
+                <p class="publication-abstract">将台风特征矩阵与轨迹序列矩阵融合，使用 CNN 提取局部模式、TimeForce 动态强化时间影响，再由多层 LSTM 输出轨迹预测结果。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="publication-item has-figure reveal">
+            <span class="publication-number">05</span>
+            <div class="publication-shell">
+              <figure class="publication-figure">
+                <a href="../assets/undergraduate/paper/Chinese%20Brand%20Identity%20Management.jpg" target="_blank" rel="noopener" aria-label="放大查看中国品牌识别知识图谱">
+                  <img src="../assets/img/undergraduate/paper-framework-05.jpg" alt="以格力电器为中心的品牌识别管理知识图谱" loading="lazy" decoding="async">
+                </a>
+                <figcaption><span>Brand knowledge graph</span><span>点击查看原图</span></figcaption>
+              </figure>
+              <div class="publication-copy">
+                <p class="publication-topline">2023 · Knowledge Graph</p>
+                <h3 class="publication-title"><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=7awu8-kAAAAJ&amp;citation_for_view=7awu8-kAAAAJ:9yKSN-GCB0IC" target="_blank" rel="noopener">Chinese Brand Identity Management Based on Never-Ending Learning and Knowledge Graphs ↗</a></h3>
+                <p class="publication-authors">D. Li, Y. Wang, G. Wang, <strong>J. Lu</strong>, Y. Zhu, G. Bella, Y. Liang</p>
+                <div class="publication-meta"><span>Electronics 12(7), 1625</span><a class="citation-link" href="https://scholar.google.com/scholar?oi=bibs&amp;hl=en&amp;cites=8317576152719337675" target="_blank" rel="noopener">Cited by 2</a></div>
+                <p class="publication-abstract">以持续学习方式采集品牌语料，用知识图谱组织产品特征、营销词汇、品牌人格与人物关系，为品牌识别的长期追踪和策略分析提供结构化依据。</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence-section" id="honors">
+      <div class="container">
+        <p class="eyebrow">03 · Honors & Competition</p>
+        <div class="section-heading reveal">
+          <h2>在竞争中检验能力</h2>
+          <p>以第一负责人身份主报“挑战杯”并获省级三等奖；作为主要成员获得 2 项国家级、2 项省级奖项，并累计获得 16 项校内荣誉。</p>
+        </div>
+        <div class="proof-grid three">
+          <figure class="proof-card reveal">
+            <a class="proof-media" data-src="../assets/img/undergraduate/award-01.jpg" href="../assets/undergraduate/省赛国赛/基于TimeForce%20CNN-LSTM混合型风轨迹预测.pdf" target="_blank" rel="noopener" aria-label="查看挑战杯获奖证书原件"><div class="placeholder-copy"><strong>Core Competition</strong><span>加载证书 · award-01.jpg</span></div></a>
+            <figcaption class="proof-caption"><p>第十七届“挑战杯”广东省三等奖</p><span>基于 TimeForce CNN-LSTM 混合模型的台风轨迹预测</span></figcaption>
+          </figure>
+          <figure class="proof-card reveal">
+            <a class="proof-media" data-src="../assets/img/undergraduate/award-02.jpg" href="../assets/undergraduate/省赛国赛/鹏巢科技——无人机快递包裹投递全自动化解决方案.pdf" target="_blank" rel="noopener" aria-label="查看互联网加竞赛获奖证书原件"><div class="placeholder-copy"><strong>National Competition</strong><span>加载证书 · award-02.jpg</span></div></a>
+            <figcaption class="proof-caption"><p>中国国际“互联网+”大学生创新创业大赛铜奖</p><span>鹏巢科技 · 无人机快递包裹投递全自动化解决方案</span></figcaption>
+          </figure>
+          <figure class="proof-card reveal">
+            <a class="proof-media" data-src="../assets/img/undergraduate/award-03.jpg" href="../assets/undergraduate/省赛国赛/计算机设计大赛国赛%20铜奖.png" target="_blank" rel="noopener" aria-label="查看中国大学生计算机设计大赛获奖证书原件"><div class="placeholder-copy"><strong>National Competition</strong><span>加载证书 · award-03.jpg</span></div></a>
+            <figcaption class="proof-caption"><p>中国大学生计算机设计大赛三等奖</p><span>人工智能应用 · 人工智能实践赛</span></figcaption>
+          </figure>
+        </div>
+        <div class="honors-divider reveal">
+          <span>Representative Campus Honors</span>
+          <h3>16 项校内荣誉中的三项代表</h3>
+        </div>
+        <div class="proof-grid three">
+          <figure class="proof-card reveal">
+            <a class="proof-media" data-src="../assets/img/undergraduate/campus-honor-01.jpg" href="../assets/undergraduate/校内荣誉/WechatIMG504.jpeg" target="_blank" rel="noopener" aria-label="查看大学生计算机设计大赛一等奖证书原件"><div class="placeholder-copy"><strong>Campus Honor 01</strong><span>加载证书 · campus-honor-01.jpg</span></div></a>
+            <figcaption class="proof-caption"><p>大学生计算机设计大赛一等奖</p><span>第三届科技学术节 · 大数据主题赛</span></figcaption>
+          </figure>
+          <figure class="proof-card reveal">
+            <a class="proof-media" data-src="../assets/img/undergraduate/campus-honor-02.jpg" href="../assets/undergraduate/校内荣誉/优秀毕业生.pdf" target="_blank" rel="noopener" aria-label="查看优秀毕业生荣誉证书原件"><div class="placeholder-copy"><strong>Campus Honor 02</strong><span>加载证书 · campus-honor-02.jpg</span></div></a>
+            <figcaption class="proof-caption"><p>2024 届优秀毕业生</p><span>思想品德优良 · 学习成绩优秀 · 综合表现突出</span></figcaption>
+          </figure>
+          <figure class="proof-card reveal">
+            <a class="proof-media" data-src="../assets/img/undergraduate/campus-honor-03.jpg" href="../assets/undergraduate/校内荣誉/2021-2022学年学术和科技创新奖.pdf" target="_blank" rel="noopener" aria-label="查看学术和科技创新奖荣誉证书原件"><div class="placeholder-copy"><strong>Campus Honor 03</strong><span>加载证书 · campus-honor-03.jpg</span></div></a>
+            <figcaption class="proof-caption"><p>学术和科技创新奖</p><span>2021–2022 学年单项奖学金</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence-section alt" id="ip">
+      <div class="container">
+        <p class="eyebrow">04 · Intellectual Property</p>
+        <div class="section-heading reveal">
+          <h2>让研究沉淀为可复用成果</h2>
+          <p>除论文与竞赛外，也注重将方法与系统固化为知识产权：以第一作者登记 3 项软件著作权，并作为主要发明人参与 2 项发明专利。</p>
+        </div>
+        <div class="ip-columns">
+          <div class="ip-group">
+            <h3>软件著作权 <span>3 ITEMS · FIRST AUTHOR</span></h3>
+            <div class="proof-grid three">
+              <figure class="proof-card reveal">
+                <a class="proof-media" data-src="../assets/img/undergraduate/software-01.jpg" href="../assets/undergraduate/软著/登记证书(2022R11L1237340).jpg" target="_blank" rel="noopener" aria-label="查看软件著作权登记证书原件"><div class="placeholder-copy"><strong>Software 01</strong><span>加载证书 · software-01.jpg</span></div></a>
+                <figcaption class="proof-caption"><p>基于 ResNet 的颜值打分与 OpenCV 美图系统</p><span>软件著作权 · 第一作者</span></figcaption>
+              </figure>
+              <figure class="proof-card reveal">
+                <a class="proof-media" data-src="../assets/img/undergraduate/software-02.jpg" href="../assets/undergraduate/软著/登记证书(2023R11L0095501).jpeg" target="_blank" rel="noopener" aria-label="查看软件著作权登记证书原件"><div class="placeholder-copy"><strong>Software 02</strong><span>加载证书 · software-02.jpg</span></div></a>
+                <figcaption class="proof-caption"><p>基于 PyQT5 的台风路径查询软件</p><span>软件著作权 · 第一作者</span></figcaption>
+              </figure>
+              <figure class="proof-card reveal">
+                <a class="proof-media" data-src="../assets/img/undergraduate/software-03.jpg" href="../assets/undergraduate/软著/WechatIMG1050.jpeg" target="_blank" rel="noopener" aria-label="查看软件著作权登记证书原件"><div class="placeholder-copy"><strong>Software 03</strong><span>加载证书 · software-03.jpg</span></div></a>
+                <figcaption class="proof-caption"><p>基于深度学习算法的害虫定位检测系统</p><span>软件著作权 · 第一作者</span></figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="ip-group">
+            <h3>发明专利 <span>2 ITEMS · CORE INVENTOR</span></h3>
+            <div class="proof-grid">
+              <figure class="proof-card reveal">
+                <a class="proof-media" data-src="../assets/img/undergraduate/patent-01.jpg" href="../assets/undergraduate/专利/20221014-2022101685640视频处理算法仿真方法、系统、装置及存储介质-珠海科技学院-发明专利证书(签章).pdf" target="_blank" rel="noopener" aria-label="查看发明专利证书原件"><div class="placeholder-copy"><strong>Patent 01</strong><span>加载证书 · patent-01.jpg</span></div></a>
+                <figcaption class="proof-caption"><p>视频处理算法仿真方法、系统、装置及存储介质</p><span>发明专利 · 主要发明人</span></figcaption>
+              </figure>
+              <figure class="proof-card reveal">
+                <a class="proof-media" data-src="../assets/img/undergraduate/patent-02.jpg" href="../assets/undergraduate/专利/20231036-2023103021704一种光纤通导性检验方法及系统-发明专利证书(签章).pdf" target="_blank" rel="noopener" aria-label="查看发明专利证书原件"><div class="placeholder-copy"><strong>Patent 02</strong><span>加载证书 · patent-02.jpg</span></div></a>
+                <figcaption class="proof-caption"><p>一种光纤通导性检验方法及系统</p><span>发明专利 · 主要发明人</span></figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+        <div class="section-exit reveal">
+          <a class="home-button" href="../"><span aria-hidden="true">←</span> 返回个人主页</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>© 2026 Lu Jiadong</span>
+      <span>Undergraduate Journey · Zhuhai, China</span>
+    </div>
+  </footer>
+
+  <script>
+    function loadEvidenceImage(frame) {
+      const source = frame.dataset.src;
+      const image = new Image();
+      image.alt = frame.closest('figure').querySelector('.proof-caption p').textContent;
+      image.decoding = 'async';
+      image.onload = () => frame.replaceChildren(image);
+      image.src = source;
+    }
+
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loadEvidenceImage(entry.target);
+            imageObserver.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '500px 0px' });
+      document.querySelectorAll('[data-src]').forEach((frame) => imageObserver.observe(frame));
+    } else {
+      document.querySelectorAll('[data-src]').forEach(loadEvidenceImage);
+    }
+
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .08 });
+      document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+    } else {
+      document.querySelectorAll('.reveal').forEach((element) => element.classList.add('visible'));
+    }
+  </script>
+</body>
+</html>
