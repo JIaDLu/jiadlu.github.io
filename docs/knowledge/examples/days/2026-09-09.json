@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-09",
+  "summary": "从工具调用，理解 Agent 的反馈循环",
+  "entries": [
+    {
+      "note": "react-loop",
+      "takeaway": "行动产生观察，观察影响下一次决策。",
+      "kind": "learn"
+    }
+  ]
+}

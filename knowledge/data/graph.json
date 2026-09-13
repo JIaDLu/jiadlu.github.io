@@ -1,0 +1,21 @@
+{
+  "branches": [
+    {
+      "description": "从推理、决策到与环境交互。",
+      "id": "agents",
+      "parent": null,
+      "title": "Agent 算法"
+    },
+    {
+      "description": "从学习目标、优化方法到训练系统。",
+      "id": "training",
+      "parent": null,
+      "title": "大模型训练"
+    }
+  ],
+  "days": [],
+  "demo": false,
+  "notes": [],
+  "timezone": "Asia/Shanghai",
+  "version": 1
+}

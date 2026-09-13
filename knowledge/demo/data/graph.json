@@ -1,0 +1,105 @@
+{
+  "branches": [
+    {
+      "description": "从推理、决策到与环境交互。",
+      "id": "agents",
+      "parent": null,
+      "title": "Agent 算法"
+    },
+    {
+      "description": "观察环境、选择行动，再用反馈更新下一步。",
+      "id": "agent-loops",
+      "parent": "agents",
+      "title": "推理与行动"
+    },
+    {
+      "description": "从学习目标、优化方法到训练系统。",
+      "id": "training",
+      "parent": null,
+      "title": "大模型训练"
+    },
+    {
+      "description": "从高质量示范中学习条件生成。",
+      "id": "supervised-learning",
+      "parent": "training",
+      "title": "监督微调"
+    }
+  ],
+  "days": [
+    {
+      "date": "2026-09-09",
+      "entries": [
+        {
+          "kind": "learn",
+          "note": "react-loop",
+          "takeaway": "行动产生观察，观察影响下一次决策。"
+        }
+      ],
+      "summary": "从工具调用，理解 Agent 的反馈循环"
+    },
+    {
+      "date": "2026-09-11",
+      "entries": [
+        {
+          "kind": "learn",
+          "note": "sft-loss-mask",
+          "takeaway": "prompt 不直接计入 loss，但仍影响答案预测。"
+        }
+      ],
+      "summary": "分清训练时的输入与监督目标"
+    },
+    {
+      "date": "2026-09-13",
+      "entries": [
+        {
+          "kind": "review",
+          "note": "react-loop",
+          "takeaway": "工具返回意外结果时，要根据新观察重新决策。"
+        },
+        {
+          "kind": "review",
+          "note": "sft-loss-mask",
+          "takeaway": "手算 masked loss：分母只统计有效目标 token。"
+        }
+      ],
+      "summary": "用完整示例，把两个容易混淆的边界想清楚"
+    }
+  ],
+  "demo": true,
+  "notes": [
+    {
+      "aliases": [
+        "ReAct",
+        "Reasoning and Acting"
+      ],
+      "branch": "agent-loops",
+      "id": "react-loop",
+      "memory": [
+        "先行动拿到证据，再用证据决定下一步。",
+        "一次工具调用只是动作；观察结果后继续决策，才构成循环。"
+      ],
+      "related": [],
+      "summary": "在推理、行动与观察之间交替推进，让环境反馈参与下一步决策。",
+      "title": "ReAct：推理与行动循环"
+    },
+    {
+      "aliases": [
+        "SFT",
+        "loss mask",
+        "监督微调",
+        "completion-only loss"
+      ],
+      "branch": "supervised-learning",
+      "id": "sft-loss-mask",
+      "memory": [
+        "不计算输入 token 的 loss，不等于模型看不到输入。",
+        "先明确要学习的目标 token，再检查标签与预测位置是否对齐。"
+      ],
+      "related": [],
+      "summary": "在条件生成的监督微调中，可以只对目标回复计算损失，输入上下文仍参与前向计算。",
+      "title": "SFT：哪些 token 参与 loss？"
+    }
+  ],
+  "timezone": "Asia/Shanghai",
+  "version": 1
+}

@@ -1,0 +1,55 @@
+{
+  "id": "react-loop",
+  "title": "ReAct：推理与行动循环",
+  "summary": "在推理、行动与观察之间交替推进，让环境反馈参与下一步决策。",
+  "branch": "agent-loops",
+  "aliases": [
+    "ReAct",
+    "Reasoning and Acting"
+  ],
+  "related": [],
+  "memory": [
+    "先行动拿到证据，再用证据决定下一步。",
+    "一次工具调用只是动作；观察结果后继续决策，才构成循环。"
+  ],
+  "context": "演示问题：一个助手需要回答多步事实问题，为什么只生成一段计划还不够？以下是为产品演示编写的教学案例，并非用户的历史学习记录。",
+  "sections": [
+    {
+      "title": "循环的基本单位",
+      "paragraphs": [
+        "ReAct 将推理与行动交替组织：模型根据任务与已有观察选择行动，环境返回结果，模型再继续决策。观察提供了新证据，行动因此不必完全依赖模型内部的知识。",
+        "核心是把环境反馈纳入后续决策，而不是要求每个应用都把长篇内部推理展示给用户。"
+      ]
+    },
+    {
+      "title": "什么时候停止",
+      "paragraphs": [
+        "当已有证据足够支持回答时结束；若观察不足，继续检索。工程实现还应设置步数上限和工具错误处理，避免无效循环。这些限制是应用工程的补充设计。"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "两次查询，回答一个多步问题",
+      "scenario": "给定演示资料库：项目 Aurora 的负责人是 Lin，Lin 所在团队是 Atlas。问题是：Aurora 的负责人属于哪个团队？这些名称与事实均为虚构。",
+      "steps": [
+        "先查询 Aurora，获得负责人 Lin。",
+        "根据新观察查询 Lin，获得团队 Atlas。",
+        "两条证据组成完整链条，返回 Atlas 并结束。"
+      ],
+      "code": "# 确定性演示轨迹：用于说明观察如何改变下一步查询\nrecords = {\"Aurora\": {\"lead\": \"Lin\"}, \"Lin\": {\"team\": \"Atlas\"}}\nobservations = []\n\nlead = records[\"Aurora\"][\"lead\"]\nobservations.append((\"Aurora.lead\", lead))\nteam = records[lead][\"team\"]\nobservations.append((f\"{lead}.team\", team))\n\nassert observations == [(\"Aurora.lead\", \"Lin\"), (\"Lin.team\", \"Atlas\")]\nprint(team)  # Atlas",
+      "language": "python",
+      "result": "第二次查询的对象来自第一次观察。代码固定了动作顺序以展示数据依赖；真实 ReAct 系统由模型依据当前上下文选择动作。"
+    }
+  ],
+  "recall": {
+    "question": "如果工具返回的信息与原计划不同，下一步应该由什么决定？",
+    "answer": "由更新后的任务上下文和真实观察共同决定。重新选择行动，直到证据足够或达到停止条件，而不是机械执行旧计划。"
+  },
+  "sources": [
+    {
+      "title": "ReAct 作者项目页",
+      "url": "https://react-lm.github.io/"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-13",
+  "summary": "用完整示例，把两个容易混淆的边界想清楚",
+  "entries": [
+    {
+      "note": "react-loop",
+      "takeaway": "工具返回意外结果时，要根据新观察重新决策。",
+      "kind": "review"
+    },
+    {
+      "note": "sft-loss-mask",
+      "takeaway": "手算 masked loss：分母只统计有效目标 token。",
+      "kind": "review"
+    }
+  ]
+}

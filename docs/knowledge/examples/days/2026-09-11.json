@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-11",
+  "summary": "分清训练时的输入与监督目标",
+  "entries": [
+    {
+      "note": "sft-loss-mask",
+      "takeaway": "prompt 不直接计入 loss，但仍影响答案预测。",
+      "kind": "learn"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+# Keep authoring sources and automation out of the public Pages artifact.
+exclude:
+  - content
+  - docs
+  - scripts
+  - tests
+  - AGENTS.md
+  - .agents
+  - .knowledge-local

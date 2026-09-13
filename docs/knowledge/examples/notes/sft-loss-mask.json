@@ -1,0 +1,57 @@
+{
+  "id": "sft-loss-mask",
+  "title": "SFT：哪些 token 参与 loss？",
+  "summary": "在条件生成的监督微调中，可以只对目标回复计算损失，输入上下文仍参与前向计算。",
+  "branch": "supervised-learning",
+  "aliases": [
+    "SFT",
+    "loss mask",
+    "监督微调",
+    "completion-only loss"
+  ],
+  "related": [],
+  "memory": [
+    "不计算输入 token 的 loss，不等于模型看不到输入。",
+    "先明确要学习的目标 token，再检查标签与预测位置是否对齐。"
+  ],
+  "context": "演示问题：训练输入包含问题和答案，如果问题部分被 mask，模型是否还利用问题？这是教学示例，不是用户历史学习记录。",
+  "sections": [
+    {
+      "title": "输入上下文与监督目标是两回事",
+      "paragraphs": [
+        "自回归模型根据前面的 token 预测后面的 token。把提示词对应的标签设为忽略，只是让那些位置不贡献直接的 token 预测损失；提示词仍然作为上下文影响答案生成。",
+        "不同数据格式与配置可以选择不同的损失范围。这里专门讨论只对目标回复监督的设置。"
+      ]
+    },
+    {
+      "title": "检查对齐与归一化",
+      "paragraphs": [
+        "损失通常在有效目标 token 上求平均。若把忽略的位置算进分母，会改变损失尺度。还需要区分框架内部是否已经完成标签移位，避免把同一批标签重复移位。"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "用四个位置手算 masked cross entropy",
+      "scenario": "假设已完成预测与目标对齐。四个位置对目标 token 给出的概率分别为 0.8、0.6、0.5、0.25；前两个属于提示词，后两个属于答案。",
+      "steps": [
+        "对每个目标概率取负对数。",
+        "只选择最后两个有效位置。",
+        "将两项相加并除以有效 token 数量 2。"
+      ],
+      "code": "import math\n\n# 概率与 target 已对齐；此处不再执行 shift。\np_target = [0.8, 0.6, 0.5, 0.25]\nmask = [0, 0, 1, 1]\nvalid = [(-math.log(p)) for p, keep in zip(p_target, mask) if keep]\nloss = sum(valid) / len(valid)\n\nassert math.isclose(loss, 1.0397207708399179)\nprint(round(loss, 4))  # 1.0397",
+      "language": "python",
+      "result": "只有答案位置贡献这次标量 loss。这个手算例子展示损失筛选，不模拟完整模型前向或梯度；在真实模型中答案预测仍受提示词上下文影响。"
+    }
+  ],
+  "recall": {
+    "question": "把 prompt 标签设为忽略，会阻止模型利用 prompt 吗？",
+    "answer": "不会。标签 mask 决定哪些预测位置参与直接的监督损失；输入与 attention 决定模型能看到哪些上下文，两者作用不同。"
+  },
+  "sources": [
+    {
+      "title": "Hugging Face TRL · SFT Trainer",
+      "url": "https://huggingface.co/docs/trl/sft_trainer"
+    }
+  ]
+}

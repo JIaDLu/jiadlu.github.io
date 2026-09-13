@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ReAct：推理与行动循环 · Jiadong / Knowledge</title><meta name="description" content="在推理、行动与观察之间交替推进，让环境反馈参与下一步决策。">
+<meta property="og:title" content="ReAct：推理与行动循环"><meta property="og:description" content="在推理、行动与观察之间交替推进，让环境反馈参与下一步决策。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="ReAct：推理与行动循环"><meta name="twitter:description" content="在推理、行动与观察之间交替推进，让环境反馈参与下一步决策。">
+<link rel="stylesheet" href="/knowledge/assets/style.css?v=439188def5dd"><script defer src="/knowledge/assets/app.js?v=439188def5dd"></script></head>
+<body data-base="/knowledge/demo" data-page="detail"><a class="skip" href="#main">跳至正文</a><div class="demo-banner">演示空间 · 示例内容与日期，不计入真实学习记录 <a href="/knowledge/">返回我的知识库 ↗</a></div>
+<header class="site-header"><a class="brand" href="/">Jiadong<span>/</span><b>Knowledge</b></a><nav aria-label="主导航"><a  href="/knowledge/demo/">每日学习</a><a  href="/knowledge/demo/tree/">知识树</a><a href="/">个人主页 ↗</a></nav></header>
+<main id="main"><article class="detail"><div class="breadcrumbs"><a href="/knowledge/demo/tree/">知识树</a><span>/</span><a href="/knowledge/demo/tree/?node=agents">Agent 算法</a><span>/</span><a href="/knowledge/demo/tree/?node=agent-loops">推理与行动</a></div>
+<div class="detail-heading"><div class="eyebrow">KNOWLEDGE NOTE</div><h1>ReAct：推理与行动循环</h1><p class="lede">在推理、行动与观察之间交替推进，让环境反馈参与下一步决策。</p><div class="meta">首次学习 2026-09-09<span>最近回顾 2026-09-13</span><span>2 次学习</span></div></div>
+<div class="reading-layout"><aside class="reading-nav"><span class="eyebrow">ON THIS PAGE</span><a href="#memory">记忆点</a><a href="#concept">理解概念</a><a href="#examples">完整示例</a><a href="#recall">主动回忆</a><a href="#connections">关联与来源</a><a class="back-tree" href="/knowledge/demo/tree/?node=react-loop">在知识树中定位 ↗</a></aside>
+<div class="reading-body"><section id="memory" class="memory"><div class="eyebrow">TAKE THIS WITH YOU · 记忆点</div><p>先行动拿到证据，再用证据决定下一步。</p><p>一次工具调用只是动作；观察结果后继续决策，才构成循环。</p></section>
+<section id="concept"><div class="section-heading"><span class="number">01</span><h2>理解概念</h2></div><div class="context"><b>回到当时的问题</b><p>演示问题：一个助手需要回答多步事实问题，为什么只生成一段计划还不够？以下是为产品演示编写的教学案例，并非用户的历史学习记录。</p></div><section class="prose-section"><h3>循环的基本单位</h3><p>ReAct 将推理与行动交替组织：模型根据任务与已有观察选择行动，环境返回结果，模型再继续决策。观察提供了新证据，行动因此不必完全依赖模型内部的知识。</p><p>核心是把环境反馈纳入后续决策，而不是要求每个应用都把长篇内部推理展示给用户。</p></section><section class="prose-section"><h3>什么时候停止</h3><p>当已有证据足够支持回答时结束；若观察不足，继续检索。工程实现还应设置步数上限和工具错误处理，避免无效循环。这些限制是应用工程的补充设计。</p></section></section>
+<section id="examples"><div class="section-heading"><span class="number">02</span><h2>把概念放进示例</h2></div><details class="example" open><summary><span class="number">01</span>两次查询，回答一个多步问题</summary><div class="example-body"><p>给定演示资料库：项目 Aurora 的负责人是 Lin，Lin 所在团队是 Atlas。问题是：Aurora 的负责人属于哪个团队？这些名称与事实均为虚构。</p><ol><li>先查询 Aurora，获得负责人 Lin。</li><li>根据新观察查询 Lin，获得团队 Atlas。</li><li>两条证据组成完整链条，返回 Atlas 并结束。</li></ol><div class="code-label">python<button class="copy-code" type="button">复制</button></div><pre><code># 确定性演示轨迹：用于说明观察如何改变下一步查询
+records = {&quot;Aurora&quot;: {&quot;lead&quot;: &quot;Lin&quot;}, &quot;Lin&quot;: {&quot;team&quot;: &quot;Atlas&quot;}}
+observations = []
+
+lead = records[&quot;Aurora&quot;][&quot;lead&quot;]
+observations.append((&quot;Aurora.lead&quot;, lead))
+team = records[lead][&quot;team&quot;]
+observations.append((f&quot;{lead}.team&quot;, team))
+
+assert observations == [(&quot;Aurora.lead&quot;, &quot;Lin&quot;), (&quot;Lin.team&quot;, &quot;Atlas&quot;)]
+print(team)  # Atlas</code></pre><p class="result"><b>得到什么</b><br>第二次查询的对象来自第一次观察。代码固定了动作顺序以展示数据依赖；真实 ReAct 系统由模型依据当前上下文选择动作。</p></div></details></section>
+<section id="recall" class="recall"><div class="eyebrow">A MOMENT TO RECALL</div><h2>如果工具返回的信息与原计划不同，下一步应该由什么决定？</h2><details><summary>想一想，再展开答案</summary><p>由更新后的任务上下文和真实观察共同决定。重新选择行动，直到证据足够或达到停止条件，而不是机械执行旧计划。</p></details></section>
+<section id="connections"><div class="section-heading"><span class="number">03</span><h2>连接与回顾</h2></div><h3>相关知识</h3><p class="muted">随着学习，建立更多连接。</p><details class="history"><summary>学习轨迹 · 2 次</summary><ul><li><a href="/knowledge/demo/?day=2026-09-13">2026-09-13</a><span class="tag">回顾</span><p>工具返回意外结果时，要根据新观察重新决策。</p></li><li><a href="/knowledge/demo/?day=2026-09-09">2026-09-09</a><span class="tag">初学</span><p>行动产生观察，观察影响下一次决策。</p></li></ul></details><details class="history"><summary>参考来源</summary><ul><li><a href="https://react-lm.github.io/" target="_blank" rel="noopener noreferrer">ReAct 作者项目页 ↗</a></li></ul></details></section></div></div></article><noscript><p>学习日历和交互树需要启用 JavaScript；知识详情可直接阅读。</p></noscript></main><footer><span>Jiadong’s learning notebook</span><span>一点一滴，形成体系。<span class="footer-dot">●</span></span></footer></body></html>

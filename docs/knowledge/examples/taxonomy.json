@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "timezone": "Asia/Shanghai",
+  "branches": [
+    {
+      "id": "agents",
+      "title": "Agent 算法",
+      "parent": null,
+      "description": "从推理、决策到与环境交互。"
+    },
+    {
+      "id": "agent-loops",
+      "title": "推理与行动",
+      "parent": "agents",
+      "description": "观察环境、选择行动，再用反馈更新下一步。"
+    },
+    {
+      "id": "training",
+      "title": "大模型训练",
+      "parent": null,
+      "description": "从学习目标、优化方法到训练系统。"
+    },
+    {
+      "id": "supervised-learning",
+      "title": "监督微调",
+      "parent": "training",
+      "description": "从高质量示范中学习条件生成。"
+    }
+  ]
+}

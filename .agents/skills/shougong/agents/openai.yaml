@@ -1,0 +1,6 @@
+interface:
+  display_name: "收工 · 每日知识归档"
+  short_description: "整理当天学习，保留完整示例与记忆点，更新知识树、每日记录并发布"
+  default_prompt: "使用 $shougong 整理今天 session 的学习知识，更新知识体系并发布。"
+policy:
+  allow_implicit_invocation: true

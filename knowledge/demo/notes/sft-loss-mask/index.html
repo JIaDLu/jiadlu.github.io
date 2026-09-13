@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SFT：哪些 token 参与 loss？ · Jiadong / Knowledge</title><meta name="description" content="在条件生成的监督微调中，可以只对目标回复计算损失，输入上下文仍参与前向计算。">
+<meta property="og:title" content="SFT：哪些 token 参与 loss？"><meta property="og:description" content="在条件生成的监督微调中，可以只对目标回复计算损失，输入上下文仍参与前向计算。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="SFT：哪些 token 参与 loss？"><meta name="twitter:description" content="在条件生成的监督微调中，可以只对目标回复计算损失，输入上下文仍参与前向计算。">
+<link rel="stylesheet" href="/knowledge/assets/style.css?v=439188def5dd"><script defer src="/knowledge/assets/app.js?v=439188def5dd"></script></head>
+<body data-base="/knowledge/demo" data-page="detail"><a class="skip" href="#main">跳至正文</a><div class="demo-banner">演示空间 · 示例内容与日期，不计入真实学习记录 <a href="/knowledge/">返回我的知识库 ↗</a></div>
+<header class="site-header"><a class="brand" href="/">Jiadong<span>/</span><b>Knowledge</b></a><nav aria-label="主导航"><a  href="/knowledge/demo/">每日学习</a><a  href="/knowledge/demo/tree/">知识树</a><a href="/">个人主页 ↗</a></nav></header>
+<main id="main"><article class="detail"><div class="breadcrumbs"><a href="/knowledge/demo/tree/">知识树</a><span>/</span><a href="/knowledge/demo/tree/?node=training">大模型训练</a><span>/</span><a href="/knowledge/demo/tree/?node=supervised-learning">监督微调</a></div>
+<div class="detail-heading"><div class="eyebrow">KNOWLEDGE NOTE</div><h1>SFT：哪些 token 参与 loss？</h1><p class="lede">在条件生成的监督微调中，可以只对目标回复计算损失，输入上下文仍参与前向计算。</p><div class="meta">首次学习 2026-09-11<span>最近回顾 2026-09-13</span><span>2 次学习</span></div></div>
+<div class="reading-layout"><aside class="reading-nav"><span class="eyebrow">ON THIS PAGE</span><a href="#memory">记忆点</a><a href="#concept">理解概念</a><a href="#examples">完整示例</a><a href="#recall">主动回忆</a><a href="#connections">关联与来源</a><a class="back-tree" href="/knowledge/demo/tree/?node=sft-loss-mask">在知识树中定位 ↗</a></aside>
+<div class="reading-body"><section id="memory" class="memory"><div class="eyebrow">TAKE THIS WITH YOU · 记忆点</div><p>不计算输入 token 的 loss，不等于模型看不到输入。</p><p>先明确要学习的目标 token，再检查标签与预测位置是否对齐。</p></section>
+<section id="concept"><div class="section-heading"><span class="number">01</span><h2>理解概念</h2></div><div class="context"><b>回到当时的问题</b><p>演示问题：训练输入包含问题和答案，如果问题部分被 mask，模型是否还利用问题？这是教学示例，不是用户历史学习记录。</p></div><section class="prose-section"><h3>输入上下文与监督目标是两回事</h3><p>自回归模型根据前面的 token 预测后面的 token。把提示词对应的标签设为忽略，只是让那些位置不贡献直接的 token 预测损失；提示词仍然作为上下文影响答案生成。</p><p>不同数据格式与配置可以选择不同的损失范围。这里专门讨论只对目标回复监督的设置。</p></section><section class="prose-section"><h3>检查对齐与归一化</h3><p>损失通常在有效目标 token 上求平均。若把忽略的位置算进分母，会改变损失尺度。还需要区分框架内部是否已经完成标签移位，避免把同一批标签重复移位。</p></section></section>
+<section id="examples"><div class="section-heading"><span class="number">02</span><h2>把概念放进示例</h2></div><details class="example" open><summary><span class="number">01</span>用四个位置手算 masked cross entropy</summary><div class="example-body"><p>假设已完成预测与目标对齐。四个位置对目标 token 给出的概率分别为 0.8、0.6、0.5、0.25；前两个属于提示词，后两个属于答案。</p><ol><li>对每个目标概率取负对数。</li><li>只选择最后两个有效位置。</li><li>将两项相加并除以有效 token 数量 2。</li></ol><div class="code-label">python<button class="copy-code" type="button">复制</button></div><pre><code>import math
+
+# 概率与 target 已对齐；此处不再执行 shift。
+p_target = [0.8, 0.6, 0.5, 0.25]
+mask = [0, 0, 1, 1]
+valid = [(-math.log(p)) for p, keep in zip(p_target, mask) if keep]
+loss = sum(valid) / len(valid)
+
+assert math.isclose(loss, 1.0397207708399179)
+print(round(loss, 4))  # 1.0397</code></pre><p class="result"><b>得到什么</b><br>只有答案位置贡献这次标量 loss。这个手算例子展示损失筛选，不模拟完整模型前向或梯度；在真实模型中答案预测仍受提示词上下文影响。</p></div></details></section>
+<section id="recall" class="recall"><div class="eyebrow">A MOMENT TO RECALL</div><h2>把 prompt 标签设为忽略，会阻止模型利用 prompt 吗？</h2><details><summary>想一想，再展开答案</summary><p>不会。标签 mask 决定哪些预测位置参与直接的监督损失；输入与 attention 决定模型能看到哪些上下文，两者作用不同。</p></details></section>
+<section id="connections"><div class="section-heading"><span class="number">03</span><h2>连接与回顾</h2></div><h3>相关知识</h3><p class="muted">随着学习，建立更多连接。</p><details class="history"><summary>学习轨迹 · 2 次</summary><ul><li><a href="/knowledge/demo/?day=2026-09-13">2026-09-13</a><span class="tag">回顾</span><p>手算 masked loss：分母只统计有效目标 token。</p></li><li><a href="/knowledge/demo/?day=2026-09-11">2026-09-11</a><span class="tag">初学</span><p>prompt 不直接计入 loss，但仍影响答案预测。</p></li></ul></details><details class="history"><summary>参考来源</summary><ul><li><a href="https://huggingface.co/docs/trl/sft_trainer" target="_blank" rel="noopener noreferrer">Hugging Face TRL · SFT Trainer ↗</a></li></ul></details></section></div></div></article><noscript><p>学习日历和交互树需要启用 JavaScript；知识详情可直接阅读。</p></noscript></main><footer><span>Jiadong’s learning notebook</span><span>一点一滴，形成体系。<span class="footer-dot">●</span></span></footer></body></html>
