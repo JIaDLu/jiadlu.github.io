@@ -45,10 +45,11 @@ python3 scripts/knowledge.py validate
 python3 scripts/knowledge.py build
 python3 -m unittest discover -s tests -v
 node --check knowledge/assets/app.js
+python3 scripts/knowledge_dom_check.py
 python3 -m http.server 8765 --bind 127.0.0.1
 ```
 
-浏览 `http://127.0.0.1:8765/knowledge/`，演示地址为 `/knowledge/demo/`。生成文件与源数据一起提交。站点运行无 npm 依赖；可选 DOM 交互测试使用临时安装的 `jsdom@24.1.3`（CI 自动执行 `tests/knowledge.dom.cjs`），不打包到网页。Python 3.10+（需系统 IANA 时区数据），Node 仅供 JavaScript 语法检查。
+浏览 `http://127.0.0.1:8765/knowledge/`，演示地址为 `/knowledge/demo/`。生成文件与源数据一起提交。站点运行无 npm 依赖；DOM 交互测试由发布器与 CI 共同调用 `scripts/knowledge_dom_check.py`，在临时目录安装 `jsdom@24.1.3`，执行后清理，不打包到网页。此检查需要 npm 和依赖下载网络；失败会阻止发布器提交与推送。空状态使用独立测试数据，不假设真实知识库为空。Python 3.10+（需系统 IANA 时区数据），Node 仅供 JavaScript 语法检查。
 
 ## 发布与故障恢复
 

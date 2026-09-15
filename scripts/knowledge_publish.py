@@ -8,6 +8,7 @@ import subprocess
 import sys
 from urllib.request import Request, urlopen
 from knowledge import ROOT, build, load, date, require
+from knowledge_dom_check import check as check_dom
 
 BRANCH = 'furbish'
 REPOSITORY = 'JIaDLu/jiadlu.github.io'
@@ -33,6 +34,7 @@ def publish(day):
     subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', 'tests'], cwd=ROOT, check=True)
     subprocess.run(['node', '--check', 'knowledge/assets/app.js'], cwd=ROOT, check=True)
     build(source, ROOT / 'knowledge')
+    check_dom()
     changed = set(git('diff', '--name-only', '-z').split('\0') + git('ls-files', '--others', '--exclude-standard', '-z').split('\0')) - {''}
     relevant = sorted(p for p in changed if allowed(p))
     require(not any(p.startswith('knowledge/') and not allowed(p) for p in changed), 'Uncommitted Knowledge code/demo changes need a separate implementation commit')

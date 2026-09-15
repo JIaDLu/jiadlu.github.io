@@ -1,4 +1,4 @@
-/* Optional interaction checks: NODE_PATH=<temporary jsdom install>/node_modules node tests/knowledge.dom.cjs */
+/* Run through python3 scripts/knowledge_dom_check.py (also used by CI and publishing). */
 const {JSDOM} = require('jsdom');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -10,12 +10,17 @@ async function open(route, options={}) {
   const html=fs.readFileSync(path.join(root,url.pathname,'index.html'),'utf8');
   const dom=new JSDOM(html,{url:url.href,runScripts:'outside-only',pretendToBeVisual:true});
   const w=dom.window;
+  const NativeDate=w.Date;
+  w.Date=class extends NativeDate {
+    constructor(...args){super(...(args.length?args:[options.now||'2026-09-13T04:00:00Z']));}
+    static now(){return new NativeDate(options.now||'2026-09-13T04:00:00Z').getTime();}
+  };
   w.Element.prototype.scrollIntoView=function(){};
   Object.defineProperty(w.HTMLElement.prototype,'clientWidth',{get(){return options.width||850;}});
   Object.defineProperty(w.HTMLElement.prototype,'clientHeight',{get(){return 570;}});
   w.ResizeObserver=class{observe(){} disconnect(){}};
   w.fetch=async()=>({ok:!options.fail,json:async()=>{
-    const data=JSON.parse(fs.readFileSync(path.join(root,w.document.body.dataset.base,'data/graph.json')));
+    const data=options.data ? structuredClone(options.data) : JSON.parse(fs.readFileSync(path.join(root,w.document.body.dataset.base,'data/graph.json')));
     if(options.related)data.notes[0].related=[data.notes[1].id];
     return data;
   }});
@@ -25,10 +30,28 @@ async function open(route, options={}) {
 }
 function input(w,el,value){el.value=value;el.dispatchEvent(new w.Event('input',{bubbles:true}));}
 (async()=>{
-  let a=await open('/knowledge/');
+  const fixture=JSON.parse(fs.readFileSync(path.join(root,'knowledge/demo/data/graph.json')));
+  fixture.demo=false;
+  let a=await open('/knowledge/',{data:{...fixture,notes:[],days:[]}});
   assert.match(a.d.querySelector('#records').textContent,/第一条理解/);
   assert.equal(a.d.querySelectorAll('.day[data-level="1"]').length,0);
   a.close();
+  a=await open('/knowledge/',{data:fixture});
+  assert.equal(a.d.querySelectorAll('.day-record').length,fixture.days.length);
+  assert.match(a.d.querySelector('.metrics').textContent,/今天已学习/);
+  assert.ok(a.d.querySelector('.entry').href.includes('/knowledge/tree/?node='));
+  assert.ok(!a.d.querySelector('.entry').href.includes('/demo/'));
+  a.close();
+  const real=JSON.parse(fs.readFileSync(path.join(root,'knowledge/data/graph.json')));
+  assert.equal(real.demo,false);
+  if(real.days.length){
+    const latest=real.days.at(-1);
+    a=await open('/knowledge/?day='+latest.date,{now:latest.date+'T04:00:00Z'});
+    assert.equal(a.d.querySelectorAll('.day-record').length,1);
+    assert.equal(a.d.querySelectorAll('.entry').length,latest.entries.length);
+    assert.ok(a.d.querySelector('#records').textContent.includes(latest.summary));
+    a.close();
+  }
   a=await open('/knowledge/demo/');
   assert.equal(a.d.querySelectorAll('.day-record').length,3);
   assert.match(a.d.querySelector('.metrics').textContent,/今天已学习/);
