@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-14",
+  "summary": "细化 Verifier 复用、失败子集采样与成功轨迹 SFT：探索成功支持开实验，对照胜出支持选 RL。",
+  "entries": [
+    {
+      "note": "verifier-for-rl",
+      "kind": "review",
+      "takeaway": "SFT 评测器可转成 RL 奖励，但必须检查评分标准和执行漏洞。"
+    },
+    {
+      "note": "pass-at-k-diagnostics",
+      "kind": "review",
+      "takeaway": "可以只重采样失败 15% 做诊断；结果不能当作整体 Pass@k，也不能独自证明该用 RL。"
+    },
+    {
+      "note": "rl-readiness",
+      "kind": "review",
+      "takeaway": "把“值得试 RL”和“应该选 RL”分开：同一批成功轨迹也支持 SFT 对照。"
+    },
+    {
+      "note": "successful-trajectory-sft",
+      "kind": "learn",
+      "takeaway": "每题偶尔成功的轨迹可以用于 SFT 候选数据，但总量、多样性与评测隔离决定是否值得尝试。"
+    }
+  ]
+}

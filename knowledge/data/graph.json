@@ -13,9 +13,165 @@
       "title": "大模型训练"
     }
   ],
-  "days": [],
+  "days": [
+    {
+      "date": "2026-09-13",
+      "entries": [
+        {
+          "kind": "learn",
+          "note": "rl-readiness",
+          "takeaway": "用准、能、值判断是否做 RL；85% 成功率之后先核验和诊断。"
+        },
+        {
+          "kind": "learn",
+          "note": "verifier-for-rl",
+          "takeaway": "Verifier 既影响能力判断，也会成为优化目标；训练前校准并持续复查。"
+        },
+        {
+          "kind": "learn",
+          "note": "agent-reward-design",
+          "takeaway": "终态成功不能覆盖过程违规，部分奖励必须对应有用进展。"
+        },
+        {
+          "kind": "learn",
+          "note": "pass-at-k-diagnostics",
+          "takeaway": "Pass@k 差距只说明潜在探索机会，不保证 RL 收益。"
+        }
+      ],
+      "summary": "建立 RL 准入框架：先校准 Verifier，再测探索空间，最后用对照验证收益。"
+    },
+    {
+      "date": "2026-09-14",
+      "entries": [
+        {
+          "kind": "review",
+          "note": "verifier-for-rl",
+          "takeaway": "SFT 评测器可转成 RL 奖励，但必须检查评分标准和执行漏洞。"
+        },
+        {
+          "kind": "review",
+          "note": "pass-at-k-diagnostics",
+          "takeaway": "可以只重采样失败 15% 做诊断；结果不能当作整体 Pass@k，也不能独自证明该用 RL。"
+        },
+        {
+          "kind": "review",
+          "note": "rl-readiness",
+          "takeaway": "把“值得试 RL”和“应该选 RL”分开：同一批成功轨迹也支持 SFT 对照。"
+        },
+        {
+          "kind": "learn",
+          "note": "successful-trajectory-sft",
+          "takeaway": "每题偶尔成功的轨迹可以用于 SFT 候选数据，但总量、多样性与评测隔离决定是否值得尝试。"
+        }
+      ],
+      "summary": "细化 Verifier 复用、失败子集采样与成功轨迹 SFT：探索成功支持开实验，对照胜出支持选 RL。"
+    },
+    {
+      "date": "2026-09-15",
+      "entries": [
+        {
+          "kind": "learn",
+          "note": "pi-agent-learning-path",
+          "takeaway": "查阅 Pi 架构并形成四步路线，尚未实操；明天从模型、循环和工具的职责开始。"
+        }
+      ],
+      "summary": "查阅 Pi 架构与文档，规划明天按用、拆、搭、测学习 Agent 运行链路。"
+    }
+  ],
   "demo": false,
-  "notes": [],
+  "notes": [
+    {
+      "aliases": [],
+      "branch": "training",
+      "id": "agent-reward-design",
+      "memory": [
+        "结果看完成，约束看行为，过程看真实进展。"
+      ],
+      "related": [
+        "verifier-for-rl"
+      ],
+      "summary": "结果奖励检查任务完成，轨迹约束检查禁止行为，过程奖励必须鼓励真正有用的进展。",
+      "title": "Agent 的结果、过程与约束奖励"
+    },
+    {
+      "aliases": [
+        "pass@1",
+        "pass@k",
+        "rollout"
+      ],
+      "branch": "agents",
+      "id": "pass-at-k-diagnostics",
+      "memory": [
+        "代表集测整体，失败集查原因；单次看稳定，多次看探索。",
+        "探索成功，支持开实验；对照胜出，支持选 RL。"
+      ],
+      "related": [
+        "verifier-for-rl"
+      ],
+      "summary": "在固定条件下用多次独立 rollout 测探索覆盖；失败子集用于诊断，完整代表集用于报告整体能力。",
+      "title": "Pass@1 / Pass@k 与失败子集诊断"
+    },
+    {
+      "aliases": [],
+      "branch": "agents",
+      "id": "pi-agent-learning-path",
+      "memory": [
+        "用 → 拆 → 搭 → 测。",
+        "第一课：一句请求之后，模型、循环和工具各做什么？"
+      ],
+      "related": [
+        "pass-at-k-diagnostics"
+      ],
+      "summary": "按用、拆、搭、测学习 Pi：观察工具轨迹，理解循环，搭最小 Agent，再接独立评测。",
+      "title": "Pi：Agent 运行链路与学习路线"
+    },
+    {
+      "aliases": [],
+      "branch": "training",
+      "id": "rl-readiness",
+      "memory": [
+        "准、能、值：奖励准，探索有信号，训练值得。",
+        "探索成功，支持开实验；对照胜出，支持选 RL。"
+      ],
+      "related": [
+        "verifier-for-rl",
+        "pass-at-k-diagnostics"
+      ],
+      "summary": "先验证奖励，再诊断探索空间，最后用小规模对照实验判断 RL 的真实收益。",
+      "title": "如何判断是否值得做 RL"
+    },
+    {
+      "aliases": [],
+      "branch": "training",
+      "id": "successful-trajectory-sft",
+      "memory": [
+        "每题一两条，不等于整个数据集只有一两条。",
+        "探索得到与泛化学会，是两个证据层次。"
+      ],
+      "related": [
+        "rl-readiness",
+        "pass-at-k-diagnostics"
+      ],
+      "summary": "多次采样中的成功轨迹可用作 SFT 候选数据，但泛化取决于总量、覆盖、多样性和独立验证。",
+      "title": "成功轨迹 SFT：数量、覆盖与评测隔离"
+    },
+    {
+      "aliases": [
+        "Reward hacking",
+        "Rubrics",
+        "奖励验证"
+      ],
+      "branch": "training",
+      "id": "verifier-for-rl",
+      "memory": [
+        "Verifier 既是测量的尺子，也是优化的靶子。",
+        "训练前校准，训练中复查，重点核验高分行为。"
+      ],
+      "related": [],
+      "summary": "评测要求判得准，RL 还要求判据经得起持续优化；验证须在训练前开始并持续进行。",
+      "title": "Verifier：从评测尺子到训练奖励"
+    }
+  ],
   "timezone": "Asia/Shanghai",
   "version": 1
 }

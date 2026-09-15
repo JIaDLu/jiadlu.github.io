@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-13",
+  "summary": "建立 RL 准入框架：先校准 Verifier，再测探索空间，最后用对照验证收益。",
+  "entries": [
+    {
+      "note": "rl-readiness",
+      "kind": "learn",
+      "takeaway": "用准、能、值判断是否做 RL；85% 成功率之后先核验和诊断。"
+    },
+    {
+      "note": "verifier-for-rl",
+      "kind": "learn",
+      "takeaway": "Verifier 既影响能力判断，也会成为优化目标；训练前校准并持续复查。"
+    },
+    {
+      "note": "agent-reward-design",
+      "kind": "learn",
+      "takeaway": "终态成功不能覆盖过程违规，部分奖励必须对应有用进展。"
+    },
+    {
+      "note": "pass-at-k-diagnostics",
+      "kind": "learn",
+      "takeaway": "Pass@k 差距只说明潜在探索机会，不保证 RL 收益。"
+    }
+  ]
+}

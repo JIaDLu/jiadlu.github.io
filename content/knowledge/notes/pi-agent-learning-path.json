@@ -1,0 +1,68 @@
+{
+  "id": "pi-agent-learning-path",
+  "title": "Pi：Agent 运行链路与学习路线",
+  "branch": "agents",
+  "summary": "按用、拆、搭、测学习 Pi：观察工具轨迹，理解循环，搭最小 Agent，再接独立评测。",
+  "context": "用户希望逐步学习 earendil-works/pi，决定明天继续。当前只查阅架构与文档并形成路线，未安装、运行或完成代码实操。",
+  "sections": [
+    {
+      "title": "定位与模块",
+      "paragraphs": [
+        "Pi 提供模型接口 pi-ai、工具执行与状态管理 pi-agent-core、交互 CLI pi-coding-agent，以及终端 UI 等组件。模型输出工具调用，运行时执行工具并将结果追加回上下文。",
+        "消息流、工具执行和停止条件是学习主线。先读 agent-core 的 Message Flow / Event Flow，再看 pi-ai 的 Quick Start、Tools、Streaming、Stop Reasons。API 与安装方式可能变化，实操时核对对应版本文档。"
+      ]
+    },
+    {
+      "title": "四步练习计划",
+      "paragraphs": [
+        "用：在练习项目要求修复函数并运行测试，观察 read/write/edit/bash。拆：追踪上下文→模型输出→工具执行→工具结果→下一次模型调用。",
+        "搭：用 agent-core 添加一个读取文件的工具，打印事件，试正常读取、文件不存在和轮数限制；再学 sessions、压缩和 extensions。测：自行准备 10–20 个任务，重置环境、记录轨迹、接入独立 Verifier 并重复采样。最后一步是本次建议的练习，不是声称仓库已有 RL 训练管线。"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "明天的第一课：修函数并运行测试",
+      "scenario": "计划在小型练习项目让 Pi 修复函数，尚未执行。",
+      "steps": [
+        "按 coding-agent README 配置模型并启动 CLI。",
+        "发出“修复这个函数，并运行测试”。",
+        "记录它读取什么文件、如何修改、运行什么测试、如何利用失败反馈。",
+        "复述模型、Agent loop、工具各自承担的工作。"
+      ],
+      "result": "预期验收：解释完整行动与反馈循环。当前仅完成学习规划，没有实测结果。",
+      "code": "npm install -g --ignore-scripts @earendil-works/pi-coding-agent\npi",
+      "language": "bash"
+    }
+  ],
+  "memory": [
+    "用 → 拆 → 搭 → 测。",
+    "第一课：一句请求之后，模型、循环和工具各做什么？"
+  ],
+  "recall": {
+    "question": "学习 Pi 时首先要追踪哪条链路？",
+    "answer": "用户输入形成上下文，模型提出动作，运行时执行工具，将结果加入上下文，再继续或停止。"
+  },
+  "related": [
+    "pass-at-k-diagnostics"
+  ],
+  "sources": [
+    {
+      "title": "Pi 仓库",
+      "url": "https://github.com/earendil-works/pi"
+    },
+    {
+      "title": "Agent core",
+      "url": "https://github.com/earendil-works/pi/tree/main/packages/agent"
+    },
+    {
+      "title": "模型接口",
+      "url": "https://github.com/earendil-works/pi/tree/main/packages/ai"
+    },
+    {
+      "title": "Coding agent",
+      "url": "https://github.com/earendil-works/pi/tree/main/packages/coding-agent"
+    }
+  ],
+  "aliases": []
+}

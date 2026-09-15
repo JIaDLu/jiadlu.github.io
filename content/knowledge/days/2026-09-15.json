@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-15",
+  "summary": "查阅 Pi 架构与文档，规划明天按用、拆、搭、测学习 Agent 运行链路。",
+  "entries": [
+    {
+      "note": "pi-agent-learning-path",
+      "kind": "learn",
+      "takeaway": "查阅 Pi 架构并形成四步路线，尚未实操；明天从模型、循环和工具的职责开始。"
+    }
+  ]
+}
