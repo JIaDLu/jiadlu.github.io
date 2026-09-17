@@ -1,0 +1,49 @@
+{
+  "id": "llm-rl-training-metrics",
+  "title": "大模型 RL：Reward 之外的训练指标",
+  "summary": "用稳定性、探索、价值估计、真实能力与效率共同判断训练健康度。",
+  "context": "面试问题：大模型 RL 训练除了 Reward，还关注什么？",
+  "branch": "training",
+  "sections": [
+    {
+      "title": "五类指标",
+      "paragraphs": [
+        "稳：关注梯度范数、KL 与 PPO 裁剪比例。新旧策略的近似 KL 用于观察更新幅度，相对参考模型的 KL 用于观察策略偏移，不能混为一谈。",
+        "探：关注策略熵及其趋势，过早下降可能意味着探索收缩；熵不是越大越好。",
+        "准：有 Critic 的 PPO 看 Value Loss 和解释方差；没有 Critic 的 GRPO 不看这类指标。",
+        "真：在留出的任务上测准确率、成功率或偏好胜率，并检查回答长度、重复率与异常输出，避免只信训练奖励。",
+        "快：关注样本效率、有效 tokens/s、单轮耗时和达到目标效果的 GPU 小时。"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "Reward 上涨但能力不涨",
+      "scenario": "概念性诊断示例，不是本项目的实测结果：对话模型训练 Reward 上涨，回答变长。",
+      "steps": [
+        "固定生成条件，在留出的问题上与 SFT 基线盲评。",
+        "检查指令遵循、事实错误、胜率，并抽查高分长回答。",
+        "若胜率没有提升且违反长度指令增多，排查奖励偏好冗长表达的可能性。"
+      ],
+      "result": "Reward 上涨不能单独证明能力提升；上述现象提示风险，仍需核验，不能直接断言 reward hacking。",
+      "code": "",
+      "language": ""
+    }
+  ],
+  "memory": [
+    "稳、探、准、真、快。"
+  ],
+  "recall": {
+    "question": "GRPO 训练为什么不一定看 Value Loss？",
+    "answer": "无 Critic 的 GRPO 用组内奖励构造优势，不训练价值网络，因此没有相应 Value Loss。"
+  },
+  "related": [
+    "verifier-for-rl"
+  ],
+  "aliases": [
+    "Entropy",
+    "KL",
+    "Clip Fraction"
+  ],
+  "sources": []
+}

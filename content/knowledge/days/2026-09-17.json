@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-17",
+  "summary": "大模型 RL 面试复习：训练监控、迭代链路、模型选择、GPU 效率、独立评测与 DAPO。",
+  "entries": [
+    {
+      "note": "llm-rl-training-metrics",
+      "takeaway": "用“稳、探、准、真、快”组织面试回答，并分清新旧策略 KL 与参考模型 KL；无 Critic 的 GRPO 不看 Value Loss。",
+      "kind": "learn"
+    },
+    {
+      "note": "llm-rl-step-pipeline",
+      "takeaway": "明确一次 RL 迭代可能包含多次 optimizer step；长推理常受 rollout 限制，但要分阶段测量。",
+      "kind": "learn"
+    },
+    {
+      "note": "llm-rl-checkpoint-selection",
+      "takeaway": "停止看平台、退化与预算；checkpoint 按验证能力和约束选，最终测试集不反复调参。",
+      "kind": "learn"
+    },
+    {
+      "note": "llm-rl-gpu-utilization",
+      "takeaway": "分清训练/prefill 与 decode 的长度效应；增加梯度累积不直接增大单次计算并行度。",
+      "kind": "learn"
+    },
+    {
+      "note": "llm-rl-heldout-preference-evaluation",
+      "takeaway": "纠正“无标准回答就没有 eval set”：留出 prompt 可以盲评；只换题而复用训练 RM 不足以排除奖励投机。",
+      "kind": "learn"
+    },
+    {
+      "note": "dapo-training-improvements",
+      "takeaway": "把 DAPO 四项改动对应具体训练症状；动态采样改善有效信号，不保证节省端到端算力。",
+      "kind": "learn"
+    }
+  ]
+}

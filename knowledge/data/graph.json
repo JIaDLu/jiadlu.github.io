@@ -76,6 +76,42 @@
         }
       ],
       "summary": "查阅 Pi 架构与文档，规划明天按用、拆、搭、测学习 Agent 运行链路。"
+    },
+    {
+      "date": "2026-09-17",
+      "entries": [
+        {
+          "kind": "learn",
+          "note": "llm-rl-training-metrics",
+          "takeaway": "用“稳、探、准、真、快”组织面试回答，并分清新旧策略 KL 与参考模型 KL；无 Critic 的 GRPO 不看 Value Loss。"
+        },
+        {
+          "kind": "learn",
+          "note": "llm-rl-step-pipeline",
+          "takeaway": "明确一次 RL 迭代可能包含多次 optimizer step；长推理常受 rollout 限制，但要分阶段测量。"
+        },
+        {
+          "kind": "learn",
+          "note": "llm-rl-checkpoint-selection",
+          "takeaway": "停止看平台、退化与预算；checkpoint 按验证能力和约束选，最终测试集不反复调参。"
+        },
+        {
+          "kind": "learn",
+          "note": "llm-rl-gpu-utilization",
+          "takeaway": "分清训练/prefill 与 decode 的长度效应；增加梯度累积不直接增大单次计算并行度。"
+        },
+        {
+          "kind": "learn",
+          "note": "llm-rl-heldout-preference-evaluation",
+          "takeaway": "纠正“无标准回答就没有 eval set”：留出 prompt 可以盲评；只换题而复用训练 RM 不足以排除奖励投机。"
+        },
+        {
+          "kind": "learn",
+          "note": "dapo-training-improvements",
+          "takeaway": "把 DAPO 四项改动对应具体训练症状；动态采样改善有效信号，不保证节省端到端算力。"
+        }
+      ],
+      "summary": "大模型 RL 面试复习：训练监控、迭代链路、模型选择、GPU 效率、独立评测与 DAPO。"
     }
   ],
   "demo": false,
@@ -92,6 +128,113 @@
       ],
       "summary": "结果奖励检查任务完成，轨迹约束检查禁止行为，过程奖励必须鼓励真正有用的进展。",
       "title": "Agent 的结果、过程与约束奖励"
+    },
+    {
+      "aliases": [
+        "DAPO",
+        "GRPO",
+        "Clip-Higher",
+        "Dynamic Sampling"
+      ],
+      "branch": "training",
+      "id": "dapo-training-improvements",
+      "memory": [
+        "保探索、保信号、调权重、降噪声。"
+      ],
+      "related": [
+        "llm-rl-training-metrics",
+        "llm-rl-step-pipeline"
+      ],
+      "summary": "相对基础 GRPO，DAPO 针对探索收缩、零优势组、长度权重和截断奖励噪声改善长推理训练。",
+      "title": "DAPO：从训练问题解释算法改动"
+    },
+    {
+      "aliases": [
+        "early stopping",
+        "checkpoint"
+      ],
+      "branch": "training",
+      "id": "llm-rl-checkpoint-selection",
+      "memory": [
+        "停看平台、退化、预算；选看能力、约束、成本。"
+      ],
+      "related": [
+        "llm-rl-training-metrics"
+      ],
+      "summary": "按验证表现、退化和预算决定停止，在能力约束下选择验证表现最好的模型。",
+      "title": "大模型 RL：何时停止与如何选 Checkpoint"
+    },
+    {
+      "aliases": [
+        "SM",
+        "prefill",
+        "decode",
+        "KV Cache",
+        "packing"
+      ],
+      "branch": "training",
+      "id": "llm-rl-gpu-utilization",
+      "memory": [
+        "先定位，再看批量、显存、算子、通信。",
+        "利用率高不等于训练效率高。"
+      ],
+      "related": [
+        "llm-rl-step-pipeline"
+      ],
+      "summary": "先识别计算、带宽、通信或等待瓶颈，再分别优化 rollout 与训练；高忙碌率不等于高效率。",
+      "title": "大模型 RL：GPU 利用率与上下文长度"
+    },
+    {
+      "aliases": [
+        "eval set",
+        "盲评",
+        "偏好胜率"
+      ],
+      "branch": "training",
+      "id": "llm-rl-heldout-preference-evaluation",
+      "memory": [
+        "没有标准回答 ≠ 没有评估。",
+        "换题测泛化，独立核验防奖励投机。"
+      ],
+      "related": [
+        "verifier-for-rl",
+        "llm-rl-training-metrics",
+        "llm-rl-checkpoint-selection"
+      ],
+      "summary": "留出 prompt 并采用独立评判即可评估能力；题目独立与评价机制独立解决不同问题。",
+      "title": "大模型 RL：无标准回答的独立偏好评测"
+    },
+    {
+      "aliases": [
+        "rollout",
+        "GAE",
+        "optimizer step"
+      ],
+      "branch": "training",
+      "id": "llm-rl-step-pipeline",
+      "memory": [
+        "生成 → 打分 → 算优势 → 更新 → 同步。"
+      ],
+      "related": [],
+      "summary": "一轮 RL 迭代包含生成、打分与评估、优势计算、更新和权重同步；长推理通常受 rollout 耗时影响。",
+      "title": "大模型 RL step：从 Rollout 到参数更新"
+    },
+    {
+      "aliases": [
+        "Entropy",
+        "KL",
+        "Clip Fraction"
+      ],
+      "branch": "training",
+      "id": "llm-rl-training-metrics",
+      "memory": [
+        "稳、探、准、真、快。"
+      ],
+      "related": [
+        "verifier-for-rl"
+      ],
+      "summary": "用稳定性、探索、价值估计、真实能力与效率共同判断训练健康度。",
+      "title": "大模型 RL：Reward 之外的训练指标"
     },
     {
       "aliases": [

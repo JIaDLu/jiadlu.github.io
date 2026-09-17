@@ -1,0 +1,54 @@
+{
+  "id": "llm-rl-step-pipeline",
+  "title": "大模型 RL step：从 Rollout 到参数更新",
+  "summary": "一轮 RL 迭代包含生成、打分与评估、优势计算、更新和权重同步；长推理通常受 rollout 耗时影响。",
+  "context": "面试问题：从 rollout 到参数更新有哪些环节，哪里最耗时？",
+  "branch": "training",
+  "sections": [
+    {
+      "title": "训练链路",
+      "paragraphs": [
+        "生成：采样 prompt，由当前策略生成回答；GRPO 通常每题采样多条。",
+        "打分与评估：用规则或 Reward Model 算奖励，准备所需 log probability；PPO 还要价值估计。实际系统可重排或并行部分计算。",
+        "优势：PPO 通常用 GAE，GRPO 由组内相对奖励构造优势。",
+        "更新：切成 mini-batch，计算策略损失、反向传播与参数更新；PPO 还更新 Critic。一批 rollout 可对应多次 optimizer step。",
+        "同步：把策略权重同步到 rollout 引擎；异步系统可重叠采样和训练，并需要处理策略滞后。"
+      ]
+    },
+    {
+      "title": "耗时边界",
+      "paragraphs": [
+        "长推理和多回答采样下通常 rollout 最慢：decode 自回归生成，长尾样本拖慢批次。训练能同时处理已有序列的 token，但不表示所有任务都一定训练更快。",
+        "大型 Reward Model、外部环境调用、多轮参数更新也可能成为瓶颈，需要分阶段测量。"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "一题多答的 GRPO 迭代",
+      "scenario": "机制演示：同一问题生成若干候选回答。",
+      "steps": [
+        "生成候选，规则验证各自答案。",
+        "用组内奖励差异计算优势，整理 token mask 和 log probability。",
+        "将采样结果分批训练，再向采样引擎同步权重。"
+      ],
+      "result": "一次完整 RL 迭代可含多次优化器更新；不能将 RL step 与 optimizer step 一一等同。",
+      "code": "",
+      "language": ""
+    }
+  ],
+  "memory": [
+    "生成 → 打分 → 算优势 → 更新 → 同步。"
+  ],
+  "recall": {
+    "question": "Rollout 为什么经常最慢？",
+    "answer": "逐 token 自回归生成，加上多回答采样和长尾输出；但最终应按阶段实测。"
+  },
+  "related": [],
+  "aliases": [
+    "rollout",
+    "GAE",
+    "optimizer step"
+  ],
+  "sources": []
+}

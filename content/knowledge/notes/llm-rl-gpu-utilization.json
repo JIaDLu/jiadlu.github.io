@@ -1,0 +1,59 @@
+{
+  "id": "llm-rl-gpu-utilization",
+  "title": "大模型 RL：GPU 利用率与上下文长度",
+  "summary": "先识别计算、带宽、通信或等待瓶颈，再分别优化 rollout 与训练；高忙碌率不等于高效率。",
+  "context": "面试问题：如何提高 GPU / SM 利用率，上下文长度有什么影响？",
+  "branch": "training",
+  "sections": [
+    {
+      "title": "调优入口",
+      "paragraphs": [
+        "先用 profiler 区分计算、显存带宽、通信和 CPU/数据/奖励等待；GPU 忙碌率、SM 活跃程度与计算吞吐利用率不是同一个指标。",
+        "Rollout 增加并发并用 continuous batching；训练在显存允许时增加 micro-batch，以 packing 减少 padding。仅增加梯度累积次数不会直接提高单次计算利用率。",
+        "BF16、FlashAttention 和融合算子减少存储或访存成本；激活重计算节省显存但增加计算。CUDA Graph 可减少启动开销。",
+        "调整并行配置、重叠通信与计算，降低权重同步和阶段切换的等待。"
+      ]
+    },
+    {
+      "title": "长度分阶段影响",
+      "paragraphs": [
+        "训练和 prefill：更多 token 往往让计算更充分，但标准全注意力计算随序列长度近似平方增长；显存压力可能迫使 batch 变小。FlashAttention 避免显式存储完整注意力矩阵，但不消除精确全注意力的平方计算量。",
+        "Decode：每步通常只产一个新 token，上下文越长，KV Cache 读取和存储压力越大，可支持并发可能下降，因此不保证更高计算利用率。",
+        "整轮 RL：长度差异造成 padding、负载不均和长尾等待，可用长度分桶、动态 batching、packing 缓解；应同时观察有效 tokens/s、轮次耗时与目标效果对应成本。"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "长回答拖慢 Rollout",
+      "scenario": "概念示例：同批多数回答很快结束，少数回答持续生成长推理。",
+      "steps": [
+        "观察 decode 阶段活跃请求数和 GPU 时间线。",
+        "用动态 batching 及时补入新请求；训练对变长序列采用合适的 packing 或分桶。",
+        "比较有效吞吐和单轮耗时，而不是通过增加 padding 拉高忙碌率。"
+      ],
+      "result": "提高有效并发可能减少空闲；上下文越长并不自动越高效，KV Cache 容量和带宽仍可能限制吞吐。",
+      "code": "",
+      "language": ""
+    }
+  ],
+  "memory": [
+    "先定位，再看批量、显存、算子、通信。",
+    "利用率高不等于训练效率高。"
+  ],
+  "recall": {
+    "question": "为什么增加梯度累积不能直接解决小 micro-batch 的低利用率？",
+    "answer": "它增加顺序执行的次数和有效 batch，而未改变单次前后向的工作量与并行形状。"
+  },
+  "related": [
+    "llm-rl-step-pipeline"
+  ],
+  "aliases": [
+    "SM",
+    "prefill",
+    "decode",
+    "KV Cache",
+    "packing"
+  ],
+  "sources": []
+}
