@@ -1,17 +1,18 @@
 ---
 name: ideas-editor
-description: 在 jiadlu.github.io workspace 中跟踪值得讨论的 AI 动态，并把当前 session 中用户真实的判断、疑问、吐槽和 brainstorm 整理成 Ideas。用户说“看看 AI 动态”“整理想法”“写成草稿”“记一笔”“发布 Ideas”或调用 $ideas-editor 时使用；“记一笔”表示整理并发布，单纯追踪新闻或讨论不授权发表。不同于只归档知识的“收工”。
+description: 在 jiadlu.github.io workspace 中跟踪值得讨论的 AI 动态，并把当前 session 中用户真实的判断、疑问、吐槽和 brainstorm 整理成 Ideas。用户说“看看 AI 动态”“整理想法”“写成草稿”“记一笔”“发布 Ideas”或调用 $ideas-editor 时使用；“记一笔”表示整理并发布，单纯追踪新闻或讨论不授权发表。也承接“收工”统一入口分流出的 Ideas。
 ---
 
 # Ideas editor
 
-这里记录 **What I think**。知识归档由 `shougong` 负责。先读 `docs/ideas/README.md` 与 `docs/ideas/schema.md`；需要查来源、保留表达或做发布前编辑审查时读 [editorial.md](../../../docs/ideas/editorial.md)。该引用相对于 skill 目录应通过仓库根路径 `docs/ideas/editorial.md` 打开。
+这里记录 **What I think**。“收工”由 `shougong` 统一分流，知识部分留在 Knowledge，本 Skill 负责 Ideas。先读 `docs/ideas/README.md` 与 `docs/ideas/schema.md`；需要查来源、保留表达或做发布前编辑审查时读 [editorial.md](../../../docs/ideas/editorial.md)。
 
 ## 按意图推进
 
 - **看看 AI 动态 / Follow AI**：联网追踪 → 提供值得讨论的线索 → 与用户讨论。不要把新闻摘要自动发表。
 - **整理想法 / 写成草稿**：整理当前讨论，只写 `.ideas-local/` 并 dry-run，不写公开 content，不 commit/push。
 - **记一笔 / 发布 Ideas**：整理当前 session 的可发表想法，检查质量，应用、构建并正常 commit/push；这是本次发布授权，不重复询问同一授权。用户明确指定的范围优先。
+- **由收工分流而来**：仅处理分配到的个人思考，执行以下编辑与校验流程。继承统一入口的发布授权、限定范围或草稿限制，不重复确认，也不回调 `shougong`。两边都有时先准备并 dry-run Ideas batch，等待 Knowledge push 成功后才调用 Ideas 发布器；不要抢先提交。
 - **补记某篇**：复用稳定 ID 与最初日期；用 `updates` 追加认知变化，保留旧补记。修订正文时必须补一条说明，不能把新观点伪装成当初就想明白了。
 
 ## Follow frontier

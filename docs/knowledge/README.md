@@ -32,7 +32,7 @@
 
 ## 每日使用
 
-在这个 workspace 的当天学习 session 中直接输入 **收工**，或显式调用 `$shougong`。项目 Skill 位于 `.agents/skills/shougong/`，AGENTS.md 也为已有 session 提供明确路由。Skill 应用 batch 后构建、校验和检查 diff，再发布。没有知识内容则不打卡。
+在这个 workspace 的当天学习 session 中直接输入 **收工**，或显式调用 `$shougong`。项目 Skill 位于 `.agents/skills/shougong/`，AGENTS.md 也为已有 session 提供明确路由。“收工”按内容自动分流：学懂的概念、机制、示例进入 Knowledge；个人评论、判断、疑问、吐槽与 brainstorm 交给 Ideas editor；两者都有就分别整理与发布。知识部分应用 batch 后构建、校验和检查 diff，再发布。没有知识内容则不打卡；只有 Ideas 也可以收工。“只整理、不发布”保留本地草稿。
 
 自动化是由“收工”触发，并非午夜定时任务；session 不会在后台自动读取。真实学习从空白开始。演示笔记来自产品教学案例，来源链接附在各自详情中。
 

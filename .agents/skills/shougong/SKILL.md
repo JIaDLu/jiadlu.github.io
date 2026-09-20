@@ -1,11 +1,35 @@
 ---
 name: shougong
-description: 当用户在 jiadlu.github.io workspace 结束当天学习并说“收工”、要求归档当天 Codex 学习或显式调用 $shougong 时，提炼当前 session 的知识、更新知识树与每日记录，校验后 commit 并 push 到现有 GitHub Pages 分支。不用于普通代码任务的结束语，除非用户明确要归档学习。
+description: 当用户在 jiadlu.github.io workspace 结束当天学习或讨论并说“收工”、要求归档当天 Codex session 或显式调用 $shougong 时，自动把学懂的知识归入 Knowledge，把用户的判断、疑问、吐槽与 brainstorm 归入 Ideas；两者都有则分别整理，校验后 commit 并 push。不用于普通代码任务的结束语，除非用户明确要沉淀内容。
 ---
 
 # 收工
 
-把当前学习 session 的有效理解沉淀到 `/knowledge/`。重点是 Agent 算法与大模型训练，但允许按内容扩展其他领域。先读仓库的 `docs/knowledge/README.md` 与 `docs/knowledge/schema.md`；结构以 `scripts/knowledge.py` 的校验为准。
+当前 session 的统一归档入口：Knowledge 记录 **What I learned**，Ideas 记录 **What I think**。按每段讨论的实际内容分流，不给整个 session 强选一个类别。
+
+## 自动分流
+
+| 当前讨论中的内容 | 去向 |
+| --- | --- |
+| 学懂的概念、机制、完整示例和适用边界 | Knowledge |
+| 用户的热点评论、判断、疑问、吐槽、情绪和 brainstorm | Ideas |
+| 同一话题同时有知识理解与个人思考 | 分别整理，两边各自完整，不复制同一篇正文 |
+
+例如：弄懂某个 Agent 的规划机制进入 Knowledge；用户认为它的演示掩盖了落地成本进入 Ideas；同一次讨论两者都有，就各留一份。已解答的机制性提问随知识解释归档；个人质疑或尚不成熟的猜想可以独立成为 Idea。依据语义与用户表达判断，不能只凭“为什么”等关键词。
+
+- 只有新闻材料、AI 自己的观点、普通网站工程任务时，不硬造 Ideas 或算法学习记录。“继续讲”不代表用户认同 AI 的判断。
+- “收工”授权本 session 符合条件的两个方向整理、commit 和正常 push，无需再次询问。用户明确限定“只归档 Knowledge / 只发 Ideas”时遵从范围；“只整理 / 不发布”只写相应本地忽略目录并 dry-run，不写公开 content 或生成页面。
+- 有 Knowledge 内容时，读 `docs/knowledge/README.md` 与 `docs/knowledge/schema.md`，执行下面的知识流程。重点是 Agent 算法与大模型训练，但允许扩展其他领域。
+- 有 Ideas 内容时，读取并执行同项目 `.agents/skills/ideas-editor/SKILL.md` 的声源、事实核查、编辑与 batch 流程。由当前 Codex 执行，无需重新触发一个 session；继承本次发布授权及限制，不递归调用“收工”。
+- 任一方向无合适内容就跳过，不创建空记录。缺上下文、无法核实或不适合公开的部分留本地草稿，说明缺口；其余可独立成立的内容仍可归档。两边都为空则说明未归档。
+
+## 两边都有时的执行顺序
+
+先分别准备 `.knowledge-local/` 和 `.ideas-local/` 的 batch，按各自 schema 去重、dry-run 并审阅，再应用和构建。先运行 Knowledge 发布器，确认正常 push 成功后，再运行 Ideas 发布器；只有一边时只运行那一边。不要并行操作 Git，也不要合并为绕过发布器检查的手工提交。
+
+两个发布器只接受各自类型的待推送提交。因此第一个 push 失败时，应修复并重试同一个发布器，成功之前不提交第二边。已推送但 Pages 待更新不阻止第二边 push。第二边失败时保留第一边结果与本地成果，明确报告部分成功；重试复用 ID 与已创建的提交。最终分别验证两个页面版本，不把一次成功当成两边成功。
+
+以下为 Knowledge 部分；Ideas 的具体编辑与发布步骤以 Ideas editor 为准。
 
 ## 回顾与提炼
 
@@ -20,12 +44,12 @@ description: 当用户在 jiadlu.github.io workspace 结束当天学习并说“
 - 先读取 taxonomy 与已有笔记的标题、别名、摘要，按语义查重。复学同一概念复用稳定 ID，更新原笔记，保留仍有效的内容与代表性示例；不要以日期创建重复概念。
 - 每个概念选一个主要父分支，跨领域关系通过 `related` 表示。分类要表达知识关系，不按日期或来源分组。找不到合理分支时添加适度粒度的父分支；同义类别不要重复创建。
 - 日期记录中的 `takeaway` 写“这一次理解了什么”。它与知识点当前摘要不同，应保留历史；同一天再收工，只更新对应条目并合并新增条目。`kind` 是本次 `learn` 或 `review`，依据已有历史判断。
-- 若没有值得沉淀的学习，不创建空记录，不增加连续学习天数，直接说明。
+- 若没有值得沉淀的学习，不创建空记录，不增加连续学习天数；继续处理符合条件的 Ideas。
 - 生成 schema 所定义的 batch JSON，放到 `.knowledge-local/`，其中 `notes` 使用完整笔记对象。不要直接编辑 `knowledge/data/` 或生成的 HTML。
 
 ## 校验与发布
 
-用户在这个项目调用“收工”即授权本次知识归档、commit 和正常 push；已授权时不重复请求确认。若明确说“只整理、不发布”，则完成归档和构建，到发布前停止。
+以下应用与发布命令仅用于已授权发布的 Knowledge 部分。只整理时在第一条 dry-run 后停止，草稿保持本地。两边都有时遵循上面的顺序。
 
 从仓库根目录执行：
 
@@ -56,4 +80,4 @@ python3 scripts/knowledge_publish.py --verify
 
 如果仍在构建，可隔约 20 秒检查一次，最多约 3 分钟。验证失败不撤销已完成的内容提交；返回明确的“已推送，线上待确认”，附 Actions 链接。不要把 push 成功等同于部署成功。
 
-结束时简短给出：归档日期、新增/回顾的知识点、分类变化、commit、发布状态与当天页面链接。保持 `.knowledge-local/` 草稿为本地忽略文件，不随 commit 发布。
+结束时分别列出：Knowledge 的新增/回顾知识点与分类变化；Ideas 的想法与补记；各自日期、commit、发布状态与页面链接。未归档或仍为草稿的部分简要说明。保持 `.knowledge-local/`、`.ideas-local/` 为本地忽略文件，不随 commit 发布。
