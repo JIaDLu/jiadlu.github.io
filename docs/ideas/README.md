@@ -1,4 +1,4 @@
-# Ideas, in progress.
+# Ideas
 
 **Knowledge = What I learned. Ideas = What I think.** 两者同属个人站点，数据、页面和日常触发独立。Ideas 是一个人的思考流：短想法、疑问、吐槽、随记、技术/行业观察和长文都可以共存。
 
@@ -11,7 +11,7 @@
 - `/ideas/demo/`：四条虚构演示，展示不同长度与补记；不代表作者立场，不进入真实记录。
 - `/blog/`：兼容入口，跳转 `/ideas/`。
 
-首页与详情是静态 HTML，关闭 JavaScript 仍可阅读与翻页。归档交互增强由独立 JS 提供。视觉沿用 Knowledge 的克制色彩和留白，加入轻微书写感；没有知识树、打卡 KPI 或传统博客侧栏组件堆积。
+首页与详情是静态 HTML，关闭 JavaScript 仍可阅读与翻页。归档交互增强由独立 JS 提供。首页使用用户提供的原图 `ideas/assets/lose-yourself.jpg`，保持完整比例；标题与导航保持简短，移除装饰性标语。视觉保留克制色彩和留白；没有知识树、打卡 KPI 或传统博客侧栏组件堆积。
 
 ## 日常闭环
 

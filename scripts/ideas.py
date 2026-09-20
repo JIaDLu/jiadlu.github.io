@@ -227,7 +227,7 @@ def shell(settings, page_title, description, body, base, route='', page='feed', 
 {'<meta name="robots" content="noindex,follow">' if demo else ''}<link rel="alternate" type="application/atom+xml" title="Jiadong / Ideas" href="{base}/feed.xml">
 <link rel="stylesheet" href="/ideas/assets/style.css?v={version}"><script defer src="/ideas/assets/app.js?v={version}"></script></head>
 <body data-base="{base}" data-page="{page}"><a class="skip" href="#main">跳到正文</a>{banner}<header class="site-header"><a class="brand" href="/">Jiadong<span>/</span><strong>Ideas</strong></a><nav aria-label="主导航"><a href="{base}/" {'aria-current="page"' if page=='feed' else ''}>想法</a><a href="{base}/archive/" {'aria-current="page"' if page=='archive' else ''}>归档</a><a href="/knowledge/">Knowledge ↗</a></nav></header>
-<main id="main">{body}</main><footer><a href="{base}/">Jiadong / Ideas</a><span>保持好奇。允许改主意。</span><a href="{base}/feed.xml">RSS / Atom ↗</a></footer><div class="announcement" role="status" aria-live="polite"></div></body></html>'''
+<main id="main">{body}</main><footer><a href="{base}/">Jiadong / Ideas</a><a href="{base}/feed.xml">RSS / Atom ↗</a></footer><div class="announcement" role="status" aria-live="polite"></div></body></html>'''
 
 
 def sidebar(settings, posts, base, demo):
@@ -235,19 +235,20 @@ def sidebar(settings, posts, base, demo):
     topics = ''.join(f'<a href="{base}/archive/?tag={t["id"]}"><span>#{e(t["label"])}</span><small>{counts[t["id"]]}</small></a>' for t in settings['tags'] if counts[t['id']])
     months = sorted({p['date'][:7] for p in posts}, reverse=True)
     archive = ''.join(f'<a href="{base}/archive/?month={m}"><span>{m[:4]} / {m[5:]}</span><small>{sum(p["date"].startswith(m) for p in posts)} ↗</small></a>' for m in months[:6])
-    return f'''<aside class="feed-sidebar"><section class="margin-note"><div class="eyebrow">A NOTE TO SELF</div><p>有些事想明白了。<br>有些事，先记下来。</p><span>AI · 工作 · 生活 · 未完成的想法</span></section>{f'<section><h2>最近在想</h2><div class="sidebar-list">{topics}</div></section>' if topics else ''}{f'<section><h2>时间留下的痕迹</h2><div class="sidebar-list">{archive}</div></section>' if archive else ''}<section class="small-note"><a href="/knowledge/">What I learned → Knowledge</a><p>这里留下的是 What I think。</p>{'<a href="/ideas/demo/">看看不同长度的想法 ↗</a>' if not posts and not demo else ''}</section></aside>'''
+    return f'''<aside class="feed-sidebar">{f'<section><h2>话题</h2><div class="sidebar-list">{topics}</div></section>' if topics else ''}{f'<section><h2>按月浏览</h2><div class="sidebar-list">{archive}</div></section>' if archive else ''}<section class="small-note"><a href="/knowledge/">知识笔记 → Knowledge</a>{'<a href="/ideas/demo/">查看演示 ↗</a>' if not posts and not demo else ''}</section></aside>'''
 
 
 def empty():
-    return '<div class="empty"><span class="empty-symbol" aria-hidden="true">↳</span><h2>下一条想法，从这里开始。</h2><p>不一定想清楚了才值得写。<br>也许是一句吐槽，也许是一个值得追问的问题。</p><a class="text-link" href="/ideas/demo/">先逛逛演示空间 ↗</a></div>'
+    return '<div class="empty"><h2>还没有发布的内容。</h2><a class="text-link" href="/ideas/demo/">查看演示 ↗</a></div>'
 
 
 def feed(settings, posts, base, demo, number=1):
     pages = max(1, (len(posts)+PAGE_SIZE-1)//PAGE_SIZE)
     part = posts[(number-1)*PAGE_SIZE:number*PAGE_SIZE]
     latest = posts[0]['date'] if posts else None
-    headline=e(settings['title']).replace('in progress.', '<em>in progress.</em>')
-    heading = f'''<section class="intro"><div class="eyebrow">PERSONAL IDEAS / RESEARCH LOG</div><h1>{headline}<span class="cursor" aria-hidden="true">_</span></h1><p>{e(settings['description'])}</p><div class="intro-meta"><span class="live-dot" aria-hidden="true"></span>{f'最近一笔 {latest}' if latest else '留一点空间，给下一次灵光一闪。'}</div></section>'''
+    photo = '<figure class="intro-photo"><img src="/ideas/assets/lose-yourself.jpg" alt="夕阳下的路牌：Lose yourself to find yourself." width="1384" height="1074" fetchpriority="high" decoding="async"></figure>' if number == 1 else ''
+    last_entry = f'<p class="intro-meta">最近更新 · {latest}</p>' if latest else ''
+    heading = f'<section class="intro home-intro {"with-photo" if photo else ""}"><div class="intro-copy"><h1>{e(settings["title"])}</h1><p>{e(settings["description"])}</p>{last_entry}</div>{photo}</section>'
     pagination = ''
     if pages > 1:
         prev = base+'/' if number==2 else f'{base}/page/{number-1}/'
@@ -260,7 +261,7 @@ def feed(settings, posts, base, demo, number=1):
 def archive(settings, posts, base, demo):
     months = sorted({p['date'][:7] for p in posts},reverse=True)
     controls = f'''<form class="filters" id="filters" role="search"><label class="search-label"><span>搜索</span><input type="search" name="q" placeholder="一个词，一次没想完的对话…" aria-label="搜索全文"></label><div class="filter-row"><label><span>形态</span><select name="kind"><option value="">所有形态</option>{''.join(f'<option value="{k}">{v}</option>' for k,v in KINDS.items())}</select></label><label><span>话题</span><select name="tag"><option value="">所有话题</option>{''.join(f'<option value="{t["id"]}">{e(t["label"])}</option>' for t in settings['tags'])}</select></label><label><span>月份</span><select name="month"><option value="">所有月份</option>{''.join(f'<option>{m}</option>' for m in months)}</select></label><label><span>从</span><input type="date" name="from" aria-label="起始日期"></label><label><span>至</span><input type="date" name="to" aria-label="结束日期"></label><button type="reset" class="reset">清除筛选</button></div></form>'''
-    body = f'''<section class="intro archive-intro"><div class="eyebrow">THE RUNNING LOG</div><h1>想法有迹可循<span class="period">.</span></h1><p>顺着时间，找回当时在想什么。</p></section>{controls}<div class="results-heading"><span id="result-count" role="status">{len(posts)} 条记录</span><span>按最初记录时间 · 新 → 旧</span></div><p id="filter-error" class="filter-error" role="alert" hidden></p><div id="archive-results">{''.join(card(p,settings,base) for p in posts[:PAGE_SIZE]) or empty()}</div><div id="archive-pagination"></div><noscript><p>交互筛选需要 JavaScript。<a href="{base}/">返回可逐页浏览的时间流</a>。</p></noscript>'''
+    body = f'''<section class="intro archive-intro"><h1>归档</h1></section>{controls}<div class="results-heading"><span id="result-count" role="status">{len(posts)} 条记录</span><span>按最初记录时间 · 新 → 旧</span></div><p id="filter-error" class="filter-error" role="alert" hidden></p><div id="archive-results">{''.join(card(p,settings,base) for p in posts[:PAGE_SIZE]) or empty()}</div><div id="archive-pagination"></div><noscript><p>交互筛选需要 JavaScript。<a href="{base}/">返回可逐页浏览的时间流</a>。</p></noscript>'''
     return shell(settings,'归档',settings['description'],body,base,'archive/','archive',demo)
 
 
@@ -275,7 +276,7 @@ def detail(settings, post, posts, base, demo):
         sources = '<section class="sources"><h2>这次讨论的背景</h2><ol>'+''.join(f'<li id="source-{s["id"]}"><a href="{e(s["url"])}" target="_blank" rel="noopener noreferrer">{e(s["title"])} ↗</a><span>{e(s["publisher"])} · {"发布 "+s["published"]+" · " if s["published"] else ""}查阅 {s["accessed"]}</span></li>' for s in post['sources'])+'</ol></section>'
     updates = '<section class="updates"><h2>后来又想了想</h2>'+''.join(f'<div><time datetime="{u["date"]}">{u["date"]}</time><p>{e(u["text"])}</p></div>' for u in post['updates'])+'</section>' if post['updates'] else ''
     neighbors = sorted((p for p in posts if p['id']!=post['id']),key=lambda p:(-len(set(p['tags'])&set(post['tags'])), -int(p['date'].replace('-','')),p['id']))[:2]
-    more = '<section class="read-next"><h2>还有一些没聊完的</h2>'+''.join(f'<a href="{base}/posts/{p["id"]}/"><span>{e(title(p))}</span><small>{KINDS[p["kind"]]} · {p["date"]} ↗</small></a>' for p in neighbors)+'</section>' if neighbors else ''
+    more = '<section class="read-next"><h2>继续读</h2>'+''.join(f'<a href="{base}/posts/{p["id"]}/"><span>{e(title(p))}</span><small>{KINDS[p["kind"]]} · {p["date"]} ↗</small></a>' for p in neighbors)+'</section>' if neighbors else ''
     display_title = f'<h1>{e(post["title"])}</h1>' if post['title'] else '<h1 class="sr-only">'+e(title(post))+'</h1>'
     body = f'''<article class="post {post['kind']} {'has-toc' if toc else ''}"><a class="back-link" href="{base}/">← 回到想法流</a><header class="post-header"><div class="post-meta"><span class="kind-label">{KINDS[post['kind']]}</span><time datetime="{post['date']}">{post['date']}</time><span>{'片刻阅读' if post['kind']=='idea' else str(minutes(post))+' 分钟阅读'}</span></div>{display_title}{lead}<div class="tags">{tag_links(post,settings,base)}</div></header><div class="reading-layout">{toc}<div class="reading-column"><div class="prose">{render_blocks(post)}</div>{updates}<div class="post-signoff"><span class="signature">{'演示文字' if demo else 'Jiadong'}</span><button class="copy-link" type="button">复制这条想法的链接 ↗</button></div>{sources}{more}<a class="text-link" href="{base}/archive/">回到所有记录 →</a></div></div></article>'''
     return shell(settings,title(post),summary(post),body,base,f'posts/{post["id"]}/','post',demo)
