@@ -3,6 +3,15 @@
 This is Jiadong's static GitHub Pages site. The live branch is `furbish`.
 Knowledge is a separate visual and data system; do not inherit the old homepage theme.
 
+## Shared site design
+
+Read `docs/site/README.md` for homepage content sources and design decisions.
+`assets/css/site.css` owns shared tokens, page width and global navigation;
+product layouts stay in their own CSS. After changing shared CSS, build and
+verify both Knowledge and Ideas, and bump the homepage stylesheet query version.
+The Undergraduate standalone page has been removed; keep its selected research
+and background on the homepage without reintroducing the route or certificates.
+
 ## Learning workflow
 
 When the user says **收工** to end a learning or discussion session, read and execute

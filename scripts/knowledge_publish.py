@@ -37,7 +37,7 @@ def publish(day):
     check_dom()
     changed = set(git('diff', '--name-only', '-z').split('\0') + git('ls-files', '--others', '--exclude-standard', '-z').split('\0')) - {''}
     relevant = sorted(p for p in changed if allowed(p))
-    require(not any(p.startswith('knowledge/') and not allowed(p) for p in changed), 'Uncommitted Knowledge code/demo changes need a separate implementation commit')
+    require(not any(p == 'assets/css/site.css' or (p.startswith('knowledge/') and not allowed(p)) for p in changed), 'Uncommitted shared styles or Knowledge code/demo changes need a separate implementation commit')
     subprocess.run(['git', 'fetch', 'origin', BRANCH], cwd=ROOT, check=True)
     ahead = git('rev-list', f'origin/{BRANCH}..HEAD').splitlines()
     behind = git('rev-list', f'HEAD..origin/{BRANCH}').splitlines()

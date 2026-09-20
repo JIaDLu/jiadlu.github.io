@@ -54,7 +54,7 @@ def publish():
     build(ROOT/'content/ideas',ROOT/'ideas')
     check_dom()
     changed=set(git('diff','--name-only','-z').split('\0')+git('ls-files','--others','--exclude-standard','-z').split('\0'))-{''}
-    need(not any(p.startswith(('ideas/','content/ideas/')) and not allowed(p) for p in changed),'Uncommitted Ideas implementation/demo changes need a separate commit')
+    need(not any(p == 'assets/css/site.css' or (p.startswith(('ideas/','content/ideas/')) and not allowed(p)) for p in changed),'Uncommitted shared styles or Ideas implementation/demo changes need a separate commit')
     relevant=sorted(p for p in changed if allowed(p))
     subprocess.run(['git','fetch','origin',BRANCH],cwd=ROOT,check=True)
     need(not git('rev-list',f'HEAD..origin/{BRANCH}'),'Remote has new commits; reconcile and revalidate first')

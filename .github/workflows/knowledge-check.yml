@@ -2,9 +2,9 @@ name: Knowledge integrity
 on:
   push:
     branches: [furbish]
-    paths: ['content/knowledge/**', 'knowledge/**', 'scripts/**', 'tests/**', '.github/workflows/knowledge-check.yml']
+    paths: ['assets/css/site.css', 'content/knowledge/**', 'knowledge/**', 'scripts/**', 'tests/**', '.github/workflows/knowledge-check.yml']
   pull_request:
-    paths: ['content/knowledge/**', 'knowledge/**', 'scripts/**', 'tests/**', '.github/workflows/knowledge-check.yml']
+    paths: ['assets/css/site.css', 'content/knowledge/**', 'knowledge/**', 'scripts/**', 'tests/**', '.github/workflows/knowledge-check.yml']
   workflow_dispatch:
 permissions:
   contents: read

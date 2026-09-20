@@ -127,15 +127,16 @@ def escape(value):
     return html.escape(str(value), quote=True)
 
 def shell(title, description, body, base, page, demo=False, extra=''):
-    asset_version = hashlib.sha256(b''.join(p.read_bytes() for p in sorted((ROOT / 'knowledge/assets').glob('*')) if p.is_file())).hexdigest()[:12]
+    asset_version = hashlib.sha256(b''.join(p.read_bytes() for p in sorted((ROOT / 'knowledge/assets').glob('*')) if p.is_file()) + (ROOT / 'assets/css/site.css').read_bytes()).hexdigest()[:12]
     banner = '<div class="demo-banner">演示空间 · 示例内容与日期，不计入真实学习记录 <a href="/knowledge/">返回我的知识库 ↗</a></div>' if demo else ''
     return f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{escape(title)} · Jiadong / Knowledge</title><meta name="description" content="{escape(description)}">
 <meta property="og:title" content="{escape(title)}"><meta property="og:description" content="{escape(description)}"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="{escape(title)}"><meta name="twitter:description" content="{escape(description)}">
-<link rel="stylesheet" href="/knowledge/assets/style.css?v={asset_version}"><script defer src="/knowledge/assets/app.js?v={asset_version}"></script></head>
+<link rel="stylesheet" href="/knowledge/assets/style.css?v={asset_version}"><link rel="stylesheet" href="/assets/css/site.css?v={asset_version}"><script defer src="/knowledge/assets/app.js?v={asset_version}"></script></head>
 <body data-base="{base}" data-page="{page}"><a class="skip" href="#main">跳至正文</a>{banner}
-<header class="site-header"><a class="brand" href="/">Jiadong<span>/</span><b>Knowledge</b></a><nav aria-label="主导航"><a {'aria-current="page"' if page == 'home' else ''} href="{base}/">每日学习</a><a {'aria-current="page"' if page == 'tree' else ''} href="{base}/tree/">知识树</a><a href="/ideas/">Ideas ↗</a><a href="/">个人主页 ↗</a></nav></header>
+<header class="site-header"><a class="brand" href="/">Jiadong</a><nav aria-label="主导航"><a href="/">Home</a><a href="/knowledge/" aria-current="location">Knowledge</a><a href="/ideas/">Ideas</a></nav></header>
+<nav class="section-nav" aria-label="Knowledge 导航"><a {'aria-current="page"' if page == 'home' else ''} href="{base}/">每日学习</a><a {'aria-current="page"' if page == 'tree' else ''} href="{base}/tree/">知识树</a></nav>
 <main id="main">{body}<noscript><p>学习日历和交互树需要启用 JavaScript；知识详情可直接阅读。</p></noscript></main><footer><span>Jiadong’s learning notebook</span><span>一点一滴，形成体系。<span class="footer-dot">●</span></span></footer>{extra}</body></html>'''
 
 def detail(n, notes, branches, days, base, demo):
@@ -178,6 +179,7 @@ def build(source, output, base='/knowledge', demo=False):
     for asset in sorted((ROOT / 'knowledge/assets').glob('*')):
         if asset.is_file():
             revision_input += asset.read_text()
+    revision_input += (ROOT / 'assets/css/site.css').read_text()
     revision = hashlib.sha256(revision_input.encode()).hexdigest()[:16]
     home = '''<section class="page-intro"><div class="eyebrow">A PERSONAL KNOWLEDGE SYSTEM</div><div class="intro-row"><div><h1>Everyday Learning<span class="period">.</span></h1><p class="lede">让今天的理解，成为明天的直觉。</p></div><a class="text-link" href="BASE/tree/">探索知识树 <span>↗</span></a></div></section>
 <div id="learning-app" aria-live="polite"><p class="loading">正在展开学习记录…</p></div>'''.replace('BASE', base)

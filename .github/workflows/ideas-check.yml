@@ -1,10 +1,10 @@
-name: Ideas integrity
+name: Site and Ideas integrity
 on:
   push:
     branches: [furbish]
-    paths: ['content/ideas/**', 'ideas/**', 'docs/ideas/examples/**', 'scripts/**', 'tests/**', '.github/workflows/ideas-check.yml']
+    paths: ['index.html', 'undergraduate/**', 'assets/css/home.css', 'assets/cv/**', 'assets/css/site.css', 'content/ideas/**', 'ideas/**', 'docs/ideas/examples/**', 'scripts/**', 'tests/**', '.github/workflows/ideas-check.yml']
   pull_request:
-    paths: ['content/ideas/**', 'ideas/**', 'docs/ideas/examples/**', 'scripts/**', 'tests/**', '.github/workflows/ideas-check.yml']
+    paths: ['index.html', 'undergraduate/**', 'assets/css/home.css', 'assets/cv/**', 'assets/css/site.css', 'content/ideas/**', 'ideas/**', 'docs/ideas/examples/**', 'scripts/**', 'tests/**', '.github/workflows/ideas-check.yml']
   workflow_dispatch:
 permissions:
   contents: read
