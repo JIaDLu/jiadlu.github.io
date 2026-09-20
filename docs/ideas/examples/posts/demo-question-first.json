@@ -1,0 +1,20 @@
+{
+  "id": "demo-question-first",
+  "kind": "idea",
+  "title": "先留一个问题",
+  "date": "2026-09-15",
+  "updated": "2026-09-15",
+  "tags": [
+    "work",
+    "agents"
+  ],
+  "excerpt": "",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "如果一个工具替我省掉了写代码的时间，却增加了我判断它对不对的时间，那我到底应该练得更快，还是练得更会判断？"
+    }
+  ],
+  "sources": [],
+  "updates": []
+}

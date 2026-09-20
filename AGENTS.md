@@ -31,3 +31,24 @@ Run `python3 scripts/knowledge.py validate`, `python3 scripts/knowledge.py build
 pages with their source so branch-based GitHub Pages works without extra setup.
 The existing Pages deployment remains the publisher; the Knowledge integrity
 workflow checks consistency and does not change repository Pages settings.
+
+## Ideas / personal expression
+
+Ideas records **What I think**, separately from Knowledge's **What I learned**.
+When the user asks to follow AI developments, draft current ideas, says **记一笔**,
+or invokes `$ideas-editor`, read `.agents/skills/ideas-editor/SKILL.md`.
+“记一笔” means edit and publish; “先整理成草稿” stays local; following news alone
+never authorizes publication. “收工” continues to route to Knowledge only.
+
+Read `docs/ideas/README.md`, `docs/ideas/schema.md`, and the editorial guidance
+before archiving Ideas. Published sources live in `content/ideas/`; public views
+in `ideas/` are generated. `.ideas-local/` holds private drafts, exact user voice
+anchors, and current-session checkpoints. Never publish or commit that folder.
+Do not attribute AI-originated opinions or invented experiences to Jiadong.
+Keep demo content under `docs/ideas/examples/` and `ideas/demo/` only.
+
+For Ideas changes run `python3 scripts/ideas.py validate`,
+`python3 scripts/ideas.py build`, `python3 -m unittest discover -s tests -v`,
+`node --check ideas/assets/app.js`, and `python3 scripts/ideas_dom_check.py`.
+Commit generated pages with the source. Use the dedicated publisher for future
+content updates so unrelated workspace changes are not staged or pushed.

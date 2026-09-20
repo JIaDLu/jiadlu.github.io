@@ -7,3 +7,4 @@ exclude:
   - AGENTS.md
   - .agents
   - .knowledge-local
+  - .ideas-local

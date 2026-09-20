@@ -1,0 +1,58 @@
+---
+name: ideas-editor
+description: 在 jiadlu.github.io workspace 中跟踪值得讨论的 AI 动态，并把当前 session 中用户真实的判断、疑问、吐槽和 brainstorm 整理成 Ideas。用户说“看看 AI 动态”“整理想法”“写成草稿”“记一笔”“发布 Ideas”或调用 $ideas-editor 时使用；“记一笔”表示整理并发布，单纯追踪新闻或讨论不授权发表。不同于只归档知识的“收工”。
+---
+
+# Ideas editor
+
+这里记录 **What I think**。知识归档由 `shougong` 负责。先读 `docs/ideas/README.md` 与 `docs/ideas/schema.md`；需要查来源、保留表达或做发布前编辑审查时读 [editorial.md](../../../docs/ideas/editorial.md)。该引用相对于 skill 目录应通过仓库根路径 `docs/ideas/editorial.md` 打开。
+
+## 按意图推进
+
+- **看看 AI 动态 / Follow AI**：联网追踪 → 提供值得讨论的线索 → 与用户讨论。不要把新闻摘要自动发表。
+- **整理想法 / 写成草稿**：整理当前讨论，只写 `.ideas-local/` 并 dry-run，不写公开 content，不 commit/push。
+- **记一笔 / 发布 Ideas**：整理当前 session 的可发表想法，检查质量，应用、构建并正常 commit/push；这是本次发布授权，不重复询问同一授权。用户明确指定的范围优先。
+- **补记某篇**：复用稳定 ID 与最初日期；用 `updates` 追加认知变化，保留旧补记。修订正文时必须补一条说明，不能把新观点伪装成当初就想明白了。
+
+## Follow frontier
+
+用户未指定时间窗时先看最近 72 小时，必要时扩至 7 天并明确标明。优先用户提供的 X 链接、作者公开帖、Lab/团队一手说明、代码、评测与产品文档。把事件发生时间与信息发布时间分开；转述和猜测不能充当实现证据。
+
+筛选少量真正值得继续问的线索。每条给出原始来源、日期、核心事实、值得追问的技术/行业问题，以及仍不确定的部分。不要用热度代替价值，不要只排新闻标题。X 访问失败时明确说明覆盖限制，转查作者或团队的公开一手渠道；不要声称读过未能访问的帖子。对“黑魔法”的解释区分：公开确认的实现、合理推断、尚无证据的猜想。没有一手证据就保留不确定性。
+
+围绕用户选中的问题继续聊，不强制每次都走完技术长链。一个疑问、两句吐槽或生活中的观察也可以单独留下。
+
+## 从对话中找到作者
+
+1. 读取当前 session 可见的完整对话、压缩摘要及属于本 session 的 `.ideas-local/` 检查点。不扫描其他 session；不把 Knowledge 笔记自动改写成用户立场。上下文缺少关键原话时保留本地草稿并说明缺口，不伪造回忆。
+2. 在私有 batch 的 `voice` 中摘录真实用户原话，并用 `supports` 对应正文 block 索引。每项个人判断、情绪、经历或猜测应能回到用户的表达或明确认可。AI 独立提出的观点不自动变成用户第一人称；用户只是“继续讲”不代表认同。
+3. 去掉重复、口头停顿和无关往返，调整顺序与段落节奏。保留原来的判断力度、保留意见、俚语和有趣措辞。不要把“我有点怀疑”升级成“事实证明”；不要把两段话扩成教程。没有结论时允许停在一个问题上。
+4. 按内容自然选择：`idea`（短想法，可无标题）、`note`（随记/吐槽/观察）、`essay`（确实需要展开的长文）。Research Note、职业观察等由标题、正文和少量 tag 表达，不再增加分类层级。正文 block 灵活组合，不强制“背景—方法—结论”模板。
+5. 外部事实是背景。最新发布、性能、价格、就业行情等可核查且可能变化的断言需联网复核并留来源与查阅日期；一个个人感想无需硬加引文。引用原句遵守字数限制；长内容用自己的表达概括。未验证的说法删除、限定为问题，或留在草稿。
+6. 用用户原句对照成稿：有没有新增他没说过的立场、经历、情绪、确定性？有没有消掉真正有意思的语气？原话依据是本地审校材料，不是发布正文，更不是聊天记录公开授权。
+7. 不发表私密人名、聊天截图、公司未公开信息、凭据等；能不损害表达地匿名化就直接匿名化。依赖缺失证据/隐私授权的部分保留草稿，不用模糊套话掩盖缺口。
+
+## 写入与发布
+
+真实首批内容为空。`docs/ideas/examples/` 与 `/ideas/demo/` 仅是明确标记的虚构示例，不能当作用户声音，也不能复制进入真实记录。查 `content/ideas/posts/` 去重，同一个 session 反复调用时复用已有 ID；不同的新想法可以同日多条。
+
+在 `.ideas-local/<session>-<date>.batch.json` 保存 schema 定义的 batch。公开 post 不包含声源原话、session ID 或编辑检查表。用户仅要草稿时到 dry-run 为止：
+
+```sh
+python3 scripts/ideas_ingest.py .ideas-local/<batch>.json
+```
+
+dry-run 成功后检查计划变更与成稿。如果用户已授权发布，继续：
+
+```sh
+python3 scripts/ideas_ingest.py .ideas-local/<batch>.json --apply
+python3 scripts/ideas.py validate
+python3 scripts/ideas.py build
+python3 scripts/ideas_publish.py
+```
+
+发布器运行 Python 检查与 DOM 交互测试，只 stage Ideas 内容和生成物，检查正确远端、`furbish` 分支、预先暂存的修改、远端分歧和待推送提交。不要用 `git add .`、force push、reset 或自动 stash 来绕过检查。别人的未提交工作保持原样。内容提交已创建而 push 失败时，修复原因后重试发布器，不重复造新 post。
+
+推送后运行 `python3 scripts/ideas_publish.py --verify`。必要时隔约 20 秒检查，最多约 3 分钟；超时说明“已推送，线上待确认”，不把 push 当成上线。工作流：https://github.com/JIaDLu/jiadlu.github.io/actions
+
+结束时给出发布了哪些想法、是否有补记、commit 和可打开的页面链接。若没有用户自己的可发表内容，就说明暂未发表并保留值得继续讨论的问题，不为填满时间流编造文章。

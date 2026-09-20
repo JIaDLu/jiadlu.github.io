@@ -1,0 +1,6 @@
+interface:
+  display_name: "Ideas · 记一笔"
+  short_description: "跟踪 AI 前沿，保留真实的观点与语气，把当前讨论整理成想法并发布"
+  default_prompt: "使用 $ideas-editor 记一笔：保留我在当前 session 中的真实观点与语气，整理并发布到 Ideas。"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "timezone": "Asia/Shanghai",
+  "title": "Ideas, in progress.",
+  "description": "关于 AI，也关于身处其中的我们。观察、判断，和一些还没想清楚的事。",
+  "tags": [
+    {"id": "agents", "label": "Agents"},
+    {"id": "models", "label": "Models"},
+    {"id": "infra", "label": "Infra"},
+    {"id": "industry", "label": "行业"},
+    {"id": "work", "label": "工作与成长"},
+    {"id": "life", "label": "日常"}
+  ]
+}

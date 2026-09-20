@@ -135,7 +135,7 @@ def shell(title, description, body, base, page, demo=False, extra=''):
 <meta property="og:title" content="{escape(title)}"><meta property="og:description" content="{escape(description)}"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="{escape(title)}"><meta name="twitter:description" content="{escape(description)}">
 <link rel="stylesheet" href="/knowledge/assets/style.css?v={asset_version}"><script defer src="/knowledge/assets/app.js?v={asset_version}"></script></head>
 <body data-base="{base}" data-page="{page}"><a class="skip" href="#main">跳至正文</a>{banner}
-<header class="site-header"><a class="brand" href="/">Jiadong<span>/</span><b>Knowledge</b></a><nav aria-label="主导航"><a {'aria-current="page"' if page == 'home' else ''} href="{base}/">每日学习</a><a {'aria-current="page"' if page == 'tree' else ''} href="{base}/tree/">知识树</a><a href="/">个人主页 ↗</a></nav></header>
+<header class="site-header"><a class="brand" href="/">Jiadong<span>/</span><b>Knowledge</b></a><nav aria-label="主导航"><a {'aria-current="page"' if page == 'home' else ''} href="{base}/">每日学习</a><a {'aria-current="page"' if page == 'tree' else ''} href="{base}/tree/">知识树</a><a href="/ideas/">Ideas ↗</a><a href="/">个人主页 ↗</a></nav></header>
 <main id="main">{body}<noscript><p>学习日历和交互树需要启用 JavaScript；知识详情可直接阅读。</p></noscript></main><footer><span>Jiadong’s learning notebook</span><span>一点一滴，形成体系。<span class="footer-dot">●</span></span></footer>{extra}</body></html>'''
 
 def detail(n, notes, branches, days, base, demo):

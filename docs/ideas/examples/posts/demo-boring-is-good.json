@@ -1,0 +1,23 @@
+{
+  "id": "demo-boring-is-good",
+  "kind": "idea",
+  "title": "",
+  "date": "2026-09-20",
+  "updated": "2026-09-20",
+  "tags": [
+    "agents"
+  ],
+  "excerpt": "",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "一个不成熟的判断：\nAgent 真正变好用的那天，可能看起来反而没那么像“魔法”了。"
+    },
+    {
+      "type": "paragraph",
+      "text": "少一点惊艳的接管，多一点无聊但可靠的完成。"
+    }
+  ],
+  "sources": [],
+  "updates": []
+}
