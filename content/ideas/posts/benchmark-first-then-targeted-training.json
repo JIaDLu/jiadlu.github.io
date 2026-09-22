@@ -1,0 +1,28 @@
+{
+  "id": "benchmark-first-then-targeted-training",
+  "title": "先把 benchmark 发出来，再讲怎么训",
+  "date": "2026-09-23",
+  "updated": "2026-09-23",
+  "kind": "note",
+  "tags": [
+    "models",
+    "industry",
+    "work"
+  ],
+  "excerpt": "",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "第一篇我想先发一个 benchmark。手上的实验已经能看到一个挺明确的问题：确实存在‘话术越来越差’。"
+    },
+    {
+      "type": "paragraph",
+      "text": "而且我现在有个判断：只要是这种需要话术的场景，最后如果完全依赖闭源 API，大概率不会做得太好。闭源模型的能力倾斜一变，这类能力甚至可能越来越差。"
+    },
+    {
+      "type": "paragraph",
+      "text": "第二篇再写我们在营销、销售这些常见场景里，怎么做针对性训练。不过这个顺序和讲法还值得再商榷，先记着。"
+    }
+  ],
+  "sources": []
+}

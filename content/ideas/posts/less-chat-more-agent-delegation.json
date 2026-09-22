@@ -1,0 +1,23 @@
+{
+  "id": "less-chat-more-agent-delegation",
+  "title": "也许以后不用跟 AI 高强度聊天了",
+  "date": "2026-09-23",
+  "updated": "2026-09-23",
+  "kind": "idea",
+  "tags": [
+    "agents",
+    "models"
+  ],
+  "excerpt": "",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "最近关注到 JEV 模型，又想到一个有点远的画面：如果模型能做到不幻觉——当然，这不等于它说的一定正确——再加上多 Agent 协作，也许几年后我们都不需要再和 AI 高强度聊天了。"
+    },
+    {
+      "type": "paragraph",
+      "text": "可能只要给 AI 一个目标，多个 Agent 就能同时开干。人不用一直陪聊，最后负责验收就好了。"
+    }
+  ],
+  "sources": []
+}

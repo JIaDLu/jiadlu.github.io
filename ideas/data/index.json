@@ -3,6 +3,54 @@
   "demo": false,
   "posts": [
     {
+      "id": "polish-the-resume-again",
+      "title": "简历可能还得再磨一遍",
+      "date": "2026-09-23",
+      "kind": "idea",
+      "tags": [
+        "work"
+      ],
+      "search": "简历可能还得再磨一遍\n\n简历可能也有问题，还是得再润色一下。然后找朋友帮忙内推一下字节。不过先这样吧，后面一件件来。",
+      "html": "<article class=\"entry idea\" data-post=\"polish-the-resume-again\"><div class=\"entry-date\"><time datetime=\"2026-09-23\">09.23</time><span>2026</span></div><div class=\"entry-body\"><div class=\"entry-kind\"><i aria-hidden=\"true\"></i>Idea</div><h2><a href=\"/ideas/posts/polish-the-resume-again/\">简历可能还得再磨一遍</a></h2><div class=\"entry-text\"><p>简历可能也有问题，还是得再润色一下。然后找朋友帮忙内推一下字节。不过先这样吧，后面一件件来。</p></div><div class=\"entry-bottom\"><div class=\"tags\"><a class=\"tag\" href=\"/ideas/archive/?tag=work\">#工作与成长</a></div><a class=\"read-link\" href=\"/ideas/posts/polish-the-resume-again/\" aria-label=\"阅读 简历可能还得再磨一遍\">永久链接 <span aria-hidden=\"true\">↗</span></a></div></div></article>"
+    },
+    {
+      "id": "less-chat-more-agent-delegation",
+      "title": "也许以后不用跟 AI 高强度聊天了",
+      "date": "2026-09-23",
+      "kind": "idea",
+      "tags": [
+        "agents",
+        "models"
+      ],
+      "search": "也许以后不用跟 AI 高强度聊天了\n\n最近关注到 JEV 模型，又想到一个有点远的画面：如果模型能做到不幻觉——当然，这不等于它说的一定正确——再加上多 Agent 协作，也许几年后我们都不需要再和 AI 高强度聊天了。\n可能只要给 AI 一个目标，多个 Agent 就能同时开干。人不用一直陪聊，最后负责验收就好了。",
+      "html": "<article class=\"entry idea\" data-post=\"less-chat-more-agent-delegation\"><div class=\"entry-date\"><time datetime=\"2026-09-23\">09.23</time><span>2026</span></div><div class=\"entry-body\"><div class=\"entry-kind\"><i aria-hidden=\"true\"></i>Idea</div><h2><a href=\"/ideas/posts/less-chat-more-agent-delegation/\">也许以后不用跟 AI 高强度聊天了</a></h2><div class=\"entry-text\"><p>最近关注到 JEV 模型，又想到一个有点远的画面：如果模型能做到不幻觉——当然，这不等于它说的一定正确——再加上多 Agent 协作，也许几年后我们都不需要再和 AI 高强度聊天了。</p>\n<p>可能只要给 AI 一个目标，多个 Agent 就能同时开干。人不用一直陪聊，最后负责验收就好了。</p></div><div class=\"entry-bottom\"><div class=\"tags\"><a class=\"tag\" href=\"/ideas/archive/?tag=agents\">#Agents</a><a class=\"tag\" href=\"/ideas/archive/?tag=models\">#Models</a></div><a class=\"read-link\" href=\"/ideas/posts/less-chat-more-agent-delegation/\" aria-label=\"阅读 也许以后不用跟 AI 高强度聊天了\">永久链接 <span aria-hidden=\"true\">↗</span></a></div></div></article>"
+    },
+    {
+      "id": "get-my-energy-back-on-track",
+      "title": "先把自己的状态调起来",
+      "date": "2026-09-23",
+      "kind": "note",
+      "tags": [
+        "life",
+        "work"
+      ],
+      "search": "先把自己的状态调起来\n\n今晚去健身的时候，顺便想了下后面的时间怎么排。核心其实很朴素：早睡早起，保证八小时睡眠。八点到公司，把早上最好的精力用起来；中午 11:30 吃完，边吃边干一会儿，12 点就回家。中午最好能睡着，不然下午状态真的会差很多。\n然后吃复合维生素，晚上健身或者游泳。后面也可以搞个台式机，偶尔打打游戏。\n有空再发发小红书，约做 AI 的人 coffee chat。多交点朋友、扩展下自己的人际圈；我觉得这件事本身也会让自己的状态越来越好。",
+      "html": "<article class=\"entry note\" data-post=\"get-my-energy-back-on-track\"><div class=\"entry-date\"><time datetime=\"2026-09-23\">09.23</time><span>2026</span></div><div class=\"entry-body\"><div class=\"entry-kind\"><i aria-hidden=\"true\"></i>随记</div><h2><a href=\"/ideas/posts/get-my-energy-back-on-track/\">先把自己的状态调起来</a></h2><div class=\"entry-text\"><p>今晚去健身的时候，顺便想了下后面的时间怎么排。核心其实很朴素：早睡早起，保证八小时睡眠。八点到公司，把早上最好的精力用起来；中午 11:30 吃完，边吃边干一会儿，12 点就回家。中午最好能睡着，不然下午状态真的会差很多。</p></div><div class=\"entry-bottom\"><div class=\"tags\"><a class=\"tag\" href=\"/ideas/archive/?tag=life\">#日常</a><a class=\"tag\" href=\"/ideas/archive/?tag=work\">#工作与成长</a></div><a class=\"read-link\" href=\"/ideas/posts/get-my-energy-back-on-track/\" aria-label=\"阅读 先把自己的状态调起来\">接着读 <span aria-hidden=\"true\">↗</span></a></div></div></article>"
+    },
+    {
+      "id": "benchmark-first-then-targeted-training",
+      "title": "先把 benchmark 发出来，再讲怎么训",
+      "date": "2026-09-23",
+      "kind": "note",
+      "tags": [
+        "models",
+        "industry",
+        "work"
+      ],
+      "search": "先把 benchmark 发出来，再讲怎么训\n\n第一篇我想先发一个 benchmark。手上的实验已经能看到一个挺明确的问题：确实存在‘话术越来越差’。\n而且我现在有个判断：只要是这种需要话术的场景，最后如果完全依赖闭源 API，大概率不会做得太好。闭源模型的能力倾斜一变，这类能力甚至可能越来越差。\n第二篇再写我们在营销、销售这些常见场景里，怎么做针对性训练。不过这个顺序和讲法还值得再商榷，先记着。",
+      "html": "<article class=\"entry note\" data-post=\"benchmark-first-then-targeted-training\"><div class=\"entry-date\"><time datetime=\"2026-09-23\">09.23</time><span>2026</span></div><div class=\"entry-body\"><div class=\"entry-kind\"><i aria-hidden=\"true\"></i>随记</div><h2><a href=\"/ideas/posts/benchmark-first-then-targeted-training/\">先把 benchmark 发出来，再讲怎么训</a></h2><div class=\"entry-text\"><p>第一篇我想先发一个 benchmark。手上的实验已经能看到一个挺明确的问题：确实存在‘话术越来越差’。</p></div><div class=\"entry-bottom\"><div class=\"tags\"><a class=\"tag\" href=\"/ideas/archive/?tag=models\">#Models</a><a class=\"tag\" href=\"/ideas/archive/?tag=industry\">#行业</a><a class=\"tag\" href=\"/ideas/archive/?tag=work\">#工作与成长</a></div><a class=\"read-link\" href=\"/ideas/posts/benchmark-first-then-targeted-training/\" aria-label=\"阅读 先把 benchmark 发出来，再讲怎么训\">接着读 <span aria-hidden=\"true\">↗</span></a></div></div></article>"
+    },
+    {
       "id": "watch-rollouts-during-rl-training",
       "title": "训练时，还要看模型到底怎么做",
       "date": "2026-09-22",
