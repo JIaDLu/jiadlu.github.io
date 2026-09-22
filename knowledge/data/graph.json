@@ -120,9 +120,14 @@
           "kind": "learn",
           "note": "agent-environment-harness",
           "takeaway": "环境与 harness 在工程系统里常被合称，但严格拆分后，前者定义任务世界与状态变化，后者定义模型接入世界的交互协议；同一环境可配置多套 harness。"
+        },
+        {
+          "kind": "learn",
+          "note": "rl-rollout-observability",
+          "takeaway": "Rollout 既是策略行为也是后续训练数据；训练期间要检查完整交互与评分，公告只证明检查和干预，不能据此断言专用实时看板存在。"
         }
       ],
-      "summary": "借 MiMo 软件工程 RL 分清 environment、harness、verifier 与 grader 的职责边界。"
+      "summary": "借 MiMo RL 分清环境与 harness，并理解训练期间如何用 rollout 轨迹、评分和指标共同诊断学习过程。"
     }
   ],
   "demo": false,
@@ -313,6 +318,28 @@
       ],
       "summary": "先验证奖励，再诊断探索空间，最后用小规模对照实验判断 RL 的真实收益。",
       "title": "如何判断是否值得做 RL"
+    },
+    {
+      "aliases": [
+        "Rollout Logs",
+        "轨迹监控",
+        "Long-Horizon RL",
+        "在线 RL 可观测性"
+      ],
+      "branch": "training",
+      "id": "rl-rollout-observability",
+      "memory": [
+        "指标告诉你结果如何，轨迹帮助你理解结果怎么来的。",
+        "Rollout 既是行为，也是下一轮学习的数据；训练中检查轨迹就是检查正在强化什么。"
+      ],
+      "related": [
+        "llm-rl-training-metrics",
+        "llm-rl-step-pipeline",
+        "agent-reward-design",
+        "agent-environment-harness"
+      ],
+      "summary": "Rollout 既是策略行为也是后续学习的数据；训练期间需把完整轨迹、评分与环境错误关联起来，检查模型正在学会什么。",
+      "title": "多轮 RL：从指标监控到 Rollout 轨迹检查"
     },
     {
       "aliases": [],

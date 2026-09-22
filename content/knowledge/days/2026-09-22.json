@@ -1,10 +1,15 @@
 {
   "date": "2026-09-22",
-  "summary": "借 MiMo 软件工程 RL 分清 environment、harness、verifier 与 grader 的职责边界。",
+  "summary": "借 MiMo RL 分清环境与 harness，并理解训练期间如何用 rollout 轨迹、评分和指标共同诊断学习过程。",
   "entries": [
     {
       "note": "agent-environment-harness",
       "takeaway": "环境与 harness 在工程系统里常被合称，但严格拆分后，前者定义任务世界与状态变化，后者定义模型接入世界的交互协议；同一环境可配置多套 harness。",
+      "kind": "learn"
+    },
+    {
+      "note": "rl-rollout-observability",
+      "takeaway": "Rollout 既是策略行为也是后续训练数据；训练期间要检查完整交互与评分，公告只证明检查和干预，不能据此断言专用实时看板存在。",
       "kind": "learn"
     }
   ]
