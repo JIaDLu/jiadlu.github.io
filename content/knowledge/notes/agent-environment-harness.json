@@ -1,0 +1,73 @@
+{
+  "id": "agent-environment-harness",
+  "title": "Agent 训练中的 Environment 与 Harness",
+  "branch": "agents",
+  "summary": "Environment 定义任务世界及其状态变化，harness 规定模型如何观察、操作并记录这个世界；工程上二者常被封装成同一套系统。",
+  "context": "讨论 MiMo-V2.6 的 Multi-Harness Training 时，用户追问自建仿真环境是否就是 harness，需要澄清严格概念和日常工程用法之间的差别。",
+  "sections": [
+    {
+      "title": "四层职责",
+      "paragraphs": [
+        "Environment 是任务发生的客观世界，包含可变化的状态和行动后果，例如代码仓库、容器、文件系统、终端与资源限制。Harness 位于模型和环境之间，负责 system prompt、工具定义、动作解析、交互循环、上下文管理、终止条件与轨迹记录。",
+        "Verifier 判断任务是否真正完成，例如运行隐藏测试并检查环境终态；grader 在成功与失败之外进一步比较完成质量，例如路径是否更短、token 是否更少、是否违反约束。训练系统可将这些信号组合为 reward。"
+      ]
+    },
+    {
+      "title": "为什么日常会把环境叫作 harness",
+      "paragraphs": [
+        "实际项目通常把仿真器、工具接口、循环、上下文和评分入口封装在一起，因此把整套系统称为环境或 harness 都很常见。需要分析泛化来源时才值得严格拆开：环境决定模型在哪个世界做事，harness 决定模型怎样看见并操作这个世界。",
+        "同一个底层环境可以配置多套 harness。改变工具名称、system prompt、上下文压缩和子 Agent 能力，并不必然改变仓库、容器或成功标准。Multi-Harness Training 的目标之一，是减少模型对某一种框架协议和交互套路的依赖。"
+      ]
+    },
+    {
+      "title": "适用边界",
+      "paragraphs": [
+        "Environment 与 harness 不是行业中始终严格统一的术语。有些框架把环境适配器也纳入 harness，有些实现把 verifier 作为环境返回 reward 的一部分。讨论时应先明确组件职责，不必执着于唯一命名。",
+        "更换 harness 后表现下降，不必然证明模型没有底层能力；也可能是工具可用性、prompt、上下文预算或动作表达发生了实质变化。要检验跨 harness 泛化，应尽量保持任务、预算和成功标准可比。"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "同一个修 bug 任务使用两套 harness",
+      "scenario": "模型需要修复一个 Python 缓存模块的并发 bug，并通过公开与隐藏测试。",
+      "steps": [
+        "Environment 提供带 bug 的 Git 仓库、Docker 容器、文件系统、pytest 和资源限制；模型动作会真实改变仓库状态。",
+        "Harness A 暴露 read_file、search_code、apply_patch、run_tests 等结构化工具，并负责解析调用、回传 observation、维护历史和限制轮数。",
+        "Harness B 保持同一个仓库、容器和测试不变，只提供 bash；模型必须自己组合搜索、读取、修改和测试命令。",
+        "Verifier 分别运行公开与隐藏测试并检查模型没有篡改测试；grader 再比较多条成功轨迹的修改质量、交互轮数和 token 消耗。"
+      ],
+      "code": "Environment: repo + container + filesystem + tests\nHarness A: read_file | search_code | apply_patch | run_tests\nHarness B: bash(command)\nVerifier: public_tests && hidden_tests && tests_untouched\nGrader: correctness + path_quality + efficiency",
+      "language": "text",
+      "result": "两套 harness 面对的是同一个任务世界和成功标准，却给模型不同的观察与行动接口。若模型在两者上都能形成调查、修改、验证的策略，更能说明它学到的是软件工程能力而非单一框架套路。"
+    }
+  ],
+  "memory": [
+    "环境决定在哪个世界做事；harness 决定怎样看见并操作这个世界。",
+    "先按职责拆组件，再讨论术语；工程封装里环境和 harness 经常重叠。"
+  ],
+  "recall": {
+    "question": "同一个代码仓库和隐藏测试不变，只把结构化工具换成 bash，这改变的是 environment 还是 harness？",
+    "answer": "主要改变的是 harness：任务世界、状态和成功标准仍相同，但模型观察与操作世界的接口、交互协议和上下文管理方式发生了变化。"
+  },
+  "related": [
+    "verifier-for-rl",
+    "pi-agent-learning-path"
+  ],
+  "sources": [
+    {
+      "title": "MiMo-V2.6: Scaling Up Reinforcement Learning for Self-Improvement",
+      "url": "https://mimo.mi.com/docs/en-US/news/latest/v2-6"
+    },
+    {
+      "title": "MiMo-V2.6-Pro-RL model card",
+      "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL"
+    }
+  ],
+  "aliases": [
+    "Agent Harness",
+    "Multi-Harness Training",
+    "训练环境",
+    "仿真环境"
+  ]
+}

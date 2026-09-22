@@ -112,10 +112,41 @@
         }
       ],
       "summary": "大模型 RL 面试复习：训练监控、迭代链路、模型选择、GPU 效率、独立评测与 DAPO。"
+    },
+    {
+      "date": "2026-09-22",
+      "entries": [
+        {
+          "kind": "learn",
+          "note": "agent-environment-harness",
+          "takeaway": "环境与 harness 在工程系统里常被合称，但严格拆分后，前者定义任务世界与状态变化，后者定义模型接入世界的交互协议；同一环境可配置多套 harness。"
+        }
+      ],
+      "summary": "借 MiMo 软件工程 RL 分清 environment、harness、verifier 与 grader 的职责边界。"
     }
   ],
   "demo": false,
   "notes": [
+    {
+      "aliases": [
+        "Agent Harness",
+        "Multi-Harness Training",
+        "训练环境",
+        "仿真环境"
+      ],
+      "branch": "agents",
+      "id": "agent-environment-harness",
+      "memory": [
+        "环境决定在哪个世界做事；harness 决定怎样看见并操作这个世界。",
+        "先按职责拆组件，再讨论术语；工程封装里环境和 harness 经常重叠。"
+      ],
+      "related": [
+        "verifier-for-rl",
+        "pi-agent-learning-path"
+      ],
+      "summary": "Environment 定义任务世界及其状态变化，harness 规定模型如何观察、操作并记录这个世界；工程上二者常被封装成同一套系统。",
+      "title": "Agent 训练中的 Environment 与 Harness"
+    },
     {
       "aliases": [],
       "branch": "training",
