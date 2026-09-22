@@ -164,7 +164,7 @@ def e(value):
 
 
 def asset_version():
-    return hashlib.sha256(b''.join(p.read_bytes() for p in sorted((ROOT/'ideas/assets').glob('*')) if p.is_file()) + (ROOT/'assets/css/site.css').read_bytes()).hexdigest()[:12]
+    return hashlib.sha256(b''.join(p.read_bytes() for p in sorted((ROOT/'ideas/assets').glob('*')) if p.is_file()) + b''.join((ROOT/path).read_bytes() for path in ('assets/css/site.css', 'assets/favicon.png', 'assets/apple-touch-icon.png'))).hexdigest()[:12]
 
 
 def render_blocks(post, subset=None):
@@ -225,6 +225,7 @@ def shell(settings, page_title, description, body, base, route='', page='feed', 
 <title>{e(page_title)} · Jiadong / Ideas</title><meta name="description" content="{e(description)}"><link rel="canonical" href="{e(canonical)}">
 <meta property="og:title" content="{e(page_title)}"><meta property="og:description" content="{e(description)}"><meta property="og:url" content="{e(canonical)}"><meta property="og:type" content="{'article' if page=='post' else 'website'}"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="{e(page_title)}"><meta name="twitter:description" content="{e(description)}">
 {'<meta name="robots" content="noindex,follow">' if demo else ''}<link rel="alternate" type="application/atom+xml" title="Jiadong / Ideas" href="{base}/feed.xml">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon.png?v={version}"><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v={version}">
 <link rel="stylesheet" href="/ideas/assets/style.css?v={version}"><link rel="stylesheet" href="/assets/css/site.css?v={version}"><script defer src="/ideas/assets/app.js?v={version}"></script></head>
 <body data-base="{base}" data-page="{page}"><a class="skip" href="#main">跳到正文</a>{banner}<header class="site-header"><a class="brand" href="/">Jiadong</a><nav aria-label="主导航"><a href="/">Home</a><a href="/knowledge/">Knowledge</a><a href="/ideas/" aria-current="location">Ideas</a></nav></header>
 <nav class="section-nav" aria-label="Ideas 导航"><a href="{base}/" {'aria-current="page"' if page=='feed' else ''}>想法</a><a href="{base}/archive/" {'aria-current="page"' if page=='archive' else ''}>归档</a></nav>

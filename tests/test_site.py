@@ -64,6 +64,8 @@ class SiteTests(unittest.TestCase):
                 page = Page(path.read_text())
                 self.assertEqual(set(page.header_links), {'/', '/knowledge/', '/ideas/'})
                 self.assertTrue(any(urlsplit(ref).path == '/assets/css/site.css' for ref in page.references))
+                self.assertTrue(any(urlsplit(ref).path == '/assets/favicon.png' for ref in page.references))
+                self.assertTrue(any(urlsplit(ref).path == '/assets/apple-touch-icon.png' for ref in page.references))
                 self.assertFalse(any(urlsplit(ref).path.startswith('/undergraduate/') for ref in page.references))
 
     def test_shared_css_changes_invalidate_both_product_revisions(self):
@@ -76,6 +78,8 @@ class SiteTests(unittest.TestCase):
             (root / 'assets/css').mkdir(parents=True)
             shared = root / 'assets/css/site.css'
             shared.write_bytes((ROOT / 'assets/css/site.css').read_bytes())
+            for name in ('favicon.png', 'apple-touch-icon.png'):
+                shutil.copy2(ROOT / 'assets' / name, root / 'assets' / name)
             for module, product in ((knowledge, 'knowledge'), (ideas, 'ideas')):
                 with self.subTest(product=product), patch.object(module, 'ROOT', root):
                     output = root / f'{product}-public'

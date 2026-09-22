@@ -127,12 +127,13 @@ def escape(value):
     return html.escape(str(value), quote=True)
 
 def shell(title, description, body, base, page, demo=False, extra=''):
-    asset_version = hashlib.sha256(b''.join(p.read_bytes() for p in sorted((ROOT / 'knowledge/assets').glob('*')) if p.is_file()) + (ROOT / 'assets/css/site.css').read_bytes()).hexdigest()[:12]
+    asset_version = hashlib.sha256(b''.join(p.read_bytes() for p in sorted((ROOT / 'knowledge/assets').glob('*')) if p.is_file()) + b''.join((ROOT / path).read_bytes() for path in ('assets/css/site.css', 'assets/favicon.png', 'assets/apple-touch-icon.png'))).hexdigest()[:12]
     banner = '<div class="demo-banner">演示空间 · 示例内容与日期，不计入真实学习记录 <a href="/knowledge/">返回我的知识库 ↗</a></div>' if demo else ''
     return f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{escape(title)} · Jiadong / Knowledge</title><meta name="description" content="{escape(description)}">
 <meta property="og:title" content="{escape(title)}"><meta property="og:description" content="{escape(description)}"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="{escape(title)}"><meta name="twitter:description" content="{escape(description)}">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon.png?v={asset_version}"><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v={asset_version}">
 <link rel="stylesheet" href="/knowledge/assets/style.css?v={asset_version}"><link rel="stylesheet" href="/assets/css/site.css?v={asset_version}"><script defer src="/knowledge/assets/app.js?v={asset_version}"></script></head>
 <body data-base="{base}" data-page="{page}"><a class="skip" href="#main">跳至正文</a>{banner}
 <header class="site-header"><a class="brand" href="/">Jiadong</a><nav aria-label="主导航"><a href="/">Home</a><a href="/knowledge/" aria-current="location">Knowledge</a><a href="/ideas/">Ideas</a></nav></header>
