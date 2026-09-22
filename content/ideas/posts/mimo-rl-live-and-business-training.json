@@ -1,0 +1,47 @@
+{
+  "id": "mimo-rl-live-and-business-training",
+  "title": "看 MiMo RL 直播，把大厂训练和自己的工作接上了",
+  "date": "2026-09-22",
+  "updated": "2026-09-22",
+  "kind": "note",
+  "tags": [
+    "models",
+    "work"
+  ],
+  "excerpt": "",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "我觉得小米 MiMo 的 RL 直播，是普通人能接触大厂模型训练的一个超好的机会。平时大家称赞的、真正能用的 AI 到底是怎么练出来的？这次至少能看到其中一段 RL 训练的过程。",
+      "refs": [
+        "mimo-v26"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "对我这种在小公司做业务算法的人，也有很多可以学。看下来，它们用的技术其实没有想象中那么多“黑魔法”：我平时训练也有自己构建的仿真环境和交互框架，也做多轮交互，只不过大约十轮，还没有那么 long-horizon。"
+    },
+    {
+      "type": "paragraph",
+      "text": "我的任务更偏具体业务，数据相对单一；MiMo 面向更广的能力，有更多环境、多套 harness、更丰富的数据来源，也要考虑数据配比、多机多卡 scaling，以及大规模训练下的细节。",
+      "refs": [
+        "mimo-v26"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "这种对照让我觉得，自己做业务训练的经验和大厂模型训练是能接得上的。规模和复杂度确实不同，但很多问题已经可以用自己的经验去理解。这是我看这场直播觉得特别有价值的地方。"
+    }
+  ],
+  "sources": [
+    {
+      "id": "mimo-v26",
+      "title": "MiMo-V2.6 官方发布说明",
+      "url": "https://mimo.mi.com/docs/en-US/news/latest/v2-6",
+      "publisher": "Xiaomi MiMo",
+      "published": "2026-09-22",
+      "accessed": "2026-09-22"
+    }
+  ],
+  "updates": []
+}

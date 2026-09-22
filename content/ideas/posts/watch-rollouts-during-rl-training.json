@@ -1,0 +1,41 @@
+{
+  "id": "watch-rollouts-during-rl-training",
+  "title": "训练时，还要看模型到底怎么做",
+  "date": "2026-09-22",
+  "updated": "2026-09-22",
+  "kind": "note",
+  "tags": [
+    "models",
+    "work"
+  ],
+  "excerpt": "",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "这次看 MiMo RL 直播，有一条中途发出的通知特别让我在意：团队从 rollout logs 里观察到一些不良模式，因此决定在接下来的 Pro run 中移除 cyber 数据集。这是我在直播看板截图里看到的。"
+    },
+    {
+      "type": "paragraph",
+      "text": "我之前的直觉是，模型放下去训之后，实时监控一下指标就好了。看到这条通知才意识到，训练过程中的 rollout 本身也需要有能持续查看、检查的渠道，不能只盯着最后的曲线。"
+    },
+    {
+      "type": "paragraph",
+      "text": "具体是不是专门的实时看板、多久检查一次，这条通知没有讲清楚。但训练还在进行时，就去看模型的交互过程，并据此调整训练，这件事对我很有启发。"
+    },
+    {
+      "type": "paragraph",
+      "text": "对我后续做多轮 RL、long-horizon RL 来说，这是一个很好的学习点：训练时也要看模型到底怎么做。我想把这个反思留下来。"
+    }
+  ],
+  "sources": [
+    {
+      "id": "mimo-v26",
+      "title": "MiMo-V2.6 官方发布说明",
+      "url": "https://mimo.mi.com/docs/en-US/news/latest/v2-6",
+      "publisher": "Xiaomi MiMo",
+      "published": "2026-09-22",
+      "accessed": "2026-09-22"
+    }
+  ],
+  "updates": []
+}
