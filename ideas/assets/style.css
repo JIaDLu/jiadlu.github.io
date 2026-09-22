@@ -155,15 +155,12 @@ code { font-family: inherit; }
 .signature { font: italic 21px var(--serif); color: #76865e; }
 .copy-link { font-size: 10px; border: 0; padding-right: 0; color: var(--muted); }
 .sources { border-top: 1px solid var(--line); padding-top: 23px; margin: 30px 0; }
-.sources h2, .updates h2, .read-next h2 { font-size: 12px; color: var(--muted); margin-bottom: 19px; }
+.sources h2, .read-next h2 { font-size: 12px; color: var(--muted); margin-bottom: 19px; }
 .sources ol { padding-left: 20px; font-size: 12px; }
 .sources li { padding: 5px 0 12px 4px; scroll-margin-top: 30px; }
 .sources li:target { background: var(--tint); }
 .sources li > span { display: block; font-size: 10px; color: var(--muted); margin-top: 5px; }
 .sources a { text-decoration: underline; text-underline-offset: 4px; }
-.updates { border-left: 1px solid #a7b695; padding-left: 22px; margin: 40px 0; }
-.updates time { font: 10px ui-monospace, monospace; color: #8b967e; }
-.updates p { margin: 8px 0 20px; font-size: 14px; line-height: 1.9; white-space: pre-line; }
 .read-next { border-top: 1px solid var(--line); padding-top: 23px; margin: 28px 0; }
 .read-next a { display: block; padding: 13px 0; font-size: 14px; }
 .read-next small { display: block; margin-top: 5px; font-size: 10px; color: var(--muted); }

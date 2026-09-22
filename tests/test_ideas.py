@@ -118,15 +118,28 @@ class IdeasTests(unittest.TestCase):
         batch=self.batch();batch['review']['voice_preserved']=False
         with self.assertRaisesRegex(ValueError,'review'):ingest(self.source,batch,True)
 
-    def test_published_views_need_append_only_updates(self):
+    def test_published_views_can_be_revised_without_history(self):
         batch=self.batch();ingest(self.source,batch,True)
-        batch['posts'][0]['blocks'][0]['text']='想法变了'
-        with self.assertRaisesRegex(ValueError,'update note'):ingest(self.source,batch,True)
-        batch['posts'][0]['updates']=[{'date':'2026-09-16','text':'补充一个不同角度。'}]
+        original_date=batch['posts'][0]['date']
+        batch['posts'][0]['blocks'][0]['text']='当天直接修改正文'
+        ingest(self.source,batch,True)
+        batch['posts'][0]['blocks'][0]['text']='跨日更新后的正文'
         batch['posts'][0]['updated']='2026-09-16'
         ingest(self.source,batch,True)
-        batch['posts'][0]['updates']=[]
-        with self.assertRaisesRegex(ValueError,'history'):ingest(self.source,batch,True)
+        self.assertEqual(ingest(self.source,batch,True),[])
+        ideas.build(self.source,self.output,demo=True)
+        page=(self.output/'posts/a-real-idea/index.html').read_text()
+        self.assertIn('跨日更新后的正文',page)
+        self.assertNotIn('当天直接修改正文',page)
+        self.assertNotIn('后来又想了想',page)
+        self.assertNotIn('已补记',(self.output/'index.html').read_text())
+        manifest=(self.output/'data/index.json').read_text()
+        self.assertNotIn('当天直接修改正文',manifest)
+        batch['posts'][0]['date']='2026-09-14'
+        with self.assertRaisesRegex(ValueError,'original publication'):ingest(self.source,batch,True)
+        batch['posts'][0]['date']=original_date
+        batch['posts'][0]['updated']=original_date
+        with self.assertRaisesRegex(ValueError,'backward'):ingest(self.source,batch,True)
 
     def test_invalid_candidate_never_changes_existing_source(self):
         original={p:p.read_bytes() for p in self.source.rglob('*.json')}

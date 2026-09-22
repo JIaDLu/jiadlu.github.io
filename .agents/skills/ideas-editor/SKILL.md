@@ -13,7 +13,7 @@ description: 在 jiadlu.github.io workspace 中跟踪值得讨论的 AI 动态�
 - **整理想法 / 写成草稿**：整理当前讨论，只写 `.ideas-local/` 并 dry-run，不写公开 content，不 commit/push。
 - **记一笔 / 发布 Ideas**：整理当前 session 的可发表想法，检查质量，应用、构建并正常 commit/push；这是本次发布授权，不重复询问同一授权。用户明确指定的范围优先。
 - **由收工分流而来**：仅处理分配到的个人思考，执行以下编辑与校验流程。继承统一入口的发布授权、限定范围或草稿限制，不重复确认，也不回调 `shougong`。两边都有时先准备并 dry-run Ideas batch，等待 Knowledge push 成功后才调用 Ideas 发布器；不要抢先提交。
-- **补记某篇**：复用稳定 ID 与最初日期；用 `updates` 追加认知变化，保留旧补记。修订正文时必须补一条说明，不能把新观点伪装成当初就想明白了。
+- **修改某篇**：复用稳定 ID 与首次日期，直接更新正文和 `updated` 日期。不创建修改说明、补记或追溯板块；页面只展示当前正文。
 
 ## Follow frontier
 
@@ -56,4 +56,4 @@ python3 scripts/ideas_publish.py
 
 推送后运行 `python3 scripts/ideas_publish.py --verify`。必要时隔约 20 秒检查，最多约 3 分钟；超时说明“已推送，线上待确认”，不把 push 当成上线。工作流：https://github.com/JIaDLu/jiadlu.github.io/actions
 
-结束时给出发布了哪些想法、是否有补记、commit 和可打开的页面链接。若没有用户自己的可发表内容，就说明暂未发表并保留值得继续讨论的问题，不为填满时间流编造文章。
+结束时给出发布或修改了哪些想法、commit 和可打开的页面链接。若没有用户自己的可发表内容，就说明暂未发表并保留值得继续讨论的问题，不为填满时间流编造文章。

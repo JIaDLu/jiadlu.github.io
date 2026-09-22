@@ -49,11 +49,8 @@ def candidate(source, batch, dest):
         path = dest/'posts'/f'{post["id"]}.json'
         if path.exists():
             previous = read(path)
-            need(post['date'] == previous['date'], 'Keep original publication date; use updates for evolving views')
+            need(post['date'] == previous['date'], 'Keep original publication date')
             need(day(post['updated']) >= day(previous['updated']), 'Updated date cannot move backward')
-            need(post['updates'][:len(previous['updates'])] == previous['updates'], 'Keep existing update history')
-            if post['blocks'] != previous['blocks']:
-                need(len(post['updates']) > len(previous['updates']), 'Changed published thoughts need an update note')
         path.write_text(json.dumps(post,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     load(dest)
 

@@ -34,8 +34,8 @@
         "work",
         "life"
       ],
-      "search": "看了一圈新东西，脑子里反而更吵了\n\n有时觉得，关注 AI 动态最累的部分不是看不懂，而是每看一个东西，都像新欠了一笔“应该研究一下”的债。\n模型、工具、框架，一个接一个。标签页越来越多，自己的问题却不一定更清楚。\n所以想试一个很小的规则：看到新东西，先写一句“它和我正在做的事有什么关系”。写不出来，就先关掉。\n这不代表它不重要。只是我今天可能不需要知道所有重要的事。\n补一个边界：也想留一点无目的闲逛的空间。有些有意思的连接，确实是在“暂时没用”的时候遇见的。",
-      "html": "<article class=\"entry note\" data-post=\"demo-tabs-open\"><div class=\"entry-date\"><time datetime=\"2026-09-18\">09.18</time><span>2026</span></div><div class=\"entry-body\"><div class=\"entry-kind\"><i aria-hidden=\"true\"></i>随记<span>已补记</span></div><h2><a href=\"/ideas/demo/posts/demo-tabs-open/\">看了一圈新东西，脑子里反而更吵了</a></h2><div class=\"entry-text\"><p>有时觉得，关注 AI 动态最累的部分不是看不懂，而是每看一个东西，都像新欠了一笔“应该研究一下”的债。</p></div><div class=\"entry-bottom\"><div class=\"tags\"><a class=\"tag\" href=\"/ideas/demo/archive/?tag=work\">#工作与成长</a><a class=\"tag\" href=\"/ideas/demo/archive/?tag=life\">#日常</a></div><a class=\"read-link\" href=\"/ideas/demo/posts/demo-tabs-open/\" aria-label=\"阅读 看了一圈新东西，脑子里反而更吵了\">接着读 <span aria-hidden=\"true\">↗</span></a></div></div></article>"
+      "search": "看了一圈新东西，脑子里反而更吵了\n\n有时觉得，关注 AI 动态最累的部分不是看不懂，而是每看一个东西，都像新欠了一笔“应该研究一下”的债。\n模型、工具、框架，一个接一个。标签页越来越多，自己的问题却不一定更清楚。\n所以想试一个很小的规则：看到新东西，先写一句“它和我正在做的事有什么关系”。写不出来，就先关掉。\n这不代表它不重要。只是我今天可能不需要知道所有重要的事。",
+      "html": "<article class=\"entry note\" data-post=\"demo-tabs-open\"><div class=\"entry-date\"><time datetime=\"2026-09-18\">09.18</time><span>2026</span></div><div class=\"entry-body\"><div class=\"entry-kind\"><i aria-hidden=\"true\"></i>随记</div><h2><a href=\"/ideas/demo/posts/demo-tabs-open/\">看了一圈新东西，脑子里反而更吵了</a></h2><div class=\"entry-text\"><p>有时觉得，关注 AI 动态最累的部分不是看不懂，而是每看一个东西，都像新欠了一笔“应该研究一下”的债。</p></div><div class=\"entry-bottom\"><div class=\"tags\"><a class=\"tag\" href=\"/ideas/demo/archive/?tag=work\">#工作与成长</a><a class=\"tag\" href=\"/ideas/demo/archive/?tag=life\">#日常</a></div><a class=\"read-link\" href=\"/ideas/demo/posts/demo-tabs-open/\" aria-label=\"阅读 看了一圈新东西，脑子里反而更吵了\">接着读 <span aria-hidden=\"true\">↗</span></a></div></div></article>"
     },
     {
       "id": "demo-question-first",

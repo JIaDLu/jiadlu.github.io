@@ -80,4 +80,4 @@ python3 scripts/knowledge_publish.py --verify
 
 如果仍在构建，可隔约 20 秒检查一次，最多约 3 分钟。验证失败不撤销已完成的内容提交；返回明确的“已推送，线上待确认”，附 Actions 链接。不要把 push 成功等同于部署成功。
 
-结束时分别列出：Knowledge 的新增/回顾知识点与分类变化；Ideas 的想法与补记；各自日期、commit、发布状态与页面链接。未归档或仍为草稿的部分简要说明。保持 `.knowledge-local/`、`.ideas-local/` 为本地忽略文件，不随 commit 发布。
+结束时分别列出：Knowledge 的新增/回顾知识点与分类变化；Ideas 新增或修改的想法；各自日期、commit、发布状态与页面链接。Ideas 修改直接更新正文，不附修改说明或追溯板块。未归档或仍为草稿的部分简要说明。保持 `.knowledge-local/`、`.ideas-local/` 为本地忽略文件，不随 commit 发布。

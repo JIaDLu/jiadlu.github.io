@@ -18,8 +18,7 @@
   "tags": ["agents"],
   "excerpt": "",
   "blocks": [{"type": "paragraph", "text": "这里替换成用户自己的想法。"}],
-  "sources": [],
-  "updates": []
+  "sources": []
 }
 ```
 
@@ -43,11 +42,11 @@
 
 只用 paragraph 也完全有效。essay 至少三个小节时才显示目录；idea 不套用长文章布局。首页完整显示不超过 500 字、由纯段落构成的短 Idea，其他内容显示引子与详情入口。
 
-### 来源与补记
+### 来源与修改
 
 source 结构：`id`, `title`, `url`, `publisher`, `published`（YYYY-MM-DD 或 null）, `accessed`（实际查阅日）。引用 block 用 `refs: ["source-id"]` 指向它。只允许 http/https URL，拒绝嵌入凭据与悬空引用。
 
-updates 是 `{"date":"2026-09-21","text":"后来改变了哪些判断，以及为什么。"}` 的数组，按时间追加。ingest 强制保留旧补记与首次日期，正文修改需要新补记。每次正文修订或跨日修改都需要补记；说明可以很短，修正文案不必伪装成认知变化。补记中的旧版本全文由 Git 保留。
+修改直接更新正文，复用稳定 ID 和首次发表日期；`updated` 保留最后修改日期供 Atom 等元数据使用。不记录或展示修订过程，不需要添加修改说明或补记。
 
 ## 私有 batch
 

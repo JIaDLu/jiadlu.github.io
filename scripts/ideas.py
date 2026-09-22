@@ -87,7 +87,7 @@ def load(source, demo=False):
     posts = []
     for path in sorted((source/'posts').glob('*.json')):
         post = read(path)
-        fields(post, 'id title date updated kind tags excerpt blocks sources updates', label=str(path))
+        fields(post, 'id title date updated kind tags excerpt blocks sources', label=str(path))
         identifier(post['id'])
         need(path.stem == post['id'], 'ID and filename must match')
         need(post['kind'] in KINDS, 'Unknown content kind')
@@ -146,14 +146,6 @@ def load(source, demo=False):
             need(len(set(refs)) == len(refs), 'Repeated source reference')
             substantive |= kind not in ('heading', 'divider')
         need(substantive, 'A heading is not a post')
-        need(isinstance(post['updates'], list), 'updates must be a list')
-        previous = post['date']
-        for update in post['updates']:
-            fields(update, 'date text')
-            need(day(previous) <= day(update['date']) <= day(post['updated']), 'Unordered update history')
-            text(update['text'], 'update note')
-            previous = update['date']
-        need(post['updated'] == post['date'] or (post['updates'] and previous == post['updated']), 'Revised posts need a dated update note')
         posts.append(post)
     posts.sort(key=lambda p:(p['date'],p['id']), reverse=True)
     return settings, posts
@@ -213,7 +205,7 @@ def card(post, settings, base):
     # Tiny ideas are readable in the feed. Quotes/code/citations stay in the full note.
     tiny = post['kind'] == 'idea' and all(b['type'] == 'paragraph' and not b.get('refs') for b in post['blocks']) and sum(len(plain(b)) for b in post['blocks']) <= 500
     content = render_blocks(post) if tiny else f'<p>{e(summary(post))}</p>'
-    return f'''<article class="entry {post['kind']}" data-post="{post['id']}"><div class="entry-date"><time datetime="{post['date']}">{post['date'][5:].replace('-', '.')}</time><span>{post['date'][:4]}</span></div><div class="entry-body"><div class="entry-kind"><i aria-hidden="true"></i>{KINDS[post['kind']]}{'<span>已补记</span>' if post['updates'] else ''}</div>{heading}<div class="entry-text">{content}</div><div class="entry-bottom"><div class="tags">{tag_links(post, settings, base)}</div><a class="read-link" href="{link}" aria-label="阅读 {e(title(post))}">{'永久链接' if tiny else '接着读'} <span aria-hidden="true">↗</span></a></div></div></article>'''
+    return f'''<article class="entry {post['kind']}" data-post="{post['id']}"><div class="entry-date"><time datetime="{post['date']}">{post['date'][5:].replace('-', '.')}</time><span>{post['date'][:4]}</span></div><div class="entry-body"><div class="entry-kind"><i aria-hidden="true"></i>{KINDS[post['kind']]}</div>{heading}<div class="entry-text">{content}</div><div class="entry-bottom"><div class="tags">{tag_links(post, settings, base)}</div><a class="read-link" href="{link}" aria-label="阅读 {e(title(post))}">{'永久链接' if tiny else '接着读'} <span aria-hidden="true">↗</span></a></div></div></article>'''
 
 
 def shell(settings, page_title, description, body, base, route='', page='feed', demo=False):
@@ -276,11 +268,10 @@ def detail(settings, post, posts, base, demo):
     sources = ''
     if post['sources']:
         sources = '<section class="sources"><h2>这次讨论的背景</h2><ol>'+''.join(f'<li id="source-{s["id"]}"><a href="{e(s["url"])}" target="_blank" rel="noopener noreferrer">{e(s["title"])} ↗</a><span>{e(s["publisher"])} · {"发布 "+s["published"]+" · " if s["published"] else ""}查阅 {s["accessed"]}</span></li>' for s in post['sources'])+'</ol></section>'
-    updates = '<section class="updates"><h2>后来又想了想</h2>'+''.join(f'<div><time datetime="{u["date"]}">{u["date"]}</time><p>{e(u["text"])}</p></div>' for u in post['updates'])+'</section>' if post['updates'] else ''
     neighbors = sorted((p for p in posts if p['id']!=post['id']),key=lambda p:(-len(set(p['tags'])&set(post['tags'])), -int(p['date'].replace('-','')),p['id']))[:2]
     more = '<section class="read-next"><h2>继续读</h2>'+''.join(f'<a href="{base}/posts/{p["id"]}/"><span>{e(title(p))}</span><small>{KINDS[p["kind"]]} · {p["date"]} ↗</small></a>' for p in neighbors)+'</section>' if neighbors else ''
     display_title = f'<h1>{e(post["title"])}</h1>' if post['title'] else '<h1 class="sr-only">'+e(title(post))+'</h1>'
-    body = f'''<article class="post {post['kind']} {'has-toc' if toc else ''}"><a class="back-link" href="{base}/">← 回到想法流</a><header class="post-header"><div class="post-meta"><span class="kind-label">{KINDS[post['kind']]}</span><time datetime="{post['date']}">{post['date']}</time><span>{'片刻阅读' if post['kind']=='idea' else str(minutes(post))+' 分钟阅读'}</span></div>{display_title}{lead}<div class="tags">{tag_links(post,settings,base)}</div></header><div class="reading-layout">{toc}<div class="reading-column"><div class="prose">{render_blocks(post)}</div>{updates}<div class="post-signoff"><span class="signature">{'演示文字' if demo else 'Jiadong'}</span><button class="copy-link" type="button">复制这条想法的链接 ↗</button></div>{sources}{more}<a class="text-link" href="{base}/archive/">回到所有记录 →</a></div></div></article>'''
+    body = f'''<article class="post {post['kind']} {'has-toc' if toc else ''}"><a class="back-link" href="{base}/">← 回到想法流</a><header class="post-header"><div class="post-meta"><span class="kind-label">{KINDS[post['kind']]}</span><time datetime="{post['date']}">{post['date']}</time><span>{'片刻阅读' if post['kind']=='idea' else str(minutes(post))+' 分钟阅读'}</span></div>{display_title}{lead}<div class="tags">{tag_links(post,settings,base)}</div></header><div class="reading-layout">{toc}<div class="reading-column"><div class="prose">{render_blocks(post)}</div><div class="post-signoff"><span class="signature">{'演示文字' if demo else 'Jiadong'}</span><button class="copy-link" type="button">复制这条想法的链接 ↗</button></div>{sources}{more}<a class="text-link" href="{base}/archive/">回到所有记录 →</a></div></div></article>'''
     return shell(settings,title(post),summary(post),body,base,f'posts/{post["id"]}/','post',demo)
 
 
@@ -311,7 +302,7 @@ def build(source, output, base='/ideas', demo=False):
     settings, posts = load(source,demo)
     manifest = {'version':1,'demo':demo,'posts':[{
         'id':p['id'],'title':title(p),'date':p['date'],'kind':p['kind'],'tags':p['tags'],
-        'search':'\n'.join([title(p),p['excerpt'],*(plain(b) for b in p['blocks']),*(u['text'] for u in p['updates'])]),
+        'search':'\n'.join([title(p),p['excerpt'],*(plain(b) for b in p['blocks'])]),
         'html':card(p,settings,base)
     } for p in posts]}
     files = {'index.html':feed(settings,posts,base,demo),'archive/index.html':archive(settings,posts,base,demo),'data/index.json':json.dumps(manifest,ensure_ascii=False,indent=2)+'\n','feed.xml':atom(settings,posts,base)}
