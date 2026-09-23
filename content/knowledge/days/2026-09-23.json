@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-23",
+  "summary": "进一步理解 Multi-Harness RL：组内控制变量，组间混合经验，用长程交互学习跨框架策略。",
+  "entries": [
+    {
+      "note": "agent-environment-harness",
+      "takeaway": "Multi-Harness 不是让每个任务遍历全部框架，而是组内固定可比条件、组间混合不同 harness 的长程轨迹，共同训练共享 policy 的接口适配与反馈纠错策略。",
+      "kind": "review"
+    }
+  ]
+}

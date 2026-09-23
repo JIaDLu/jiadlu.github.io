@@ -2,14 +2,14 @@
   "id": "agent-environment-harness",
   "title": "Agent 训练中的 Environment 与 Harness",
   "branch": "agents",
-  "summary": "Environment 定义任务世界及其状态变化，harness 规定模型如何观察、操作并记录这个世界；工程上二者常被封装成同一套系统。",
-  "context": "讨论 MiMo-V2.6 的 Multi-Harness Training 时，用户追问自建仿真环境是否就是 harness，需要澄清严格概念和日常工程用法之间的差别。",
+  "summary": "Environment 定义任务世界及其状态变化，harness 双向转换模型动作与环境反馈；Multi-Harness 通过组间混合多种交互协议，推动共享策略跨框架泛化。",
+  "context": "讨论 MiMo-V2.6 的 Multi-Harness Training 时，先澄清自建仿真环境是否就是 harness，随后追问多个 harness 如何参与同一次 RL、group 内怎样保持可比，以及是否需要让每个任务遍历全部 harness。",
   "sections": [
     {
-      "title": "四层职责",
+      "title": "四层职责与双向链路",
       "paragraphs": [
         "Environment 是任务发生的客观世界，包含可变化的状态和行动后果，例如代码仓库、容器、文件系统、终端与资源限制。Harness 位于模型和环境之间，负责 system prompt、工具定义、动作解析、交互循环、上下文管理、终止条件与轨迹记录。",
-        "Verifier 判断任务是否真正完成，例如运行隐藏测试并检查环境终态；grader 在成功与失败之外进一步比较完成质量，例如路径是否更短、token 是否更少、是否违反约束。训练系统可将这些信号组合为 reward。"
+        "Harness 不只是把命令发给环境。正向链路把模型决策解析、校验并翻译成环境动作；反向链路把 stdout、错误、截图或状态变化整理成 observation，加入上下文供模型进行下一轮决策。Verifier 判断任务是否真正完成，grader 则进一步比较路径质量、token 消耗或约束遵守情况。"
       ]
     },
     {
@@ -20,7 +20,28 @@
       ]
     },
     {
-      "title": "适用边界",
+      "title": "Multi-Harness 不是任务与框架的全组合",
+      "paragraphs": [
+        "更合理的训练结构是稀疏路由：一个 prompt 在一次采样中接入一套与任务兼容的 harness，由这套配置产生一组 rollout；不同 prompt 或 group 使用其他 harness，所得经验共同更新同一个 policy。没有必要让每道题遍历全部 harness，许多任务与工具组合也并不兼容。",
+        "MiMo 公开资料确认多任务和多套 harness 混在同一次 RL run 与 batch 中，但没有公开任务到 harness 的具体路由规则，也没有确认同一任务会否在不同时刻换 harness 重复出现。因此，稀疏路由和 group 内固定 harness 是基于训练可比性作出的合理解释，不应伪装成已公开实现细节。"
+      ]
+    },
+    {
+      "title": "组内可比，组间促成泛化",
+      "paragraphs": [
+        "在 GRPO 一类组内相对比较中，理想控制变量是同一 prompt、environment、harness、预算和评分标准，只让模型采样的行动路径不同。若同组轨迹使用能力差异明显的工具，reward 差异可能来自工具条件而非策略质量，污染 advantage。",
+        "跨 group 再混合不同 harness 的轨迹，梯度共同作用于同一个模型。模型一方面学习当前工具协议的适配层，另一方面从不同外壳下反复出现的成功结构中学习调查、行动、观察、纠错与验证等共享策略。Multi-Harness 提供多样性，但不能自动保证泛化；仍需未见 harness 和条件可比的独立评测。"
+      ]
+    },
+    {
+      "title": "Long-horizon 为什么重要",
+      "paragraphs": [
+        "跨 harness 的共同能力主要不在一次工具调用，而在多轮闭环：模型能否根据环境反馈修改假设、从失败中恢复、重新规划并最终验证结果。Long-horizon rollout 让这些相隔多轮的决策与最终 reward 发生联系。",
+        "但最终奖励不会天然精确指出是哪一轮导致成败；轨迹越长，credit assignment 越难。多 harness 还会引入轨迹长度、工具能力和基础设施可靠性的差异，所以训练需要控制组内条件、记录完整轨迹，并结合 verifier、grader 与独立评测判断模型学到的是策略还是框架捷径。"
+      ]
+    },
+    {
+      "title": "术语与判断边界",
       "paragraphs": [
         "Environment 与 harness 不是行业中始终严格统一的术语。有些框架把环境适配器也纳入 harness，有些实现把 verifier 作为环境返回 reward 的一部分。讨论时应先明确组件职责，不必执着于唯一命名。",
         "更换 harness 后表现下降，不必然证明模型没有底层能力；也可能是工具可用性、prompt、上下文预算或动作表达发生了实质变化。要检验跨 harness 泛化，应尽量保持任务、预算和成功标准可比。"
@@ -29,30 +50,31 @@
   ],
   "examples": [
     {
-      "title": "同一个修 bug 任务使用两套 harness",
-      "scenario": "模型需要修复一个 Python 缓存模块的并发 bug，并通过公开与隐藏测试。",
+      "title": "同一组固定 harness，跨组混合训练",
+      "scenario": "共享 policy 学习修复 Python 项目中的 bug。底层环境均为隔离代码仓库、容器和测试，但训练同时使用结构化工具与裸终端两类 harness。",
       "steps": [
-        "Environment 提供带 bug 的 Git 仓库、Docker 容器、文件系统、pytest 和资源限制；模型动作会真实改变仓库状态。",
-        "Harness A 暴露 read_file、search_code、apply_patch、run_tests 等结构化工具，并负责解析调用、回传 observation、维护历史和限制轮数。",
-        "Harness B 保持同一个仓库、容器和测试不变，只提供 bash；模型必须自己组合搜索、读取、修改和测试命令。",
-        "Verifier 分别运行公开与隐藏测试并检查模型没有篡改测试；grader 再比较多条成功轨迹的修改质量、交互轮数和 token 消耗。"
+        "Group 1 固定任务 1、Environment 1 和 Harness A；Harness A 提供 read_file、search_code、apply_patch、run_tests，并生成 16 条不同的 long-horizon rollout。",
+        "Verifier 对 16 条轨迹使用同一套公开与隐藏测试，grader 比较成功路径的轮数、修改质量和约束遵守情况，由此构造组内相对 advantage。",
+        "Group 2 固定任务 2、Environment 2 和 Harness B；Harness B 只提供 bash，同样生成一组 rollout 并在组内比较。任务 2 不需要再把 A、C、D 等所有 harness 全跑一次。",
+        "两个 group 的训练信号共同更新同一个 policy。不同工具语法训练适配能力，而调查、形成假设、执行、读取反馈、纠错与最终验证的长程结构在参数更新中被反复强化。"
       ],
-      "code": "Environment: repo + container + filesystem + tests\nHarness A: read_file | search_code | apply_patch | run_tests\nHarness B: bash(command)\nVerifier: public_tests && hidden_tests && tests_untouched\nGrader: correctness + path_quality + efficiency",
+      "code": "Group 1: task-1 + env-1 + harness-A -> rollout[1..16] -> relative advantages\nGroup 2: task-2 + env-2 + harness-B -> rollout[1..16] -> relative advantages\nshared policy <- gradients from both groups",
       "language": "text",
-      "result": "两套 harness 面对的是同一个任务世界和成功标准，却给模型不同的观察与行动接口。若模型在两者上都能形成调查、修改、验证的策略，更能说明它学到的是软件工程能力而非单一框架套路。"
+      "result": "组内固定条件使相对奖励主要反映策略差异；组间混合多种 harness，使共享 policy 既学会具体接口，又有机会提取跨框架的长程解决策略。是否真正泛化仍要在未见 harness 上验证。"
     }
   ],
   "memory": [
-    "环境决定在哪个世界做事；harness 决定怎样看见并操作这个世界。",
-    "先按职责拆组件，再讨论术语；工程封装里环境和 harness 经常重叠。"
+    "环境承载状态与因果；harness 双向转换动作与观察。",
+    "组内固定条件比较策略，组间混合 harness 学共享能力；不是每题遍历所有框架。"
   ],
   "recall": {
-    "question": "同一个代码仓库和隐藏测试不变，只把结构化工具换成 bash，这改变的是 environment 还是 harness？",
-    "answer": "主要改变的是 harness：任务世界、状态和成功标准仍相同，但模型观察与操作世界的接口、交互协议和上下文管理方式发生了变化。"
+    "question": "Multi-Harness RL 是否要求每个 prompt 在所有 harness 下都跑一遍？为什么一个 GRPO group 内通常应固定 harness？",
+    "answer": "不要求全组合；通常让一次 prompt/group 接入一套兼容 harness，不同 group 的经验共同更新共享 policy。组内固定 harness 可避免把工具条件差异误当成策略优劣，从而保持相对 reward 与 advantage 的可比性。"
   },
   "related": [
     "verifier-for-rl",
-    "pi-agent-learning-path"
+    "pi-agent-learning-path",
+    "rl-rollout-observability"
   ],
   "sources": [
     {
@@ -62,6 +84,10 @@
     {
       "title": "MiMo-V2.6-Pro-RL model card",
       "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL"
+    },
+    {
+      "title": "MiMo-V2.6 RL live dashboard",
+      "url": "https://mimo.xiaomi.com/rl/"
     }
   ],
   "aliases": [

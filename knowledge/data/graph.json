@@ -128,6 +128,17 @@
         }
       ],
       "summary": "借 MiMo RL 分清环境与 harness，并理解训练期间如何用 rollout 轨迹、评分和指标共同诊断学习过程。"
+    },
+    {
+      "date": "2026-09-23",
+      "entries": [
+        {
+          "kind": "review",
+          "note": "agent-environment-harness",
+          "takeaway": "Multi-Harness 不是让每个任务遍历全部框架，而是组内固定可比条件、组间混合不同 harness 的长程轨迹，共同训练共享 policy 的接口适配与反馈纠错策略。"
+        }
+      ],
+      "summary": "进一步理解 Multi-Harness RL：组内控制变量，组间混合经验，用长程交互学习跨框架策略。"
     }
   ],
   "demo": false,
@@ -142,14 +153,15 @@
       "branch": "agents",
       "id": "agent-environment-harness",
       "memory": [
-        "环境决定在哪个世界做事；harness 决定怎样看见并操作这个世界。",
-        "先按职责拆组件，再讨论术语；工程封装里环境和 harness 经常重叠。"
+        "环境承载状态与因果；harness 双向转换动作与观察。",
+        "组内固定条件比较策略，组间混合 harness 学共享能力；不是每题遍历所有框架。"
       ],
       "related": [
         "verifier-for-rl",
-        "pi-agent-learning-path"
+        "pi-agent-learning-path",
+        "rl-rollout-observability"
       ],
-      "summary": "Environment 定义任务世界及其状态变化，harness 规定模型如何观察、操作并记录这个世界；工程上二者常被封装成同一套系统。",
+      "summary": "Environment 定义任务世界及其状态变化，harness 双向转换模型动作与环境反馈；Multi-Harness 通过组间混合多种交互协议，推动共享策略跨框架泛化。",
       "title": "Agent 训练中的 Environment 与 Harness"
     },
     {
