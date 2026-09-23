@@ -42,6 +42,34 @@ function input(w,el,value){el.value=value;el.dispatchEvent(new w.Event('input',{
   assert.ok(a.d.querySelector('.entry').href.includes('/knowledge/tree/?node='));
   assert.ok(!a.d.querySelector('.entry').href.includes('/demo/'));
   a.close();
+  // New domains and deeper taxonomy must work without hard-coded root names.
+  const nested=structuredClone(fixture);
+  nested.branches.push(
+    {id:'evaluation',title:'模型评测',parent:null,description:'独立评估'},
+    {id:'evaluation-methods',title:'评测方法',parent:'evaluation',description:'方法'},
+    {id:'sampling-metrics',title:'采样指标',parent:'evaluation-methods',description:'指标'},
+    {id:'success-estimation',title:'成功率估计',parent:'sampling-metrics',description:'估计'}
+  );
+  const moved=nested.notes[0];
+  moved.branch='success-estimation';
+  a=await open('/knowledge/?branch=evaluation',{data:nested});
+  assert.equal(a.d.querySelector('#branch-filter').value,'evaluation');
+  const expectedDays=nested.days.filter(day=>day.entries.some(entry=>entry.note===moved.id));
+  assert.equal(a.d.querySelectorAll('.day-record').length,expectedDays.length);
+  assert.ok([...a.d.querySelectorAll('.entry')].every(el=>el.href.endsWith('node='+moved.id)));
+  a.close();
+  a=await open('/knowledge/tree/?node='+moved.id,{data:nested});
+  assert.ok(a.d.querySelector('.map-node.active').textContent.includes(moved.title));
+  assert.ok(a.d.querySelector('.map-context').textContent.includes('模型评测 / 评测方法 / 采样指标 / 成功率估计'));
+  a.d.querySelector('#collapse').click();
+  input(a.w,a.d.querySelector('#node-search'),moved.title);
+  a.d.querySelector('#node-results button').click();
+  assert.ok(a.d.querySelector('.map-node.active').textContent.includes(moved.title));
+  for(const title of ['模型评测','评测方法','采样指标','成功率估计']){
+    assert.ok([...a.d.querySelectorAll('.map-node')].some(el=>el.textContent.includes(title)));
+  }
+  assert.ok(a.d.querySelector('.map-context .primary').href.endsWith('/notes/'+moved.id+'/'));
+  a.close();
   const real=JSON.parse(fs.readFileSync(path.join(root,'knowledge/data/graph.json')));
   assert.equal(real.demo,false);
   if(real.days.length){

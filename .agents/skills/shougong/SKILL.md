@@ -19,7 +19,7 @@ description: 当用户在 jiadlu.github.io workspace 结束当天学习或讨论
 
 - 只有新闻材料、AI 自己的观点、普通网站工程任务时，不硬造 Ideas 或算法学习记录。“继续讲”不代表用户认同 AI 的判断。
 - “收工”授权本 session 符合条件的两个方向整理、commit 和正常 push，无需再次询问。用户明确限定“只归档 Knowledge / 只发 Ideas”时遵从范围；“只整理 / 不发布”只写相应本地忽略目录并 dry-run，不写公开 content 或生成页面。
-- 有 Knowledge 内容时，读 `docs/knowledge/README.md` 与 `docs/knowledge/schema.md`，执行下面的知识流程。重点是 Agent 算法与大模型训练，但允许扩展其他领域。
+- 有 Knowledge 内容时，读 `docs/knowledge/README.md` 与 `docs/knowledge/schema.md`，执行下面的知识流程。领域与层级随实际知识增长，不把现有顶层类别当作固定边界。
 - 有 Ideas 内容时，读取并执行同项目 `.agents/skills/ideas-editor/SKILL.md` 的声源、事实核查、编辑与 batch 流程。由当前 Codex 执行，无需重新触发一个 session；继承本次发布授权及限制，不递归调用“收工”。
 - 任一方向无合适内容就跳过，不创建空记录。缺上下文、无法核实或不适合公开的部分留本地草稿，说明缺口；其余可独立成立的内容仍可归档。两边都为空则说明未归档。
 
@@ -43,6 +43,9 @@ description: 当用户在 jiadlu.github.io workspace 结束当天学习或讨论
 
 - 先读取 taxonomy 与已有笔记的标题、别名、摘要，按语义查重。复学同一概念复用稳定 ID，更新原笔记，保留仍有效的内容与代表性示例；不要以日期创建重复概念。
 - 每个概念选一个主要父分支，跨领域关系通过 `related` 表示。分类要表达知识关系，不按日期或来源分组。找不到合理分支时添加适度粒度的父分支；同义类别不要重复创建。
+- 每次归档执行 [知识树分类 SOP](references/taxonomy.md)：先判断技术属性，再检查父子关系与相邻笔记，必要时拆分、迁移或扩展顶层。不要把同类知识不断追加到一个大类下，也不要为凑层级逐篇建分类。
+- 区分 Agent 系统与工程（运行时、Harness、框架、编排）与 Agent 算法及能力训练（策略学习、奖励、优化）；通用训练和评测方法不因示例使用 Agent 就归入 Agent 工程。
+- 纯分类迁移直接更新 taxonomy 和笔记的 `branch`，作为结构维护审查、构建和发布；不将未复学的旧笔记加入当天 entries。学习内容的新增或实质修订仍使用下述 batch。
 - 日期记录中的 `takeaway` 写“这一次理解了什么”。它与知识点当前摘要不同，应保留历史；同一天再收工，只更新对应条目并合并新增条目。`kind` 是本次 `learn` 或 `review`，依据已有历史判断。
 - 若没有值得沉淀的学习，不创建空记录，不增加连续学习天数；继续处理符合条件的 Ideas。
 - 生成 schema 所定义的 batch JSON，放到 `.knowledge-local/`，其中 `notes` 使用完整笔记对象。不要直接编辑 `knowledge/data/` 或生成的 HTML。

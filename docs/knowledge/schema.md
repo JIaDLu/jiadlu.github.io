@@ -11,12 +11,15 @@
   "version": 1,
   "timezone": "Asia/Shanghai",
   "branches": [
-    {"id": "agents", "title": "Agent 算法", "parent": null, "description": "从推理到行动。"}
+    {"id": "agents", "title": "Agent 系统与工程", "parent": null, "description": "运行时、工具接口与框架组织。"},
+    {"id": "agent-runtime", "title": "运行时与 Harness", "parent": "agents", "description": "模型、工具与环境之间的交互链路。"}
   ]
 }
 ```
 
 `parent` 是分支 ID 或 null。树必须无环，每个分支只有一个父分支。笔记的 `related` 承担跨分支关联，页面双向展示这些关联，无需手写双向副本。
+
+顶层数量和深度不固定。分类按专业归属与上下位关系逐步细化，具体操作遵循 [分类 SOP](../../.agents/skills/shougong/references/taxonomy.md)。纯分类维护可直接改 taxonomy 与旧笔记的 `branch`；保留稳定 ID 和学习历史，不通过学习 batch 为所有迁移笔记制造当天复学记录。
 
 ## 笔记：content/knowledge/notes/<id>.json
 

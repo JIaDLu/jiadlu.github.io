@@ -186,7 +186,7 @@ def build(source, output, base='/knowledge', demo=False):
 <div id="learning-app" aria-live="polite"><p class="loading">正在展开学习记录…</p></div>'''.replace('BASE', base)
     tree = '''<section class="page-intro tree-intro"><div class="eyebrow">CONNECT THE DOTS</div><div class="intro-row"><div><h1>Knowledge Tree<span class="period">.</span></h1><p class="lede">找到位置，看见连接。</p></div><div id="tree-count" class="muted"></div></div></section>
 <div id="tree-app"><p class="loading">正在展开知识树…</p></div>'''
-    files = {'index.html': shell('Everyday Learning', '每天学了什么，它们如何连接。', home, base, 'home', demo), 'tree/index.html': shell('Knowledge Tree', 'Agent 算法与大模型训练的生长式知识树。', tree, base, 'tree', demo), 'data/graph.json': serialized, 'data/revision.json': json.dumps({'revision': revision}) + '\n'}
+    files = {'index.html': shell('Everyday Learning', '每天学了什么，它们如何连接。', home, base, 'home', demo), 'tree/index.html': shell('Knowledge Tree', '按知识归属逐层展开，随学习持续生长的知识树。', tree, base, 'tree', demo), 'data/graph.json': serialized, 'data/revision.json': json.dumps({'revision': revision}) + '\n'}
     for n in notes.values():
         files[f'notes/{n["id"]}/index.html'] = detail(n, notes, branches, days, base, demo)
     # Remove only obsolete generated note pages, never assets or source content.
