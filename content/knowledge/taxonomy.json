@@ -4,15 +4,75 @@
   "branches": [
     {
       "id": "agents",
-      "title": "Agent 算法",
+      "title": "Agent 系统与工程",
       "parent": null,
-      "description": "从推理、决策到与环境交互。"
+      "description": "研究 Agent 如何运行、连接工具与环境，以及框架如何组织交互；与策略学习和模型训练区分。"
+    },
+    {
+      "id": "agent-runtime",
+      "title": "运行时与 Harness",
+      "parent": "agents",
+      "description": "模型调用、工具执行、环境反馈与上下文管理的运行链路，以及具体 Harness 的实现。"
     },
     {
       "id": "training",
-      "title": "大模型训练",
+      "title": "模型学习与训练",
       "parent": null,
-      "description": "从学习目标、优化方法到训练系统。"
+      "description": "研究学习目标、数据与反馈怎样改变模型能力；覆盖通用方法及大模型、Agent 能力训练。"
+    },
+    {
+      "id": "distribution-matching",
+      "title": "学习目标与分布匹配",
+      "parent": "training",
+      "description": "理解概率分布之间的目标函数及其拟合偏好，作为训练与蒸馏的基础。"
+    },
+    {
+      "id": "supervised-learning",
+      "title": "监督微调（SFT）",
+      "parent": "training",
+      "description": "用示范数据学习目标行为，组织数据选择、覆盖与泛化问题。"
+    },
+    {
+      "id": "knowledge-distillation",
+      "title": "知识蒸馏",
+      "parent": "training",
+      "description": "利用老师的输出或分布反馈训练学生，区分数据来源、匹配目标与优化方式。"
+    },
+    {
+      "id": "reinforcement-learning",
+      "title": "强化学习",
+      "parent": "training",
+      "description": "从策略采样和奖励反馈中学习；概述与适用性留在本层，具体机制进入子分支。"
+    },
+    {
+      "id": "rl-reward",
+      "title": "奖励与验证",
+      "parent": "reinforcement-learning",
+      "description": "设计反馈目标，核验成功判据，并检查奖励能否经受持续优化。"
+    },
+    {
+      "id": "policy-optimization",
+      "title": "策略优化算法",
+      "parent": "reinforcement-learning",
+      "description": "策略梯度、相对优势与优化目标的具体算法及其改进。"
+    },
+    {
+      "id": "rl-systems",
+      "title": "训练流程与系统",
+      "parent": "reinforcement-learning",
+      "description": "从 rollout、优势计算到更新与权重同步的执行链路及资源效率。"
+    },
+    {
+      "id": "rl-diagnostics",
+      "title": "训练诊断与模型选择",
+      "parent": "reinforcement-learning",
+      "description": "结合训练指标、行为轨迹与验证表现，诊断训练并决定停止与模型选择。"
+    },
+    {
+      "id": "model-evaluation",
+      "title": "模型评测",
+      "parent": null,
+      "description": "衡量模型能力与泛化的指标和评测协议；适用于 Agent、代码、对话等场景，不从属于某一训练算法。"
     }
   ]
 }

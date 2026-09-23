@@ -3,7 +3,7 @@
   "title": "大模型 RL step：从 Rollout 到参数更新",
   "summary": "一轮 RL 迭代包含生成、打分与评估、优势计算、更新和权重同步；长推理通常受 rollout 耗时影响。",
   "context": "面试问题：从 rollout 到参数更新有哪些环节，哪里最耗时？",
-  "branch": "training",
+  "branch": "rl-systems",
   "sections": [
     {
       "title": "训练链路",

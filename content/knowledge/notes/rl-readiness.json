@@ -1,7 +1,7 @@
 {
   "id": "rl-readiness",
   "title": "如何判断是否值得做 RL",
-  "branch": "training",
+  "branch": "reinforcement-learning",
   "summary": "先验证奖励，再诊断探索空间，最后用小规模对照实验判断 RL 的真实收益。",
   "context": "SFT 将任务成功率从 65% 提升到 85% 后，是否应立即做 RL？用户要求面试中简洁、清晰地解释决策依据。",
   "sections": [

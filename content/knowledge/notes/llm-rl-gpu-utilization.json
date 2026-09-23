@@ -3,7 +3,7 @@
   "title": "大模型 RL：GPU 利用率与上下文长度",
   "summary": "先识别计算、带宽、通信或等待瓶颈，再分别优化 rollout 与训练；高忙碌率不等于高效率。",
   "context": "面试问题：如何提高 GPU / SM 利用率，上下文长度有什么影响？",
-  "branch": "training",
+  "branch": "rl-systems",
   "sections": [
     {
       "title": "调优入口",

@@ -1,11 +1,21 @@
 {
   "date": "2026-09-23",
-  "summary": "进一步理解 Multi-Harness RL：组内控制变量，组间混合经验，用长程交互学习跨框架策略。",
+  "summary": "理解 Multi-Harness RL 的组内可比与组间泛化；分清 reverse KL 的模式偏好、漏峰与优化局限，以及 OPD 的采样方式和 KL 目标。",
   "entries": [
     {
       "note": "agent-environment-harness",
       "takeaway": "Multi-Harness 不是让每个任务遍历全部框架，而是组内固定可比条件、组间混合不同 harness 的长程轨迹，共同训练共享 policy 的接口适配与反馈纠错策略。",
       "kind": "review"
+    },
+    {
+      "note": "reverse-kl-mode-seeking",
+      "takeaway": "Reverse KL 对放错概率敏感、对漏峰相对宽容；有限容量下可能集中于部分模式，但不会自动跳过小峰寻找大峰，多峰也不等于把答案平均。",
+      "kind": "learn"
+    },
+    {
+      "note": "on-policy-distillation-objectives",
+      "takeaway": "学生生成前缀与选择 KL 方向是两个层次；OPD 也可在学生前缀上优化 forward KL，reverse KL 不保证保留原能力或找到最佳模式。",
+      "kind": "learn"
     }
   ]
 }

@@ -3,7 +3,7 @@
   "title": "大模型 RL：何时停止与如何选 Checkpoint",
   "summary": "按验证表现、退化和预算决定停止，在能力约束下选择验证表现最好的模型。",
   "context": "面试问题：训练到什么时候停，最终 checkpoint 怎么选？",
-  "branch": "training",
+  "branch": "rl-diagnostics",
   "sections": [
     {
       "title": "停止标准",

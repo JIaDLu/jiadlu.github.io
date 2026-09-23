@@ -1,0 +1,76 @@
+{
+  "id": "on-policy-distillation-objectives",
+  "title": "OPD：学生采样与 KL 方向是两个选择",
+  "summary": "OPD 在学生生成的前缀上接受老师反馈；前缀来自学生并不限定必须用 reverse KL，也可比较老师与学生的下一 token 分布来优化 forward KL。",
+  "branch": "knowledge-distillation",
+  "aliases": [
+    "On-Policy Distillation",
+    "在线策略蒸馏",
+    "GKD",
+    "PG OPD",
+    "forward_kl_topk"
+  ],
+  "related": [
+    "reverse-kl-mode-seeking",
+    "successful-trajectory-sft",
+    "llm-rl-step-pipeline"
+  ],
+  "memory": [
+    "先问前缀由谁生成，再问前缀下如何比较下一 token 分布。",
+    "Reverse KL 的模式偏好适合部分受限蒸馏场景，但不是保留能力、减轻遗忘或找到最佳模式的保证。"
+  ],
+  "context": "用户提供的图把 OPD 的解释分成分布几何、on-policy 约束与 verl 工程实现，需要分清哪些是直觉、哪些是过强的因果推断。",
+  "sections": [
+    {
+      "title": "在学生实际走到的状态上学习",
+      "paragraphs": [
+        "OPD 由学生生成轨迹；老师对学生当前前缀给出下一 token 的概率反馈。这样训练时遇到的前缀更接近学生推理时会产生的前缀，能针对学生自己的错误与选择学习。",
+        "“前缀来自谁”和“该前缀下选择哪种分布距离”是两个层次。学生生成前缀 s 后，可以查询老师 P(·|s) 和学生 Q(·|s)，直接计算 Σ_v P(v|s) log[P(v|s)/Q(v|s)]。这就是学生状态上的 token 级 forward KL，不需要先生成老师的整条轨迹。"
+      ]
+    },
+    {
+      "title": "为什么 reverse KL 与学生采样契合",
+      "paragraphs": [
+        "在给定前缀下，reverse KL 的期望由学生下一 token 分布加权。学生采样出的 token 可以用于估计 log Q−log P；策略梯度式 OPD 可使用对应的老师与学生 log 概率差信号。",
+        "这是一种便于利用学生样本的方式，不表示 forward KL 与 on-policy 天生冲突。全词表分布损失还可以直接影响当前前缀下没有被选中的 token；共享参数更新也可能改变其他前缀的行为。"
+      ]
+    },
+    {
+      "title": "图中三个层面的判断边界",
+      "paragraphs": [
+        "分布几何：reverse KL 相对容忍漏掉模式、排斥给老师低概率区过多权重，符合有限能力学生集中拟合部分模式的直觉；但不能据此推出一定只学一个峰，或一定保留原能力、减少灾难性遗忘。",
+        "On-policy：图把“轨迹来自学生”与“KL 必须在学生 token 分布下求期望”混在一起。前者是数据与状态来源，后者是选定 reverse KL 后的形式；二者并非同一约束。",
+        "工程实现：本次核对的 verl 文档支持学生状态上的 forward KL，并提供老师 top-k token 的近似实现。Top-k 是分布信息、计算与传输成本的取舍，既不是 forward KL 的数学定义，也不是它不适合 OPD 的证据。",
+        "SFT 的负对数似然可理解为对训练数据分布的交叉熵，等价于相应 forward KL 加常数；只有数据确实代表老师分布时才可据此讨论老师到学生的匹配。不能把 SFT 概括成“全图拉扯”、把 reverse KL 概括成“只改局部参数”，再当作遗忘差异的充分解释。"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "同一个学生前缀，选择不同 KL 目标",
+      "scenario": "学生生成当前前缀 s；为简化，下一 token 只有 A、B，老师 P=(0.8,0.2)，学生 Q=(0.6,0.4)。",
+      "steps": [
+        "保持学生前缀不变，forward KL=0.8 log(0.8/0.6)+0.2 log(0.2/0.4)≈0.0915。",
+        "同一前缀下 reverse KL=0.6 log(0.6/0.8)+0.4 log(0.4/0.2)≈0.1046。",
+        "两者可由完整分布求和；若只采学生 token，则 log(Q/P) 的期望等于 reverse KL。"
+      ],
+      "code": "",
+      "language": "",
+      "result": "前缀始终来自学生，改变的是当前前缀下的损失目标；forward KL 并不要求这个前缀由老师生成。"
+    }
+  ],
+  "recall": {
+    "question": "学生生成轨迹之后，为什么仍然可以优化 forward KL？",
+    "answer": "老师可以在学生已经生成的前缀上提供下一 token 分布。用老师概率加权比较两者的词表分布即可算 token 级 forward KL，轨迹采样来源和 KL 的方向是两个独立选择。"
+  },
+  "sources": [
+    {
+      "title": "verl：OPD、GKD 与 PG 损失变体",
+      "url": "https://verl.readthedocs.io/en/latest/algo/opd.html"
+    },
+    {
+      "title": "Thinking Machines Lab：On-Policy Distillation",
+      "url": "https://thinkingmachines.ai/blog/on-policy-distillation/"
+    }
+  ]
+}

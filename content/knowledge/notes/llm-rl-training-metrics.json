@@ -3,7 +3,7 @@
   "title": "大模型 RL：Reward 之外的训练指标",
   "summary": "用稳定性、探索、价值估计、真实能力与效率共同判断训练健康度。",
   "context": "面试问题：大模型 RL 训练除了 Reward，还关注什么？",
-  "branch": "training",
+  "branch": "rl-diagnostics",
   "sections": [
     {
       "title": "五类指标",

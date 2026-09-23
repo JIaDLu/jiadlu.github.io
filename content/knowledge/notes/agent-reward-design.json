@@ -1,7 +1,7 @@
 {
   "id": "agent-reward-design",
   "title": "Agent 的结果、过程与约束奖励",
-  "branch": "training",
+  "branch": "rl-reward",
   "summary": "结果奖励检查任务完成，轨迹约束检查禁止行为，过程奖励必须鼓励真正有用的进展。",
   "context": "最终成功但路径奇怪是否该奖励？最终失败但大多数步骤看起来正确是否应该给部分奖励？",
   "sections": [

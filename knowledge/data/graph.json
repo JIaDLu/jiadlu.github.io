@@ -1,16 +1,76 @@
 {
   "branches": [
     {
-      "description": "从推理、决策到与环境交互。",
+      "description": "研究 Agent 如何运行、连接工具与环境，以及框架如何组织交互；与策略学习和模型训练区分。",
       "id": "agents",
       "parent": null,
-      "title": "Agent 算法"
+      "title": "Agent 系统与工程"
     },
     {
-      "description": "从学习目标、优化方法到训练系统。",
+      "description": "模型调用、工具执行、环境反馈与上下文管理的运行链路，以及具体 Harness 的实现。",
+      "id": "agent-runtime",
+      "parent": "agents",
+      "title": "运行时与 Harness"
+    },
+    {
+      "description": "研究学习目标、数据与反馈怎样改变模型能力；覆盖通用方法及大模型、Agent 能力训练。",
       "id": "training",
       "parent": null,
-      "title": "大模型训练"
+      "title": "模型学习与训练"
+    },
+    {
+      "description": "理解概率分布之间的目标函数及其拟合偏好，作为训练与蒸馏的基础。",
+      "id": "distribution-matching",
+      "parent": "training",
+      "title": "学习目标与分布匹配"
+    },
+    {
+      "description": "用示范数据学习目标行为，组织数据选择、覆盖与泛化问题。",
+      "id": "supervised-learning",
+      "parent": "training",
+      "title": "监督微调（SFT）"
+    },
+    {
+      "description": "利用老师的输出或分布反馈训练学生，区分数据来源、匹配目标与优化方式。",
+      "id": "knowledge-distillation",
+      "parent": "training",
+      "title": "知识蒸馏"
+    },
+    {
+      "description": "从策略采样和奖励反馈中学习；概述与适用性留在本层，具体机制进入子分支。",
+      "id": "reinforcement-learning",
+      "parent": "training",
+      "title": "强化学习"
+    },
+    {
+      "description": "设计反馈目标，核验成功判据，并检查奖励能否经受持续优化。",
+      "id": "rl-reward",
+      "parent": "reinforcement-learning",
+      "title": "奖励与验证"
+    },
+    {
+      "description": "策略梯度、相对优势与优化目标的具体算法及其改进。",
+      "id": "policy-optimization",
+      "parent": "reinforcement-learning",
+      "title": "策略优化算法"
+    },
+    {
+      "description": "从 rollout、优势计算到更新与权重同步的执行链路及资源效率。",
+      "id": "rl-systems",
+      "parent": "reinforcement-learning",
+      "title": "训练流程与系统"
+    },
+    {
+      "description": "结合训练指标、行为轨迹与验证表现，诊断训练并决定停止与模型选择。",
+      "id": "rl-diagnostics",
+      "parent": "reinforcement-learning",
+      "title": "训练诊断与模型选择"
+    },
+    {
+      "description": "衡量模型能力与泛化的指标和评测协议；适用于 Agent、代码、对话等场景，不从属于某一训练算法。",
+      "id": "model-evaluation",
+      "parent": null,
+      "title": "模型评测"
     }
   ],
   "days": [
@@ -136,9 +196,19 @@
           "kind": "review",
           "note": "agent-environment-harness",
           "takeaway": "Multi-Harness 不是让每个任务遍历全部框架，而是组内固定可比条件、组间混合不同 harness 的长程轨迹，共同训练共享 policy 的接口适配与反馈纠错策略。"
+        },
+        {
+          "kind": "learn",
+          "note": "reverse-kl-mode-seeking",
+          "takeaway": "Reverse KL 对放错概率敏感、对漏峰相对宽容；有限容量下可能集中于部分模式，但不会自动跳过小峰寻找大峰，多峰也不等于把答案平均。"
+        },
+        {
+          "kind": "learn",
+          "note": "on-policy-distillation-objectives",
+          "takeaway": "学生生成前缀与选择 KL 方向是两个层次；OPD 也可在学生前缀上优化 forward KL，reverse KL 不保证保留原能力或找到最佳模式。"
         }
       ],
-      "summary": "进一步理解 Multi-Harness RL：组内控制变量，组间混合经验，用长程交互学习跨框架策略。"
+      "summary": "理解 Multi-Harness RL 的组内可比与组间泛化；分清 reverse KL 的模式偏好、漏峰与优化局限，以及 OPD 的采样方式和 KL 目标。"
     }
   ],
   "demo": false,
@@ -150,7 +220,7 @@
         "训练环境",
         "仿真环境"
       ],
-      "branch": "agents",
+      "branch": "agent-runtime",
       "id": "agent-environment-harness",
       "memory": [
         "环境承载状态与因果；harness 双向转换动作与观察。",
@@ -166,7 +236,7 @@
     },
     {
       "aliases": [],
-      "branch": "training",
+      "branch": "rl-reward",
       "id": "agent-reward-design",
       "memory": [
         "结果看完成，约束看行为，过程看真实进展。"
@@ -184,7 +254,7 @@
         "Clip-Higher",
         "Dynamic Sampling"
       ],
-      "branch": "training",
+      "branch": "policy-optimization",
       "id": "dapo-training-improvements",
       "memory": [
         "保探索、保信号、调权重、降噪声。"
@@ -201,7 +271,7 @@
         "early stopping",
         "checkpoint"
       ],
-      "branch": "training",
+      "branch": "rl-diagnostics",
       "id": "llm-rl-checkpoint-selection",
       "memory": [
         "停看平台、退化、预算；选看能力、约束、成本。"
@@ -220,7 +290,7 @@
         "KV Cache",
         "packing"
       ],
-      "branch": "training",
+      "branch": "rl-systems",
       "id": "llm-rl-gpu-utilization",
       "memory": [
         "先定位，再看批量、显存、算子、通信。",
@@ -238,7 +308,7 @@
         "盲评",
         "偏好胜率"
       ],
-      "branch": "training",
+      "branch": "model-evaluation",
       "id": "llm-rl-heldout-preference-evaluation",
       "memory": [
         "没有标准回答 ≠ 没有评估。",
@@ -258,7 +328,7 @@
         "GAE",
         "optimizer step"
       ],
-      "branch": "training",
+      "branch": "rl-systems",
       "id": "llm-rl-step-pipeline",
       "memory": [
         "生成 → 打分 → 算优势 → 更新 → 同步。"
@@ -273,7 +343,7 @@
         "KL",
         "Clip Fraction"
       ],
-      "branch": "training",
+      "branch": "rl-diagnostics",
       "id": "llm-rl-training-metrics",
       "memory": [
         "稳、探、准、真、快。"
@@ -286,11 +356,33 @@
     },
     {
       "aliases": [
+        "On-Policy Distillation",
+        "在线策略蒸馏",
+        "GKD",
+        "PG OPD",
+        "forward_kl_topk"
+      ],
+      "branch": "knowledge-distillation",
+      "id": "on-policy-distillation-objectives",
+      "memory": [
+        "先问前缀由谁生成，再问前缀下如何比较下一 token 分布。",
+        "Reverse KL 的模式偏好适合部分受限蒸馏场景，但不是保留能力、减轻遗忘或找到最佳模式的保证。"
+      ],
+      "related": [
+        "reverse-kl-mode-seeking",
+        "successful-trajectory-sft",
+        "llm-rl-step-pipeline"
+      ],
+      "summary": "OPD 在学生生成的前缀上接受老师反馈；前缀来自学生并不限定必须用 reverse KL，也可比较老师与学生的下一 token 分布来优化 forward KL。",
+      "title": "OPD：学生采样与 KL 方向是两个选择"
+    },
+    {
+      "aliases": [
         "pass@1",
         "pass@k",
         "rollout"
       ],
-      "branch": "agents",
+      "branch": "model-evaluation",
       "id": "pass-at-k-diagnostics",
       "memory": [
         "代表集测整体，失败集查原因；单次看稳定，多次看探索。",
@@ -304,7 +396,7 @@
     },
     {
       "aliases": [],
-      "branch": "agents",
+      "branch": "agent-runtime",
       "id": "pi-agent-learning-path",
       "memory": [
         "用 → 拆 → 搭 → 测。",
@@ -317,8 +409,30 @@
       "title": "Pi：Agent 运行链路与学习路线"
     },
     {
+      "aliases": [
+        "反向 KL",
+        "Forward KL",
+        "mode-seeking",
+        "mode-covering",
+        "零强制",
+        "模式覆盖",
+        "模式集中"
+      ],
+      "branch": "distribution-matching",
+      "id": "reverse-kl-mode-seeking",
+      "memory": [
+        "对“放错概率”敏感，对“漏掉模式”相对宽容；不是自动跳过小峰寻找大峰。",
+        "多峰表示掌握多种答案，不是把答案平均；能力充分时两种 KL 都以匹配老师整个分布为最优。"
+      ],
+      "related": [
+        "on-policy-distillation-objectives"
+      ],
+      "summary": "Reverse KL 强烈排斥学生在老师低概率区过度分配概率，相对容忍漏掉模式；有限容量下可能集中到部分峰，但不保证找到最大峰。",
+      "title": "Reverse KL：模式集中、漏峰与有限容量"
+    },
+    {
       "aliases": [],
-      "branch": "training",
+      "branch": "reinforcement-learning",
       "id": "rl-readiness",
       "memory": [
         "准、能、值：奖励准，探索有信号，训练值得。",
@@ -338,7 +452,7 @@
         "Long-Horizon RL",
         "在线 RL 可观测性"
       ],
-      "branch": "training",
+      "branch": "rl-diagnostics",
       "id": "rl-rollout-observability",
       "memory": [
         "指标告诉你结果如何，轨迹帮助你理解结果怎么来的。",
@@ -355,7 +469,7 @@
     },
     {
       "aliases": [],
-      "branch": "training",
+      "branch": "supervised-learning",
       "id": "successful-trajectory-sft",
       "memory": [
         "每题一两条，不等于整个数据集只有一两条。",
@@ -374,7 +488,7 @@
         "Rubrics",
         "奖励验证"
       ],
-      "branch": "training",
+      "branch": "rl-reward",
       "id": "verifier-for-rl",
       "memory": [
         "Verifier 既是测量的尺子，也是优化的靶子。",

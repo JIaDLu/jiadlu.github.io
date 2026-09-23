@@ -1,7 +1,7 @@
 {
   "id": "pi-agent-learning-path",
   "title": "Pi：Agent 运行链路与学习路线",
-  "branch": "agents",
+  "branch": "agent-runtime",
   "summary": "按用、拆、搭、测学习 Pi：观察工具轨迹，理解循环，搭最小 Agent，再接独立评测。",
   "context": "用户希望逐步学习 earendil-works/pi，决定明天继续。当前只查阅架构与文档并形成路线，未安装、运行或完成代码实操。",
   "sections": [

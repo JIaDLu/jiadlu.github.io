@@ -1,7 +1,7 @@
 {
   "id": "pass-at-k-diagnostics",
   "title": "Pass@1 / Pass@k 与失败子集诊断",
-  "branch": "agents",
+  "branch": "model-evaluation",
   "summary": "在固定条件下用多次独立 rollout 测探索覆盖；失败子集用于诊断，完整代表集用于报告整体能力。",
   "context": "用户问 SFT benchmark 的 85% 能否直接用于 Pass@1/Pass@k，以及能否只重测失败的 15% 来支持 RL。",
   "sections": [

@@ -1,7 +1,7 @@
 {
   "id": "verifier-for-rl",
   "title": "Verifier：从评测尺子到训练奖励",
-  "branch": "training",
+  "branch": "rl-reward",
   "summary": "评测要求判得准，RL 还要求判据经得起持续优化；验证须在训练前开始并持续进行。",
   "context": "用户反复追问：为什么测 Pass@1/Pass@k 前先验证 Verifier？SFT 评测的 Verifier 能否直接拿去做 RL？",
   "sections": [

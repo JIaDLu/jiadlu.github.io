@@ -3,7 +3,7 @@
   "title": "DAPO：从训练问题解释算法改动",
   "summary": "相对基础 GRPO，DAPO 针对探索收缩、零优势组、长度权重和截断奖励噪声改善长推理训练。",
   "context": "面试问题：具体项目为什么换成 DAPO，主要改善了什么？本次没有提供真实项目实验结果，不能把机制解释包装成实测经历。",
-  "branch": "training",
+  "branch": "policy-optimization",
   "sections": [
     {
       "title": "四项改动对应四类问题",

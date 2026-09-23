@@ -1,7 +1,7 @@
 {
   "id": "rl-rollout-observability",
   "title": "多轮 RL：从指标监控到 Rollout 轨迹检查",
-  "branch": "training",
+  "branch": "rl-diagnostics",
   "summary": "Rollout 既是策略行为也是后续学习的数据；训练期间需把完整轨迹、评分与环境错误关联起来，检查模型正在学会什么。",
   "aliases": [
     "Rollout Logs",

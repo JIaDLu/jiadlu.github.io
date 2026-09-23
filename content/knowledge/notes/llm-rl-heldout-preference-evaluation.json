@@ -3,7 +3,7 @@
   "title": "大模型 RL：无标准回答的独立偏好评测",
   "summary": "留出 prompt 并采用独立评判即可评估能力；题目独立与评价机制独立解决不同问题。",
   "context": "用户追问：RL 没有 SFT 那种 eval set，所谓独立评测集具体是什么？对话偏好对齐怎么测？",
-  "branch": "training",
+  "branch": "model-evaluation",
   "sections": [
     {
       "title": "没有标准回答也能评测",

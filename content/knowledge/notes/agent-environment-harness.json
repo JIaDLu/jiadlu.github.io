@@ -1,7 +1,7 @@
 {
   "id": "agent-environment-harness",
   "title": "Agent 训练中的 Environment 与 Harness",
-  "branch": "agents",
+  "branch": "agent-runtime",
   "summary": "Environment 定义任务世界及其状态变化，harness 双向转换模型动作与环境反馈；Multi-Harness 通过组间混合多种交互协议，推动共享策略跨框架泛化。",
   "context": "讨论 MiMo-V2.6 的 Multi-Harness Training 时，先澄清自建仿真环境是否就是 harness，随后追问多个 harness 如何参与同一次 RL、group 内怎样保持可比，以及是否需要让每个任务遍历全部 harness。",
   "sections": [

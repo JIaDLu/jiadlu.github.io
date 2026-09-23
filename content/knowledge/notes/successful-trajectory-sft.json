@@ -1,7 +1,7 @@
 {
   "id": "successful-trajectory-sft",
   "title": "成功轨迹 SFT：数量、覆盖与评测隔离",
-  "branch": "training",
+  "branch": "supervised-learning",
   "summary": "多次采样中的成功轨迹可用作 SFT 候选数据，但泛化取决于总量、覆盖、多样性和独立验证。",
   "context": "用户确认“收集成功轨迹”是否指多次采样偶尔成功的一两条，并担心数量太少。",
   "sections": [
