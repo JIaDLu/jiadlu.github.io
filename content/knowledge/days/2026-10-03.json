@@ -4,7 +4,7 @@
   "entries": [
     {
       "note": "agent-hooks-plugins-terminal-integration",
-      "takeaway": "从 Warp 通知追踪宿主触发、插件脚本与终端通信；明确插件不必依赖 Hooks、执行顺序由实现决定，dsh 的服务架构也不能简化成几个生命周期事件。",
+      "takeaway": "从 Warp 通知追踪宿主触发、插件脚本与终端通信；明确插件不必依赖 Hooks、执行顺序由实现决定，dsh 的服务架构也不能简化成几个生命周期事件。 用“Plugin 是插什么，Hook 是插在哪”区分能力与介入点，并理解 DSH 连核心部件也可按契约替换。",
       "kind": "learn"
     }
   ]

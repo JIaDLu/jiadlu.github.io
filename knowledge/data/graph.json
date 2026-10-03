@@ -216,7 +216,7 @@
         {
           "kind": "learn",
           "note": "agent-hooks-plugins-terminal-integration",
-          "takeaway": "从 Warp 通知追踪宿主触发、插件脚本与终端通信；明确插件不必依赖 Hooks、执行顺序由实现决定，dsh 的服务架构也不能简化成几个生命周期事件。"
+          "takeaway": "从 Warp 通知追踪宿主触发、插件脚本与终端通信；明确插件不必依赖 Hooks、执行顺序由实现决定，dsh 的服务架构也不能简化成几个生命周期事件。 用“Plugin 是插什么，Hook 是插在哪”区分能力与介入点，并理解 DSH 连核心部件也可按契约替换。"
         }
       ],
       "summary": "理解 Hooks、插件与终端通知的关系，并区分生命周期事件与 Harness 的完整插件架构。"
@@ -258,7 +258,7 @@
       "branch": "agent-runtime",
       "id": "agent-hooks-plugins-terminal-integration",
       "memory": [
-        "Hook 是接入时机与处理规则；插件是扩展包，两者不是一一对应，也不互相必需。",
+        "Plugin 是“插什么”，Hook 是“插在哪”；DSH 则是“连原来的主机零件都能拔下来换”（仍须满足接口与依赖约束）。",
         "终端承载输入输出，宿主触发事件，插件翻译状态；卸载插件不会移除宿主的 Hooks 能力。"
       ],
       "related": [
