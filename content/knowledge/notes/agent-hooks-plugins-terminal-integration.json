@@ -1,0 +1,139 @@
+{
+  "id": "agent-hooks-plugins-terminal-integration",
+  "title": "Hooks、插件与终端：从 Warp 通知到 Harness 扩展",
+  "branch": "agent-runtime",
+  "aliases": [
+    "Hooks",
+    "钩子",
+    "生命周期事件",
+    "插件机制",
+    "claude-code-warp",
+    "DeepSeek Harness",
+    "dsh"
+  ],
+  "summary": "Hooks 把特定执行时机交给注册的处理程序；插件可以打包这些处理程序，终端集成则把 Agent 的内部事件转换成可识别的通知。",
+  "context": "从 Warp 插件的 Hooks 信任界面出发，追问它为什么针对 Claude Code、在 Warp 中运行 Codex 是否需要它、卸载插件后 Hooks 是否仍存在，以及插件由谁加载。随后结合自动化规则、汽车插槽比喻与 DeepSeek Harness 的插件架构，厘清概念和适用边界。前期讨论发生于 2026-10-01，本次于 2026-10-03 补充、核查并整理。",
+  "sections": [
+    {
+      "title": "先拆开三个概念：扩展点、注册规则、处理程序",
+      "paragraphs": [
+        "Hooks 的直白理解是“当……时，就……”。更严格地说，主程序提供事件或扩展点，配置将某个处理程序注册到该时机，运行时再负责触发和执行。日常把扩展点、注册配置和处理程序都叫 Hook，容易造成“卸载插件是否会卸载 Hooks”的混淆。",
+        "事件名称说明什么时候触发，例如 SessionStart 是会话开始或恢复，UserPromptSubmit 是提交提示词，PermissionRequest 是请求权限，PostToolUse 是工具成功执行后，Stop 是本轮响应结束。处理程序决定具体行为，例如发送通知、记录日志或加载上下文；过滤条件还可以缩小适用范围。不同宿主的事件名称和精确语义必须分别核对。",
+        "Hook 不一定只是 shell 脚本，也可能是进程内回调或其他宿主支持的处理方式。它也不一定只负责“报幕”：某些扩展点允许修改数据、补充上下文或阻止后续操作，能力取决于该点的输入输出约定。Stop 通知表示到达响应结束时机，不是任务正确性验证。"
+      ]
+    },
+    {
+      "title": "汽车插槽比喻：有用，但不能覆盖所有插件",
+      "paragraphs": [
+        "可以把宿主比作车辆、扩展点比作预留插槽、插件比作外接设备。不过 Type-C 插槽主要表达连接关系，难以表达“何时触发”；补上“车辆启动或停车时向已连接设备发信号”，才更接近生命周期 Hooks。",
+        "插件是交付和组织扩展能力的包，可以包含 Hooks、工具、技能说明、服务或界面组件。Hooks 是接入机制之一；插件不一定必须依赖 Hooks 才能工作，用户也可以不安装插件，直接配置自己的 Hook 处理程序。",
+        "解耦的收益是在已有扩展契约覆盖需求时，不改宿主核心代码也能增加或替换行为。但不能说主程序永远无需修改、第三方能无限扩展：缺少必要事件或接口、接口版本变化、依赖和资源限制都可能要求调整宿主。"
+      ]
+    },
+    {
+      "title": "多点接入、多个处理程序与状态共享",
+      "paragraphs": [
+        "同一个事件可以注册多个处理程序，分别来自插件或用户配置；同一个插件也能接入多个事件。因此真正的一对多关系是“事件 → 处理程序”，插件则负责组织其中一组。",
+        "执行顺序没有跨框架的统一保证。核查时 Claude Code 文档说明匹配的 Hooks 并行运行；dsh 的 Codex Hooks 兼容桥则说明按配置顺序串行执行。不能把“一个 Hook 挂多个插件”进一步推导成“它们一定排队执行”。",
+        "多点监听可以共同维护一个状态账本，例如会话开始建立记录、用户提交时标记运行中、结束时标记完成。但共享状态需要显式实现：内存服务、按 session_id 隔离的文件或数据库等。独立启动的 Hook 脚本不会自动共享上一进程的内存；并发写入、重复事件、失败恢复与清理也需要设计。"
+      ]
+    },
+    {
+      "title": "Warp 与 CLI：基础输入输出和状态通信是两层",
+      "paragraphs": [
+        "在 Warp 中输入 claude，通常由终端里的 shell 启动 Claude Code 进程。Warp 提供键盘输入和输出显示，Claude Code 负责模型交互及工具执行。这条终端输入输出通道不依赖 claude-code-warp 插件，Claude Code 也可以运行在其他兼容终端中。",
+        "终端能够显示“需要审批”的文字，不等于它获得了可靠的“Agent 正在等待审批”事件。通知集成通过明确的结构化消息，让 Warp 能更新状态或提醒用户；这与正常聊天显示是不同职责。",
+        "claude-code-warp 是为 Claude Code 编写的 Warp 集成。正常使用时由 Claude Code 加载其注册配置，在事件发生时执行脚本；脚本生成 JSON 状态载荷，借助 OSC 777 终端控制序列传给 Warp。文件位于插件目录不代表它是外部监控进程。本文依据插件说明及本次查看的 2.2.0 脚本解释机制，未进行端到端通知实测。",
+        "在 Warp 中运行 codex 也是终端承载 CLI，但适配对象换成 Codex。不能把 claude-code-warp 当成所有 Agent 通用的插件，也不能仅凭某个设置页列出了它，就断定其脚本兼容该宿主。Codex 的通知应使用其对应集成；具体配置按当前 Warp 官方文档确认。"
+      ]
+    },
+    {
+      "title": "为什么要求信任，以及卸载会发生什么",
+      "paragraphs": [
+        "本次截图中的应用把“安装插件”“信任 Hooks”和“启用 Hooks”分开。其提示明确指出这些 Hooks 在沙箱之外运行，因此安装一个扩展包并不自动授权其中的脚本执行。这个提示说明的是该宿主的执行策略，不能泛化成所有框架的 Hooks 都在沙箱外。",
+        "信任通知脚本与批准 Agent 某次工具操作是两个不同授权。claude-code-warp 的 PermissionRequest 脚本用于报告审批请求；信任它不等于自动批准后续命令。不过其他 Hooks 可能参与决策，因此仍要看脚本和宿主协议，而不是只看事件名称。",
+        "卸载插件后，它提供的那组 Hooks 不再由该插件加载，不会自动转成独立配置继续运行。宿主的 Hooks 机制仍存在，其他插件及用户独立配置不因此消失。如果曾手工复制注册规则，需要分别清理；也不能假设从一个宿主卸载会同步卸载另一个宿主中的副本。",
+        "不再使用 Claude Code 时，这个特定集成可以卸载；不影响 Warp 作为终端，也不影响在 Warp 中正常运行 Codex。"
+      ]
+    },
+    {
+      "title": "dsh：插件化架构比生命周期通知更广",
+      "paragraphs": [
+        "DeepSeek Harness（dsh）官方将自身描述为基于 Cordis 的“Everything is a Plugin”架构。它的包结构把 Agent 服务和具体循环、文件系统、shell、终端与 Web GUI 等能力拆开，扩展依赖服务定义而非绑定具体提供者；dsh-agent-loop 也可替换。它说明插件化能够深入运行时，而不只用于任务结束后发通知。",
+        "但“万物皆插件”不等于“所有能力都只是挂在 SessionStart、PermissionRequest、Stop 上”。dsh 同时存在服务契约、提供者、消费者和原生扩展点。其 Codex Hooks 桥把 SessionStart 映射到 agent/created、PreToolUse 映射到 tools/pre-execute、Stop 映射到 agent/turn-stopping 等内部接入点；这些是兼容层映射，不是整套架构的同义词。",
+        "因此，原先“文件读取、终端执行、桌面外壳都只是挂在生命周期 Hooks 上”的说法过度简化。更准确的结论是：这些能力可通过模块和插件契约组合，Hooks 承担事件接入与流程干预的一部分。这里核查的是官方架构与包文档，未运行 dsh，也不声称完成全仓源码审计。"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "完整链路：Claude Code 请求权限，Warp 提醒用户",
+      "scenario": "在 Warp 终端中运行 Claude Code，并在适用环境中安装、启用其 Warp 通知插件；用户希望离开当前标签页后仍能知道何时需要审批。",
+      "steps": [
+        "用户在 Warp 的 shell 中输入 claude；shell 启动 CLI，终端负责输入输出。",
+        "Claude Code 加载插件声明的 Hooks。模型提出某项工具操作后，运行时判断该操作需要审批。",
+        "运行时触发 PermissionRequest，将事件数据交给已启用且获准运行的处理脚本。",
+        "脚本把事件、会话标识及操作概要整理成 Warp 可识别的载荷，通过 OSC 777 控制序列发送。",
+        "Warp 解析消息并按通知设置更新界面或发出提醒；用户回到 Claude Code，批准或拒绝那次操作。"
+      ],
+      "code": "键盘 ↔ Warp 终端 ↔ shell 启动的 Claude Code CLI\n\nClaude Code 权限请求\n  → PermissionRequest 事件\n  → claude-code-warp 处理脚本\n  → JSON 载荷 + OSC 777 终端控制序列\n  → Warp 通知\n  → 用户回到 CLI 作出审批决定",
+      "language": "text",
+      "result": "机制预期：插件增加结构化状态提醒；CLI 的基本运行不依赖这个通知插件。信任 Hook 和批准操作是分开的。本例为文档与脚本推导的通信流程，没有宣称现场运行成功。"
+    },
+    {
+      "title": "一个状态插件接入多个事件",
+      "scenario": "设计一个会话状态记录插件，以同一个 session_id 追踪开始、工作、待审批和结束。以下是概念伪代码，不是任一产品的可直接使用配置。",
+      "steps": [
+        "会话开始时创建以 session_id 为键的记录。",
+        "用户提交提示词时标记 working；请求权限时标记 waiting。",
+        "工具成功完成后恢复 working；Stop 时标记 turn_finished。",
+        "如果事件处理在不同进程中执行，把状态放入显式共享存储；若可能并发，需要原子更新或事务，不能依赖自然执行顺序。"
+      ],
+      "code": "on(SessionStart,      e => store.create(e.session_id))\non(UserPromptSubmit,  e => store.set(e.session_id, \"working\"))\non(PermissionRequest, e => store.set(e.session_id, \"waiting\"))\non(PostToolUse,       e => store.set(e.session_id, \"working\"))\non(Stop,              e => store.set(e.session_id, \"turn_finished\"))",
+      "language": "text",
+      "result": "同一插件可以利用多个接入点维护全程状态；状态共享来自 store 的实现，而非 Hooks 自动提供。turn_finished 只表示一轮结束，不代表成功通过测试。本例用于解释机制，未执行。"
+    }
+  ],
+  "memory": [
+    "Hook 是接入时机与处理规则；插件是扩展包，两者不是一一对应，也不互相必需。",
+    "终端承载输入输出，宿主触发事件，插件翻译状态；卸载插件不会移除宿主的 Hooks 能力。"
+  ],
+  "recall": {
+    "question": "Claude Code 已经运行在 Warp 中，为什么还需要通知插件？卸载插件后，哪些能力保留？",
+    "answer": "终端输入输出让人看到 CLI，但 Warp 仍需要明确的结构化事件才能可靠显示 Agent 状态。宿主在事件发生时调用插件脚本，脚本把状态传给 Warp。卸载后该插件的通知集成不再加载，终端的基本输入输出、CLI 本身和宿主的 Hooks 机制仍保留。"
+  },
+  "related": [
+    "agent-environment-harness",
+    "pi-agent-learning-path"
+  ],
+  "sources": [
+    {
+      "title": "Claude Code Hooks reference：事件、处理程序与并行执行",
+      "url": "https://code.claude.com/docs/en/hooks"
+    },
+    {
+      "title": "Warp 官方 Claude Code 集成：通知协议与事件",
+      "url": "https://github.com/warpdotdev/claude-code-warp"
+    },
+    {
+      "title": "OpenAI Hooks：配置与信任",
+      "url": "https://learn.chatgpt.com/docs/hooks"
+    },
+    {
+      "title": "Warp Agent Notifications：按 CLI 配置集成",
+      "url": "https://docs.warp.dev/agents/capabilities/agent-notifications/"
+    },
+    {
+      "title": "DeepSeek Harness 官方仓库",
+      "url": "https://github.com/deepseek-ai/deepseek-harness"
+    },
+    {
+      "title": "dsh 包结构：服务与插件的能力分层",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/README.md"
+    },
+    {
+      "title": "dsh Codex Hooks 桥：事件映射及兼容边界",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/hooks/hooks-codex/README.md"
+    }
+  ]
+}

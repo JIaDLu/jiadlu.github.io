@@ -209,6 +209,17 @@
         }
       ],
       "summary": "理解 Multi-Harness RL 的组内可比与组间泛化；分清 reverse KL 的模式偏好、漏峰与优化局限，以及 OPD 的采样方式和 KL 目标。"
+    },
+    {
+      "date": "2026-10-03",
+      "entries": [
+        {
+          "kind": "learn",
+          "note": "agent-hooks-plugins-terminal-integration",
+          "takeaway": "从 Warp 通知追踪宿主触发、插件脚本与终端通信；明确插件不必依赖 Hooks、执行顺序由实现决定，dsh 的服务架构也不能简化成几个生命周期事件。"
+        }
+      ],
+      "summary": "理解 Hooks、插件与终端通知的关系，并区分生命周期事件与 Harness 的完整插件架构。"
     }
   ],
   "demo": false,
@@ -233,6 +244,29 @@
       ],
       "summary": "Environment 定义任务世界及其状态变化，harness 双向转换模型动作与环境反馈；Multi-Harness 通过组间混合多种交互协议，推动共享策略跨框架泛化。",
       "title": "Agent 训练中的 Environment 与 Harness"
+    },
+    {
+      "aliases": [
+        "Hooks",
+        "钩子",
+        "生命周期事件",
+        "插件机制",
+        "claude-code-warp",
+        "DeepSeek Harness",
+        "dsh"
+      ],
+      "branch": "agent-runtime",
+      "id": "agent-hooks-plugins-terminal-integration",
+      "memory": [
+        "Hook 是接入时机与处理规则；插件是扩展包，两者不是一一对应，也不互相必需。",
+        "终端承载输入输出，宿主触发事件，插件翻译状态；卸载插件不会移除宿主的 Hooks 能力。"
+      ],
+      "related": [
+        "agent-environment-harness",
+        "pi-agent-learning-path"
+      ],
+      "summary": "Hooks 把特定执行时机交给注册的处理程序；插件可以打包这些处理程序，终端集成则把 Agent 的内部事件转换成可识别的通知。",
+      "title": "Hooks、插件与终端：从 Warp 通知到 Harness 扩展"
     },
     {
       "aliases": [],
