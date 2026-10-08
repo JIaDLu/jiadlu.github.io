@@ -39,7 +39,7 @@
           <a href="https://github.com/JIaDLu">GitHub</a>
           <a href="https://www.linkedin.com/in/jiadong-jaydon-lu-04a429377/">LinkedIn</a>
           <a href="https://scholar.google.com/citations?user=7awu8-kAAAAJ&amp;hl=en">Scholar</a>
-          <a href="/assets/cv/Resume_Lujiadong.pdf?v=20261008">CV <span aria-hidden="true">↗</span><span class="cv-format"> (PDF)</span></a>
+          <a href="/assets/cv/Resume_Lujiadong.pdf?v=20261008-1">CV <span aria-hidden="true">↗</span><span class="cv-format"> (PDF)</span></a>
         </div>
       </div>
       <figure class="profile-photo">
@@ -70,13 +70,13 @@
             <span class="date">May – Oct 2026</span>
           </div>
           <p class="role">LLM Post-Training Engineer · Intern</p>
-          <h4>Paediatric conversations: training, evaluation and deployment</h4>
-          <p>I combined simulated conversations with production logs, applied quality checks and balanced the training data to fine-tune Qwen3.5-27B for paediatric sales and customer service. After deployment, I used production failures to guide SFT and DPO, and validated multi-teacher on-policy distillation into Qwen3.5-9B.</p>
+          <h4>Lead capture through paediatric service conversations</h4>
+          <p>I fine-tuned Qwen3.5-27B for multi-turn paediatric service enquiries, with <strong>lead capture</strong> as the business objective. I combined simulated conversations with production logs, applied quality checks and balanced the training data. After deployment, I used production failures to guide SFT and DPO, and validated multi-teacher on-policy distillation into Qwen3.5-9B.</p>
           <p class="result">Evaluation failure rate: <strong>25% → 5%</strong> on a dynamic set of <strong>1,000 real business examples</strong>.</p>
-          <h4>A shared model across medical specialties</h4>
-          <p>I contributed to two-stage full-parameter SFT of Qwen3-8B: learning consultation and sales-conversion workflows from approximately <strong>460,000 production logs</strong>, then targeting difficult cases. I built the feedback loop from log ingestion and failure analysis through response repair, quality checks, retraining and regression evaluation.</p>
+          <h4>A shared lead-capture model across medical specialties</h4>
+          <p>I contributed to two-stage full-parameter SFT of Qwen3-8B: learning empathetic, goal-directed consultation and lead-capture workflows from approximately <strong>460,000 production logs</strong>, then targeting difficult cases. I built the feedback loop from log ingestion and failure analysis through response repair, quality checks, retraining and regression evaluation.</p>
           <h4>Agentic RL, grounded in the production workflow</h4>
-          <p>I recreated production workflows and built a user simulator from real conversations and behaviour. I combined trajectory-level business quality and conversion with turn-level user-state changes, using return-to-go for credit assignment. I built a multi-turn DAPO training pipeline and refined it through trajectory audits and evaluation.</p>
+          <p>I recreated production workflows and built a user simulator from real conversations and behaviour. I combined trajectory-level conversation quality and final lead capture with turn-level user-state changes, using return-to-go for credit assignment. I built a multi-turn DAPO training pipeline and refined it through trajectory audits and evaluation.</p>
           <p class="result">Internal Excellent-Bench performance improved by <strong>55%</strong>, with other evaluated capabilities maintained. The deployed model handles <strong>100,000+ calls per day</strong>.</p>
           <p class="stack">Qwen · LoRA / Full-parameter SFT · DPO · On-policy distillation · DAPO</p>
         </article>

@@ -6,8 +6,8 @@ is needed for the homepage.
 
 ## Content and maintenance
 
-The primary factual source is the author's English `resume_ng_en/main_v2.tex`,
-updated 8 October 2026. The compiled `main_v2.pdf` is copied unchanged to
+The primary factual source is the author's English `resume_ng_en/main_1.tex`,
+updated 8 October 2026. The compiled `Jiadong_Lu_CV_NUHS_PRESERVE_1.pdf` is copied unchanged to
 `assets/cv/Resume_Lujiadong.pdf`, preserving the existing public CV URL.
 
 The homepage uses a personal introduction, links to the two notebooks, selected
@@ -25,7 +25,13 @@ pipeline uses DAPO. Jiusong memory extraction improves from 80% to 95%; WeCom is
 the delivery platform, not the agent type. Its related manuscript remains under
 review at npj Digital Medicine, not accepted or published. The existing public
 memory-model link is retained; MCP and verl are not added to the current skills
-from the older resume. The CV link cache version is `20261008`.
+from the older resume. The CV link cache version is `20261008-1`.
+
+The latest downloadable CV omits the PuzzleLogic project diagram while keeping
+the header portrait and logo. Kriston copy explicitly identifies lead capture
+as the objective of the paediatric and cross-specialty models and as part of
+the RL reward. Evaluation failure rates and Excellent-Bench improvements remain
+model-evaluation metrics, not lead-capture rates, appointments or clinical outcomes.
 
 Undergraduate background is folded into education and selected research. Its
 standalone HTML and entry link have been removed, with no replacement page or
