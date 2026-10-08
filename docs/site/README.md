@@ -6,17 +6,26 @@ is needed for the homepage.
 
 ## Content and maintenance
 
-The primary factual source is the author's English `resume_ng_en/main.tex`,
-updated 17 September 2026. The compiled `main.pdf` is copied unchanged to
+The primary factual source is the author's English `resume_ng_en/main_v2.tex`,
+updated 8 October 2026. The compiled `main_v2.pdf` is copied unchanged to
 `assets/cv/Resume_Lujiadong.pdf`, preserving the existing public CV URL.
 
 The homepage uses a personal introduction, links to the two notebooks, selected
 work grouped by employer, two selected publications, and education. Role names,
 dates, degrees, authorship and reported outcomes follow the resume. Keep internal
-evaluation names and their meaning next to results: Excellent-Bench measures
-alignment with expert sales behaviour; the paediatric failure rate uses a rolling
-set of production conversations. Do not relabel these as general benchmarks or
-clinical outcomes. Do not infer a graduate research appointment from enrolment.
+evaluation names next to results: Excellent-Bench is an internal business-model
+evaluation, reported as a 55% improvement; the paediatric failure rate uses a
+dynamic set of 1,000 real business examples. Do not relabel these as general
+benchmarks or clinical outcomes, or convert 55% to percentage points or invented
+start/end scores. Do not infer a graduate research appointment from enrolment.
+
+The 8 October content refresh preserves the homepage layout and adds PuzzleLogic
+between Kriston.AI and Jiusong. Kriston dates are May–October 2026 and the RL
+pipeline uses DAPO. Jiusong memory extraction improves from 80% to 95%; WeCom is
+the delivery platform, not the agent type. Its related manuscript remains under
+review at npj Digital Medicine, not accepted or published. The existing public
+memory-model link is retained; MCP and verl are not added to the current skills
+from the older resume. The CV link cache version is `20261008`.
 
 Undergraduate background is folded into education and selected research. Its
 standalone HTML and entry link have been removed, with no replacement page or
