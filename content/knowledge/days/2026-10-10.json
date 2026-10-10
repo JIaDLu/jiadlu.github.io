@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-10",
+  "summary": "从已跑通的订单 Demo 理解 Pi 框架、业务工具与 Extension，并总结工具过载、路由、动态加载和生产兜底。",
+  "entries": [
+    {
+      "note": "pi-agent-learning-path",
+      "kind": "review",
+      "takeaway": "从原来的学习路线推进到真实订单 Demo：分清模型、Pi 循环和业务函数，解释历史消息从 1 条变为 3 条。"
+    },
+    {
+      "note": "pi-business-tools-and-extensions",
+      "kind": "learn",
+      "takeaway": "明确当前 Demo 直接传入 tools，并未使用 Extension；业务说明、Schema 和 execute 各自承担不同职责。"
+    },
+    {
+      "note": "agent-tool-selection-and-overload",
+      "kind": "learn",
+      "takeaway": "拆文件不减少上下文；常用预置与长尾检索结合，并用校验、有限纠错和兜底保证可控。"
+    }
+  ]
+}

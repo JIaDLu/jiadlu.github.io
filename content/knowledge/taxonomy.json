@@ -73,6 +73,12 @@
       "title": "模型评测",
       "parent": null,
       "description": "衡量模型能力与泛化的指标和评测协议；适用于 Agent、代码、对话等场景，不从属于某一训练算法。"
+    },
+    {
+      "id": "agent-tools",
+      "title": "工具接入与选择",
+      "parent": "agents",
+      "description": "工具契约、业务执行与扩展接入，以及候选筛选、动态加载和执行约束。"
     }
   ]
 }

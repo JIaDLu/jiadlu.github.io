@@ -1,9 +1,9 @@
 {
   "id": "pi-agent-learning-path",
-  "title": "Pi：Agent 运行链路与学习路线",
+  "title": "Pi：从订单 Demo 理解 Agent 框架与运行循环",
   "branch": "agent-runtime",
-  "summary": "按用、拆、搭、测学习 Pi：观察工具轨迹，理解循环，搭最小 Agent，再接独立评测。",
-  "context": "用户希望逐步学习 earendil-works/pi，决定明天继续。当前只查阅架构与文档并形成路线，未安装、运行或完成代码实操。",
+  "summary": "Pi 提供模型与工具之间的运行机制；订单 Demo 提供模型配置、业务工具和交互入口，一次查询通过两次模型请求完成工具调用闭环。",
+  "context": "原笔记只形成用、拆、搭、测的学习路线。本次 session 后续搭建独立订单查询 Demo，用户于 2026-10-03 提供了真实模型调用工具成功的终端输出；2026-10-10 继续厘清框架、业务工具和扩展的职责并归档。尚未运行的旧练习保留为历史计划，不等同于本次实测。",
   "sections": [
     {
       "title": "定位与模块",
@@ -18,11 +18,67 @@
         "用：在练习项目要求修复函数并运行测试，观察 read/write/edit/bash。拆：追踪上下文→模型输出→工具执行→工具结果→下一次模型调用。",
         "搭：用 agent-core 添加一个读取文件的工具，打印事件，试正常读取、文件不存在和轮数限制；再学 sessions、压缩和 extensions。测：自行准备 10–20 个任务，重置环境、记录轨迹、接入独立 Verifier 并重复采样。最后一步是本次建议的练习，不是声称仓库已有 RL 训练管线。"
       ]
+    },
+    {
+      "title": "为什么叫框架：通用机制与业务代码",
+      "paragraphs": [
+        "没有框架时，开发者需要组织模型请求、识别工具调用、查找工具、校验参数、执行、回填结果及下一轮请求。Pi 将这些通用机制封装为可复用组件，开发者提供模型、指令和工具，再调用 agent.prompt(text)。",
+        "模型理解请求、生成工具名和参数、组织回答；Pi 负责运行与反馈；业务代码真正访问数据库、调用 API 或计算。Pi 本身不训练模型，也不会自动知道企业业务。Framework 强调供开发者组装程序的接口，Harness 强调围绕模型建立的执行环境；二者没有绝对统一的行业边界。"
+      ]
+    },
+    {
+      "title": "当前 Demo 的文件与依赖",
+      "paragraphs": [
+        "cli.mjs 读取输入并调用 agent.prompt；agent.mjs 用 new Agent 配置模型、systemPrompt、tools 和事件监听；model.mjs 使用 pi-ai 的兼容接口；tools.mjs 定义 lookupOrder；.env 存放本地配置。文件名由 Demo 自行选择，不是 Pi 强制结构；.mjs 是支持 import/export 的 JavaScript 模块。",
+        "Demo 使用 npm 发布包 pi-agent-core@0.85.1 与 pi-ai@0.85.1；源码分析参照 commit 8a7b0c03d。它没有直接执行参考仓库源码，修改参考仓库不会自动改变 Demo。启动只配置 Agent，直到用户输入才请求模型。"
+      ]
+    },
+    {
+      "title": "Context、Session、Memory 与 SOP",
+      "paragraphs": [
+        "Context 是一次模型请求可见的信息，包括系统指令、历史消息和工具定义。Session 指一次持续交互；Demo 的 Agent 对象在内存保留历史，/reset 清空，进程退出后丢失，不能说已经实现持久化 Session 管理。",
+        "Memory 可以涉及历史利用、外部检索或跨会话持久化；当前 Demo 只利用本进程的历史，没有长期记忆系统。SOP 是业务操作规范，例如订单号缺失先询问、查状态必须使用工具。关键权限和业务限制应落实在代码中，不能仅依赖提示词。"
+      ]
+    },
+    {
+      "title": "可扩展与生产可用的边界",
+      "paragraphs": [
+        "Pi 的分层使业务 Agent 可以从核心运行层或 coding-agent SDK 起步。优先通过公开接口扩展、把业务代码独立成包，核心能力不足时再考虑改源码；锁定版本并测试升级。轻量指主循环抽象直接、无需先定义多 Agent 编排或 Workflow Graph，不表示工具越多都没有代价。",
+        "这个 Demo 只读两笔虚构订单，设置了每次用户请求最多 6 次模型调用；尚未实现真实数据库、多租户权限、持久化、生产部署或业务评测集。框架中的持久化也不能自动保证外部写操作只执行一次。近期新 Harness 接口和远程服务集成存在演进限制，采用具体功能前要按版本验证。"
+      ]
+    },
+    {
+      "title": "为什么叫框架：通用机制与业务代码",
+      "paragraphs": [
+        "没有框架时，开发者需要组织模型请求、识别工具调用、查找工具、校验参数、执行、回填结果及下一轮请求。Pi 将这些通用机制封装为可复用组件，开发者提供模型、指令和工具，再调用 agent.prompt(text)。",
+        "模型理解请求、生成工具名和参数、组织回答；Pi 负责运行与反馈；业务代码真正访问数据库、调用 API 或计算。Pi 本身不训练模型，也不会自动知道企业业务。Framework 强调供开发者组装程序的接口，Harness 强调围绕模型建立的执行环境；二者没有绝对统一的行业边界。"
+      ]
+    },
+    {
+      "title": "当前 Demo 的文件与依赖",
+      "paragraphs": [
+        "cli.mjs 读取输入并调用 agent.prompt；agent.mjs 用 new Agent 配置模型、systemPrompt、tools 和事件监听；model.mjs 使用 pi-ai 的兼容接口；tools.mjs 定义 lookupOrder；.env 存放本地配置。文件名由 Demo 自行选择，不是 Pi 强制结构；.mjs 是支持 import/export 的 JavaScript 模块。",
+        "Demo 使用 npm 发布包 pi-agent-core@0.85.1 与 pi-ai@0.85.1；源码分析参照 commit 8a7b0c03d。它没有直接执行参考仓库源码，修改参考仓库不会自动改变 Demo。启动只配置 Agent，直到用户输入才请求模型。"
+      ]
+    },
+    {
+      "title": "Context、Session、Memory 与 SOP",
+      "paragraphs": [
+        "Context 是一次模型请求可见的信息，包括系统指令、历史消息和工具定义。Session 指一次持续交互；Demo 的 Agent 对象在内存保留历史，/reset 清空，进程退出后丢失，不能说已经实现持久化 Session 管理。",
+        "Memory 可以涉及历史利用、外部检索或跨会话持久化；当前 Demo 只利用本进程的历史，没有长期记忆系统。SOP 是业务操作规范，例如订单号缺失先询问、查状态必须使用工具。关键权限和业务限制应落实在代码中，不能仅依赖提示词。"
+      ]
+    },
+    {
+      "title": "可扩展与生产可用的边界",
+      "paragraphs": [
+        "Pi 的分层使业务 Agent 可以从核心运行层或 coding-agent SDK 起步。优先通过公开接口扩展、把业务代码独立成包，核心能力不足时再考虑改源码；锁定版本并测试升级。轻量指主循环抽象直接、无需先定义多 Agent 编排或 Workflow Graph，不表示工具越多都没有代价。",
+        "这个 Demo 只读两笔虚构订单，设置了每次用户请求最多 6 次模型调用；尚未实现真实数据库、多租户权限、持久化、生产部署或业务评测集。框架中的持久化也不能自动保证外部写操作只执行一次。近期新 Harness 接口和远程服务集成存在演进限制，采用具体功能前要按版本验证。"
+      ]
     }
   ],
   "examples": [
     {
-      "title": "明天的第一课：修函数并运行测试",
+      "title": "历史练习计划：修函数并运行测试（未执行）",
       "scenario": "计划在小型练习项目让 Pi 修复函数，尚未执行。",
       "steps": [
         "按 coding-agent README 配置模型并启动 CLI。",
@@ -30,21 +86,51 @@
         "记录它读取什么文件、如何修改、运行什么测试、如何利用失败反馈。",
         "复述模型、Agent loop、工具各自承担的工作。"
       ],
-      "result": "预期验收：解释完整行动与反馈循环。当前仅完成学习规划，没有实测结果。",
+      "result": "此项修代码练习仍是历史计划，尚无对应实测结果；本次实际完成的是下方独立的订单查询 Demo，二者不能混为一谈。",
       "code": "npm install -g --ignore-scripts @earendil-works/pi-coding-agent\npi",
       "language": "bash"
+    },
+    {
+      "title": "已跑通：A1001 的两次模型请求",
+      "scenario": "用户在终端输入“帮我查 A1001”；工具侧保存订单，未提前把订单数据放进提示词。下面保留用户回传输出的关键字段，省略供应商地址与凭据。",
+      "steps": [
+        "CLI 执行 await agent.prompt(\"帮我查 A1001\")；Pi 加入用户消息。",
+        "第一次请求包含系统指令、工具说明和 1 条历史消息；模型提出 lookup_order({orderId:\"A1001\"})。",
+        "Pi 按工具名找到 lookupOrder，校验参数并执行 execute()，得到商品、状态、配送时间。",
+        "Pi 加入模型的工具调用消息与工具结果，再请求模型；此时历史为用户消息、assistant 工具调用、toolResult，共 3 条。系统指令与工具定义另外传递。",
+        "模型输出最终文本，不再调用工具，本次循环结束，CLI 等待下一次输入。"
+      ],
+      "code": "[模型请求] 历史消息 1 条；可用工具：lookup_order\n[工具调用] lookup_order {\"orderId\":\"A1001\"}\n[工具结果] {\"orderId\":\"A1001\",\"found\":true,\"product\":\"机械键盘\",\"status\":\"已发货\",\"delivery\":\"预计 2 天内送达\"}\n[模型请求] 历史消息 3 条；可用工具：lookup_order\n助手：A1001：机械键盘，已发货，预计 2 天内送达。",
+      "language": "text",
+      "result": "用户提供的真实终端输出验证了这一条订单任务的模型—工具闭环；不代表所有任务或生产可靠性都已验证。另有离线规则演示和模拟 HTTP 测试，它们不能替代真实模型验证。"
+    },
+    {
+      "title": "已跑通：A1001 的两次模型请求",
+      "scenario": "用户在终端输入“帮我查 A1001”；工具侧保存订单，未提前把订单数据放进提示词。下面保留用户回传输出的关键字段，省略供应商地址与凭据。",
+      "steps": [
+        "CLI 执行 await agent.prompt(\"帮我查 A1001\")；Pi 加入用户消息。",
+        "第一次请求包含系统指令、工具说明和 1 条历史消息；模型提出 lookup_order({orderId:\"A1001\"})。",
+        "Pi 按工具名找到 lookupOrder，校验参数并执行 execute()，得到商品、状态、配送时间。",
+        "Pi 加入模型的工具调用消息与工具结果，再请求模型；此时历史为用户消息、assistant 工具调用、toolResult，共 3 条。系统指令与工具定义另外传递。",
+        "模型输出最终文本，不再调用工具，本次循环结束，CLI 等待下一次输入。"
+      ],
+      "code": "[模型请求] 历史消息 1 条；可用工具：lookup_order\n[工具调用] lookup_order {\"orderId\":\"A1001\"}\n[工具结果] {\"orderId\":\"A1001\",\"found\":true,\"product\":\"机械键盘\",\"status\":\"已发货\",\"delivery\":\"预计 2 天内送达\"}\n[模型请求] 历史消息 3 条；可用工具：lookup_order\n助手：A1001：机械键盘，已发货，预计 2 天内送达。",
+      "language": "text",
+      "result": "用户提供的真实终端输出验证了这一条订单任务的模型—工具闭环；不代表所有任务或生产可靠性都已验证。另有离线规则演示和模拟 HTTP 测试，它们不能替代真实模型验证。"
     }
   ],
   "memory": [
-    "用 → 拆 → 搭 → 测。",
-    "第一课：一句请求之后，模型、循环和工具各做什么？"
+    "模型提出动作，Pi 执行并回填，业务函数真正做事。",
+    "先用、再拆、再搭、再测；一次工具查询可以包含两次模型请求。"
   ],
   "recall": {
-    "question": "学习 Pi 时首先要追踪哪条链路？",
-    "answer": "用户输入形成上下文，模型提出动作，运行时执行工具，将结果加入上下文，再继续或停止。"
+    "question": "为什么 A1001 查询先显示历史 1 条，随后显示 3 条？Pi 和业务代码各负责什么？",
+    "answer": "开始只有用户消息；模型工具调用和工具结果加入后变成 3 条。Pi 组织调用、校验、执行与反馈循环，业务 execute() 查询订单。系统指令和工具定义不计入这条日志里的历史消息数。"
   },
   "related": [
-    "pass-at-k-diagnostics"
+    "pass-at-k-diagnostics",
+    "pi-business-tools-and-extensions",
+    "agent-tool-selection-and-overload"
   ],
   "sources": [
     {
@@ -62,7 +148,29 @@
     {
       "title": "Coding agent",
       "url": "https://github.com/earendil-works/pi/tree/main/packages/coding-agent"
+    },
+    {
+      "title": "本次参考版本的执行循环",
+      "url": "https://github.com/earendil-works/pi/blob/8a7b0c03d/packages/agent/src/agent-loop.ts"
+    },
+    {
+      "title": "本次参考版本的 SDK 组装",
+      "url": "https://github.com/earendil-works/pi/blob/8a7b0c03d/packages/coding-agent/src/core/sdk.ts"
+    },
+    {
+      "title": "本次参考版本的执行循环",
+      "url": "https://github.com/earendil-works/pi/blob/8a7b0c03d/packages/agent/src/agent-loop.ts"
+    },
+    {
+      "title": "本次参考版本的 SDK 组装",
+      "url": "https://github.com/earendil-works/pi/blob/8a7b0c03d/packages/coding-agent/src/core/sdk.ts"
     }
   ],
-  "aliases": []
+  "aliases": [
+    "Pi",
+    "Agent Framework",
+    "Agent Harness",
+    "Agent Loop",
+    "订单查询 Demo"
+  ]
 }

@@ -71,6 +71,12 @@
       "id": "model-evaluation",
       "parent": null,
       "title": "模型评测"
+    },
+    {
+      "description": "工具契约、业务执行与扩展接入，以及候选筛选、动态加载和执行约束。",
+      "id": "agent-tools",
+      "parent": "agents",
+      "title": "工具接入与选择"
     }
   ],
   "days": [
@@ -220,6 +226,27 @@
         }
       ],
       "summary": "理解 Hooks、插件与终端通知的关系，并区分生命周期事件与 Harness 的完整插件架构。"
+    },
+    {
+      "date": "2026-10-10",
+      "entries": [
+        {
+          "kind": "review",
+          "note": "pi-agent-learning-path",
+          "takeaway": "从原来的学习路线推进到真实订单 Demo：分清模型、Pi 循环和业务函数，解释历史消息从 1 条变为 3 条。"
+        },
+        {
+          "kind": "learn",
+          "note": "pi-business-tools-and-extensions",
+          "takeaway": "明确当前 Demo 直接传入 tools，并未使用 Extension；业务说明、Schema 和 execute 各自承担不同职责。"
+        },
+        {
+          "kind": "learn",
+          "note": "agent-tool-selection-and-overload",
+          "takeaway": "拆文件不减少上下文；常用预置与长尾检索结合，并用校验、有限纠错和兜底保证可控。"
+        }
+      ],
+      "summary": "从已跑通的订单 Demo 理解 Pi 框架、业务工具与 Extension，并总结工具过载、路由、动态加载和生产兜底。"
     }
   ],
   "demo": false,
@@ -280,6 +307,27 @@
       ],
       "summary": "结果奖励检查任务完成，轨迹约束检查禁止行为，过程奖励必须鼓励真正有用的进展。",
       "title": "Agent 的结果、过程与约束奖励"
+    },
+    {
+      "aliases": [
+        "Tool Overload",
+        "Intent Router",
+        "Dynamic Tool Loading",
+        "Meta-tool",
+        "工具检索"
+      ],
+      "branch": "agent-tools",
+      "id": "agent-tool-selection-and-overload",
+      "memory": [
+        "常用走直达，长尾按需找；拆文件不等于减少上下文。",
+        "先筛选、再选择、执行前校验；先省往返，再做缓存，失败有退路。"
+      ],
+      "related": [
+        "pi-agent-learning-path",
+        "pi-business-tools-and-extensions"
+      ],
+      "summary": "工具多时应减少每次请求可见的候选，而非仅拆文件；常用预置、长尾按需，并以权限、校验、有限重试和评测约束动态选择。",
+      "title": "工具过载：Intent Router、动态加载与生产兜底"
     },
     {
       "aliases": [
@@ -429,18 +477,48 @@
       "title": "Pass@1 / Pass@k 与失败子集诊断"
     },
     {
-      "aliases": [],
+      "aliases": [
+        "Pi",
+        "Agent Framework",
+        "Agent Harness",
+        "Agent Loop",
+        "订单查询 Demo"
+      ],
       "branch": "agent-runtime",
       "id": "pi-agent-learning-path",
       "memory": [
-        "用 → 拆 → 搭 → 测。",
-        "第一课：一句请求之后，模型、循环和工具各做什么？"
+        "模型提出动作，Pi 执行并回填，业务函数真正做事。",
+        "先用、再拆、再搭、再测；一次工具查询可以包含两次模型请求。"
       ],
       "related": [
-        "pass-at-k-diagnostics"
+        "pass-at-k-diagnostics",
+        "pi-business-tools-and-extensions",
+        "agent-tool-selection-and-overload"
       ],
-      "summary": "按用、拆、搭、测学习 Pi：观察工具轨迹，理解循环，搭最小 Agent，再接独立评测。",
-      "title": "Pi：Agent 运行链路与学习路线"
+      "summary": "Pi 提供模型与工具之间的运行机制；订单 Demo 提供模型配置、业务工具和交互入口，一次查询通过两次模型请求完成工具调用闭环。",
+      "title": "Pi：从订单 Demo 理解 Agent 框架与运行循环"
+    },
+    {
+      "aliases": [
+        "pi.registerTool",
+        "Extension",
+        "Executor",
+        "Tool Schema",
+        "自定义工具"
+      ],
+      "branch": "agent-tools",
+      "id": "pi-business-tools-and-extensions",
+      "memory": [
+        "工具说明交给模型，执行逻辑留在代码。",
+        "直接 Agent 是搭助手，Extension 是给现成助手加能力。"
+      ],
+      "related": [
+        "pi-agent-learning-path",
+        "agent-tool-selection-and-overload",
+        "agent-hooks-plugins-terminal-integration"
+      ],
+      "summary": "业务工具把用途与参数契约交给模型，把实际操作留在执行函数；直接传给 Agent 与通过 Extension 注册是不同的接入方式。",
+      "title": "Pi 业务工具：Schema、执行函数与 Extension 接入"
     },
     {
       "aliases": [

@@ -1,0 +1,89 @@
+{
+  "id": "pi-business-tools-and-extensions",
+  "title": "Pi 业务工具：Schema、执行函数与 Extension 接入",
+  "branch": "agent-tools",
+  "aliases": [
+    "pi.registerTool",
+    "Extension",
+    "Executor",
+    "Tool Schema",
+    "自定义工具"
+  ],
+  "summary": "业务工具把用途与参数契约交给模型，把实际操作留在执行函数；直接传给 Agent 与通过 Extension 注册是不同的接入方式。",
+  "context": "从“增加能力要改 tools.mjs”追问它是否只是当前 Demo 的文件，再区分直接注册工具、Extension 插件以及工具内部业务逻辑由谁实现。",
+  "sections": [
+    {
+      "title": "一个工具包含两侧",
+      "paragraphs": [
+        "name 是模型指明工具的标识；description 说明用途；parameters Schema 声明输入形状，例如必须提供字符串 orderId。execute() 是执行函数，也就是这里所说的 Executor。模型看到名称、描述和参数 Schema，不会收到函数源码或数据库本身。",
+        "Schema 约束格式，不保证订单属于当前用户、数值符合业务要求。开发者负责执行中的数据库/API/计算逻辑及授权，可以包装已有库和服务，无需全部从零写。"
+      ]
+    },
+    {
+      "title": "当前 Demo：直接组装自己的助手",
+      "paragraphs": [
+        "tools.mjs 导出 lookupOrder；agent.mjs import 后放入 initialState.tools。只写好函数而不交给 Agent，模型不能通过该 Agent 调用它。增加物流能力时，新建工具对象并加入列表即可；是否选对工具仍需任务测试。"
+      ]
+    },
+    {
+      "title": "Extension：给现成 Pi 编程助手加能力",
+      "paragraphs": [
+        "Extension 是由 pi-coding-agent 加载的插件代码。项目位置通常是 .pi/extensions/orders.ts，项目受信任后可被发现；全局位置为 ~/.pi/agent/extensions/，也可用 pi -e ./orders.ts 显式加载。",
+        "扩展默认导出的函数接收宿主提供的 pi 接口，再调用 pi.registerTool(tool)。当前核心 Agent Demo 没有扩展加载器，放入 .pi/extensions 不会自动生效。Extension 是能力载体，工具注册是其一种用途；不应把任意 import 文件都叫 Pi Extension。"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "title": "订单工具从定义到调用",
+      "scenario": "为订单助手提供唯一的 lookup_order 工具。代码为当前 Demo 的缩短版，省略其他订单与 UI 字段。",
+      "steps": [
+        "用 Schema 声明 orderId，编写查询函数。",
+        "在 Agent 的 tools 列表中加入 lookupOrder。",
+        "模型输出 lookup_order 和参数；Pi 校验后调用 execute()，将 content 交回模型。"
+      ],
+      "code": "import { Type } from '@earendil-works/pi-ai';\nimport { Agent } from '@earendil-works/pi-agent-core';\n\nconst orders = { A1001: { product: '机械键盘', status: '已发货' } };\nconst lookupOrder = {\n  name: 'lookup_order', label: '查询订单',\n  description: '根据订单号查询订单',\n  parameters: Type.Object({ orderId: Type.String() }),\n  async execute(_id, { orderId }) {\n    const data = orders[orderId.trim().toUpperCase()];\n    return { content: [{ type: 'text', text: JSON.stringify(data ?? { found: false }) }], details: data ?? {} };\n  }\n};\n// model 和 streamFn 由模型接入代码提供。\nconst agent = new Agent({ initialState: { model, tools: [lookupOrder] }, streamFn });\nawait agent.prompt('帮我查 A1001');",
+      "language": "javascript",
+      "result": "查询执行在业务函数中，模型使用返回内容回答。该片段不是独立脚本，model 和 streamFn 需要接入代码；对应完整 Demo 的查询链路已由用户实测。"
+    },
+    {
+      "title": "同一业务工具的 Extension 接入形式",
+      "scenario": "如果使用现成的 Pi 编程助手，而不是我们自己启动核心 Agent，可把工具对象交给扩展接口。",
+      "steps": [
+        "准备满足 Extension 工具接口的 lookupOrder 对象。",
+        "在项目 .pi/extensions/orders.ts 的默认导出中注册工具。",
+        "由 Pi 编程助手加载可信项目扩展，或用 pi -e 显式加载；原 Demo 不会自动加载这个文件。"
+      ],
+      "code": "export default function (pi) {\n  pi.registerTool(lookupOrder);\n}",
+      "language": "javascript",
+      "result": "这是解释注册位置的片段，lookupOrder 定义省略；本次没有安装或运行该 Extension。"
+    }
+  ],
+  "memory": [
+    "工具说明交给模型，执行逻辑留在代码。",
+    "直接 Agent 是搭助手，Extension 是给现成助手加能力。"
+  ],
+  "recall": {
+    "question": "把 orders.ts 放入当前 Demo 的 .pi/extensions 就会自动生效吗？",
+    "answer": "不会。当前 Demo 只 import 工具并传入 tools，没有扩展加载器。Pi 编程助手的 Extension 才由宿主发现和加载，并通过 pi.registerTool 注册。"
+  },
+  "related": [
+    "pi-agent-learning-path",
+    "agent-tool-selection-and-overload",
+    "agent-hooks-plugins-terminal-integration"
+  ],
+  "sources": [
+    {
+      "title": "Extension 文档",
+      "url": "https://github.com/earendil-works/pi/blob/8a7b0c03d/packages/coding-agent/docs/extensions.md"
+    },
+    {
+      "title": "完整最小扩展示例",
+      "url": "https://github.com/earendil-works/pi/blob/8a7b0c03d/packages/coding-agent/examples/extensions/hello.ts"
+    },
+    {
+      "title": "核心工具查找与执行",
+      "url": "https://github.com/earendil-works/pi/blob/8a7b0c03d/packages/agent/src/agent-loop.ts"
+    }
+  ]
+}
